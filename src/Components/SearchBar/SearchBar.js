@@ -4,11 +4,12 @@ import "./SearchBar.css";
 function SearchBar() {
   return (
     <div className="SearchBar">
-      <header className="SearchBar-header">
-        <p>
-          Mon composant : SearchBar
-        </p>
-      </header>
+      <input
+        type="text"
+        aria-label="Type song request here"
+        placeholder="Type your song request here ..."
+      />
+      <button>Search</button>
     </div>
   );
 }
