@@ -2,11 +2,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  /* align-items: center; */
+  gap: 1rem;
+  background-color: rgb(83, 235, 149);
 }
 
 
 .App-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 9vh;
   text-align: center;
   font-size: 1rem;
   background-color: rgb(194, 181, 236);
@@ -19,14 +24,16 @@
 }
 
 .App-search {
-  background-color: #e41e1e;
-  
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
 }
 
-.App-searchbar {
-  border: 2px solid rgb(28, 24, 18);
-}
-
-.App-searchbar {
-  border: 2px solid orange;
+.App-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-around;
+  padding: 0 2rem;
 }

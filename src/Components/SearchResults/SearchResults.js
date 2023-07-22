@@ -1,14 +1,11 @@
 import React from "react";
 import "./SearchResults.css";
+import Tracklist from "../Tracklist/Tracklist";
 
 function SearchResults() {
   return (
     <div className="SearchResults">
-      <header className="SearchResults-header">
-        <p>
-          Mon composant : SearchResults
-        </p>
-      </header>
+        <Tracklist />
     </div>
   );
 }

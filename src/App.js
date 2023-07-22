@@ -1,6 +1,7 @@
 import "./App.css";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
+import Playlist from "./Components/Playlist/Playlist";
 
 function App() {
   return (
@@ -11,12 +12,12 @@ function App() {
       </header>
 
       <div className="App-search">
-        <div className="App-searchbar">
           <SearchBar />
-        </div>
-        <div className="App-searchresults">
-        <SearchResults />
-        </div>
+         
+          <div className="App-results">
+          <SearchResults />
+          <Playlist />
+          </div>
       </div>
 
     </div>

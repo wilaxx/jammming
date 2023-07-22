@@ -1,0 +1,23 @@
+.Playlist {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    gap: 0.9rem;
+}
+
+.Playlist input {
+    border-style: none;
+    background: transparent;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.Playlist-tracks {
+    display: flex;
+    flex-direction: column;
+}
+.Playlist-tracks li {
+    background-color: blue;
+}

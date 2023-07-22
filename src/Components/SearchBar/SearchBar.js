@@ -7,7 +7,7 @@ function SearchBar() {
       <input
         type="text"
         aria-label="Type song request here"
-        placeholder="Type your song request here ..."
+        placeholder="Type song here ..."
       />
       <button>Search</button>
     </div>

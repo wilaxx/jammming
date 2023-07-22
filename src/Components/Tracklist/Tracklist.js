@@ -3,12 +3,17 @@ import "./Tracklist.css";
 
 function Tracklist() {
   return (
+    
     <div className="Tracklist">
-      <header className="Tracklist-header">
-        <p>
-          Mon composant : Tracklist
-        </p>
-      </header>
+        <h1>Results</h1>
+        <ul className="tracksresult">
+          <li>Elan de vie</li>
+          <li>Echos</li>
+          <li>La Rage</li>
+          <li>Ca nous correspond pas</li>
+          <li>Une decennie d'un siecle</li>
+          <li>Cinquieme Soleil</li>
+        </ul>
     </div>
   );
 }

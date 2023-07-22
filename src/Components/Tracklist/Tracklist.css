@@ -1,0 +1,20 @@
+.Tracklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    opacity: 0.8;
+    background-color: rgb(81, 163, 235);
+}
+
+.Tracklist h1 {
+    text-align: center;
+}
+.tracksresult {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 0.2rem;
+}
+.tracksresult > * {
+    padding-left: 1rem;
+}
