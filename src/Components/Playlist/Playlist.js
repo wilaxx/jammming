@@ -12,12 +12,6 @@ function Playlist() {
       </input>
       
       <ul className="Playlist-tracks">
-          <li>Il etait une fois ...</li>
-          <li>Jamming</li>
-          <li>Cinquieme Soleil</li>
-          <li>Changes</li>
-          <li>Elan de vie</li>
-          <li>Bohemian Rapsody</li>
           
       </ul>
 
