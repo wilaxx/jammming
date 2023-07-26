@@ -1,5 +1,6 @@
 import React from "react";
 import "./Playlist.css";
+import Tracklist from "../Tracklist/Tracklist";
 
 function Playlist() {
   return (
@@ -11,9 +12,7 @@ function Playlist() {
       >
       </input>
       
-      <ul className="Playlist-tracks">
-          
-      </ul>
+      <Tracklist />
 
       <button>Save To Spotify</button>
     </div>

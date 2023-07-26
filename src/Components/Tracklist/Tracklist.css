@@ -3,8 +3,6 @@
     flex-direction: column;
     gap: 0.8rem;
     opacity: 0.8;
-    background-color: rgb(81, 163, 235);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 0.3rem;
     padding: 1rem 0;
     min-height: 40vh;

@@ -7,7 +7,7 @@
     gap: 0.9rem;
     padding: 1rem 1.5rem;
     border-radius: 0.3rem;
-    background-color: rgb(19, 232, 111);
+    /* background-color: rgb(19, 232, 111); */
     min-height: 40vh;
 }
 
@@ -23,24 +23,8 @@ bouton-rose {}
     padding-bottom: 0.3rem;
 }
 
-
-
-.Playlist-tracks {
-    display: flex;
-    flex-direction: column;
-    /* align-items: flex-start; */
-    gap: 0.7rem;
-    padding: 0.2rem;
-}
-.Playlist-tracks li {
-    min-width: 30vw;
-    max-width: 80vw;
-    padding-left: 1rem;
-}
-
 .Playlist button {
     align-self: center;
-    background-color: rgb(171, 171, 233);
     padding: 0.5rem 2rem;
     border-radius: 2rem;
     border-style: none;
