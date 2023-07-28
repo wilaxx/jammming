@@ -1,5 +1,32 @@
 .Track {
+    display: flex;
     border: 2px solid red;
     border-radius: 2rem;
     background-color: blueviolet;
-} 
+    padding: 0.4rem;
+}
+
+.content-track {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    align-self: center;
+}
+
+h4 {
+    margin-left: 0.8rem;
+}
+
+p {
+    margin-left: 1.2rem;
+}
+
+.Track button {
+    border-radius: 1rem;
+    padding: 0.5rem;
+    align-self: center;
+    justify-self: flex-end;
+}

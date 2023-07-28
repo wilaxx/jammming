@@ -5,7 +5,7 @@ import Tracklist from "../Tracklist/Tracklist";
 function SearchResults() {
   return (
     <div className="SearchResults">
-        <h2>Results</h2>
+        <h2>Results for : </h2>
         <Tracklist />
     </div>
   );

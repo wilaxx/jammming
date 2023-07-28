@@ -14,7 +14,9 @@ function Playlist() {
       
       <Tracklist />
 
-      <button>Save To Spotify</button>
+      <button className="button">
+        Save To Spotify
+      </button>
     </div>
   );
 }

@@ -7,13 +7,3 @@
     padding: 1rem 0;
     min-height: 40vh;
 }
-
-.tracksresult {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    padding: 0.2rem;
-}
-.tracksresult > * {
-    padding-left: 1rem;
-}
