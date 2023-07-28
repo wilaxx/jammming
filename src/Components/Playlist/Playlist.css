@@ -1,17 +1,14 @@
 .Playlist {
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     /* align-items: center; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     gap: 0.9rem;
     padding: 1rem 1.5rem;
     border-radius: 0.3rem;
-    /* background-color: rgb(19, 232, 111); */
     min-height: 40vh;
 }
-
-bouton-rose {}
 
 .Playlist input {
     border-style: none;

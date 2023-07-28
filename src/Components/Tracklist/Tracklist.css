@@ -8,9 +8,6 @@
     min-height: 40vh;
 }
 
-.Tracklist h1 {
-    text-align: center;
-}
 .tracksresult {
     display: flex;
     flex-direction: column;

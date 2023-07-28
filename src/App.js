@@ -4,6 +4,40 @@ import SearchResults from "./Components/SearchResults/SearchResults";
 import Playlist from "./Components/Playlist/Playlist";
 
 function App() {
+
+  const kenyArray = [
+    {
+      name: "",
+      artist: "",
+      album: "",
+      id: ""
+    },
+    {
+      name: "",
+      artist: "",
+      album: "",
+      id: ""
+    },
+    {
+      name: "",
+      artist: "",
+      album: "",
+      id: ""
+    },
+    {
+      name: "",
+      artist: "",
+      album: "",
+      id: ""
+    }, {
+      name: "",
+      artist: "",
+      album: "",
+      id: ""
+    }];
+
+
+  
   return (
     <div className="App">
       
@@ -15,7 +49,7 @@ function App() {
           <SearchBar />
          
           <div className="App-results">
-          <SearchResults />
+          <SearchResults results={}/>
           <Playlist />
           </div>
       </div>
