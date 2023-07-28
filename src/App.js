@@ -37,7 +37,7 @@ function App() {
     }];
 
 
-  
+  const classnamesArray = ["App-search App-yellow"];
   return (
     <div className="App">
       
@@ -45,7 +45,7 @@ function App() {
         <h1>Ja<span>mmm</span>ing</h1>
       </header>
 
-      <div className="App-search">
+       <div className={classnamesArray}>
           <SearchBar />
          
           <div className="App-results">

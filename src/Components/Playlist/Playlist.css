@@ -1,6 +1,6 @@
 .Playlist {
-    width: 95%;
-    align-self: center;
+    /* width: 95%; */
+    /* align-self: center; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,7 +10,6 @@
     /* padding: 1rem 1.5rem; */
     border-radius: 0.3rem;
     min-height: 40vh;
-    background-color: ;
 }
 
 .Playlist input {
@@ -20,7 +19,8 @@
     text-align: center;
     border-bottom: 1px solid white;
     outline: 0;
-    padding-bottom: 0.1rem;
+    margin: 0 2rem;
+    padding-bottom: 0.3rem;
 }
 
 .Playlist > button {
