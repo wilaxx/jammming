@@ -49,7 +49,7 @@ function App() {
           <SearchBar />
          
           <div className="App-results">
-          <SearchResults results={}/>
+          <SearchResults />
           <Playlist />
           </div>
       </div>
