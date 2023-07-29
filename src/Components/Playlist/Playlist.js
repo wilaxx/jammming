@@ -2,7 +2,7 @@ import React from "react";
 import "./Playlist.css";
 import Tracklist from "../Tracklist/Tracklist";
 
-function Playlist() {
+function Playlist({searchResults}) {
   return (
     <div className="Playlist">
       <input
@@ -12,7 +12,7 @@ function Playlist() {
       >
       </input>
       
-      <Tracklist />
+      <Tracklist searchResults={searchResults} />
 
       <button>
         Save To Spotify

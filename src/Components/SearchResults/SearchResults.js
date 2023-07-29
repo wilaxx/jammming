@@ -4,9 +4,9 @@ import Tracklist from "../Tracklist/Tracklist";
 
 function SearchResults({searchResults}) {
   return (
-    <div className="searchResults">
+    <div className="SearchResults">
         <h2>Results for : </h2>
-        <Tracklist tracklistResults={searchResults} />
+        <Tracklist searchResults={searchResults} />
     </div>
   );
 }

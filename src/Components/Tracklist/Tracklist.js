@@ -2,20 +2,25 @@ import React from "react";
 import "./Tracklist.css";
 import Track from "../Track/Track"
 
-function Tracklist() {
+function Tracklist({searchResults}) {
 
+  const arrayToLoop = searchResults;
+
+  const listOfTracks = arrayToLoop.map((track, key) => {
+    return <Track track={track} key={key} /> 
+  });
   
-
+  console.log(listOfTracks);
   return (
-    
+   
     <div className="Tracklist">
-    <Track />
-    <Track />
-    <Track />
-    <Track />
-    <Track />
+      {listOfTracks}
     </div>
   );
-}
+
+    }
+
+
+  
 
 export default Tracklist;

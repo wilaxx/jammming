@@ -1,14 +1,14 @@
 import React from "react";
 import "./Track.css";
 
-function Track() {
+function Track({track}) {
   let text = "+";
   return (
     <div className="Track">
       <div className="content-track">
-        <h3>Titre</h3>
-        <h4>by Artiste</h4>
-        <p>album</p>
+        <h3>{track.name}</h3>
+        <h4>{track.artist}</h4>
+        <p>{track.album}</p>
       </div>
       <button>{text}</button>
     </div>  
