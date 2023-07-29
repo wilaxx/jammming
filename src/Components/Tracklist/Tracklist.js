@@ -4,7 +4,7 @@ import Track from "../Track/Track"
 
 function Tracklist({searchResults}) {
 
-  const arrayToLoop = searchResults;
+  const arrayToLoop = [...searchResults];
 
   const listOfTracks = arrayToLoop.map((track, key) => {
     return <Track track={track} key={key} /> 
@@ -18,7 +18,7 @@ function Tracklist({searchResults}) {
     </div>
   );
 
-    }
+  }
 
 
   
