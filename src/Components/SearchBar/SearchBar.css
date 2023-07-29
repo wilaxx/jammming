@@ -1,18 +1,23 @@
 .SearchBar {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.2rem;
     align-items: center;
     justify-content: space;
 }
 
 .SearchBar input {
+    background-color: rgb(234, 224, 206);
     font-size: 1.2rem;
     text-align: center;
     padding: 0.5rem 1rem;
     border-radius: 1rem;
     border-style: none;
+    caret-color: rgb(255, 255, 255);
+    caret-shape: underscore;
 }
+
+
 
 .SearchBar button {
     background-color: rgb(171, 171, 233);

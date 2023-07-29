@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-around;
   /* gap: 1rem; */
-  background-color: rgba(106, 137, 119, 0.552);
+  background-color: rgba(109, 102, 134, 0.923);
 }
 
 
@@ -14,7 +14,7 @@
   /* height: 9vh; */
   /* text-align: center; */
   font-size: 1rem;
-  background-color: rgb(194, 181, 236);
+  background-color: rgb(109, 102, 134);
   padding: 0.8rem;
   
 }
@@ -31,10 +31,6 @@
 
 }
 
-.App-yellow {
-  /* background-color: yellow; */
-}
-
 .App-results {
   display: flex;
   flex-direction: column;
@@ -46,5 +42,6 @@
 .App-results > * {
   border-radius: 0.5rem;
   padding: 1rem 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.24) -3px 3px 3px;
 }
 

@@ -1,7 +1,6 @@
 .Track {
     display: flex;
     align-items: center;
-    border: 2px solid red;
     border-radius: 2rem;
     padding: 0.4rem;
 }
@@ -25,11 +24,9 @@ p {
 }
 
 .Track button {
-    border-radius: 100%;
     padding: 0.2rem;
     background-color: transparent;
     justify-self: flex-end;
-    align-self: base;
     font-weight: bold;
     font-size: 1.5rem;
     border-style: none;

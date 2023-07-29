@@ -1,9 +1,13 @@
 .SearchResults {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    min-height: 20vh;
     
 }
 
 .SearchResults h2 {
     font-size: 1rem;
     text-align: center;
+}
+
+.SearchResults .Track {
+    background-color: rgb(86, 105, 136);
 }

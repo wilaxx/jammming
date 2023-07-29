@@ -36,8 +36,6 @@ function App() {
       id: ""
     }];
 
-
-  const classnamesArray = ["App-search App-yellow"];
   return (
     <div className="App">
       
@@ -45,7 +43,7 @@ function App() {
         <h1>Ja<span>mmm</span>ing</h1>
       </header>
 
-       <div className={classnamesArray}>
+       <div className="App-search">
           <SearchBar />
          
           <div className="App-results">
@@ -53,6 +51,8 @@ function App() {
           <Playlist />
           </div>
       </div>
+
+      <footer>Yo la famille</footer>
 
     </div>
   );
