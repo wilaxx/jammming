@@ -7,33 +7,33 @@ function App() {
 
   const kenyArray = [
     {
-      name: "",
-      artist: "",
-      album: "",
-      id: ""
+      name: "Le Missile est lance",
+      artist: "Keny Arkana",
+      album: "L'esquisse (Mix-Tape Vol.1) (2005)",
+      id: "01"
     },
     {
-      name: "",
-      artist: "",
-      album: "",
-      id: ""
+      name: "La Main sur le Coeur",
+      artist: "Keny Arkana",
+      album: "mixtape: L'esquisse (Mix-Tape Vol.1) (2005)",
+      id: "02"
     },
     {
-      name: "",
-      artist: "",
-      album: "",
-      id: ""
+      name: "Ils Ont Peur de la Liberte",
+      artist: "Keny Arkana",
+      album: "Entre Ciment Et Belle Etoile",
+      id: "03"
     },
     {
-      name: "",
-      artist: "",
-      album: "",
-      id: ""
+      name: "Cinquieme Soleil",
+      artist: "Keny Arkana",
+      album: "Desobeissance",
+      id: "04"
     }, {
-      name: "",
-      artist: "",
-      album: "",
-      id: ""
+      name: "Elan de Vie",
+      artist: "Keny Arkana",
+      album: "Avant l'Exode",
+      id: "05"
     }];
 
   return (
@@ -47,7 +47,7 @@ function App() {
           <SearchBar />
          
           <div className="App-results">
-          <SearchResults />
+          <SearchResults searchResults={kenyArray} trackList="kenyTracklist"/>
           <Playlist />
           </div>
       </div>
