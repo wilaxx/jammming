@@ -37,6 +37,7 @@ function App() {
       id: "05"
     }];
 
+
     const tsrArray = [
       {
         name: "Point final",
@@ -62,14 +63,21 @@ function App() {
         album: "Flaque de Samples",
         id: "04"
       }];
+    
+    
+
 
     const [searchResults, setSearchResults] = useState(kenyArray);
+
+
     const changeArray = array => setSearchResults(array);
     ;
 
     setTimeout(() => {
       changeArray(tsrArray);
     }, "10000");
+
+
   return (
     <div className="App">
       
@@ -81,8 +89,8 @@ function App() {
           <SearchBar />
          
           <div className="App-results">
-          <SearchResults searchResults={searchResults} trackList="kenyTracklist"/>
-          <Playlist searchResults={searchResults}/>
+          <SearchResults searchResults={searchResults} trackList="kenyTracklist" />
+          <Playlist searchResults={searchResults} />
           </div>
       </div>
 

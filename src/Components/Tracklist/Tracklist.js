@@ -6,11 +6,13 @@ function Tracklist({searchResults}) {
 
   const arrayToLoop = [...searchResults];
 
-  const listOfTracks = arrayToLoop.map((track, key) => {
-    return <Track track={track} key={key} /> 
+  const listOfTracks = arrayToLoop.map(element, key) => {
+    return <Track track={element} key={key} /> 
   });
   
   console.log(listOfTracks);
+
+  
   return (
    
     <div className="Tracklist">
@@ -19,6 +21,8 @@ function Tracklist({searchResults}) {
   );
 
   }
+
+  array.map(x => x*x)
 
 
   
