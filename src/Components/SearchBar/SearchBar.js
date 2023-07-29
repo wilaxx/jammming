@@ -1,8 +1,10 @@
 import React from "react";
 import "./SearchBar.css";
 
-function SearchBar() {
+function SearchBar({setWord, onSearch}) {
   
+  setWord(input.target.value);
+
   return (
     <div className="SearchBar">
       <input
@@ -10,7 +12,7 @@ function SearchBar() {
         aria-label="Type song request here"
         placeholder="Type song here ..."
       />
-      <button>Search</button>
+      <button onClick={onSearch} >Search</button>
     </div>
   );
 }

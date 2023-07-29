@@ -37,8 +37,7 @@ function App() {
       id: "05"
     }];
 
-
-    const tsrArray = [
+  const tsrArray = [
       {
         name: "Point final",
         artist: "TSR",
@@ -62,21 +61,27 @@ function App() {
         artist: "TSR",
         album: "Flaque de Samples",
         id: "04"
-      }];
+    }];
     
-    
+    const [searchResults, setSearchResults] = useState([]);
+    const [word, setWord] = useState("");
 
 
-    const [searchResults, setSearchResults] = useState(kenyArray);
-
-
-    const changeArray = array => setSearchResults(array);
-    ;
-
-    setTimeout(() => {
-      changeArray(tsrArray);
-    }, "10000");
-
+    const onSearch = (word) => {
+      if(word === "keny"){
+        setSearchResults(kenyArray);
+      }
+      else if (word === "tsr"){
+        setSearchResults(tsrArray);
+      }
+      else {
+        setSearchResults([]);
+      }
+      
+    };
+    // setTimeout(() => {
+    //   changeArray(tsrArray);
+    // }, "3000");
 
   return (
     <div className="App">
@@ -86,7 +91,7 @@ function App() {
       </header>
 
        <div className="App-search">
-          <SearchBar />
+          <SearchBar onSearch={onSearch} setWord={setWord} />
          
           <div className="App-results">
           <SearchResults searchResults={searchResults} trackList="kenyTracklist" />
