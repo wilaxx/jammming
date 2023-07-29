@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SearchBar.css";
 
-function SearchBar({setWord, onSearch}) {
+function SearchBar({onSearch}) {
   
-  setWord(input.target.value);
+  const [word, setWord] = useState("");
+
+  const handleChange = (event) => {
+    setWord(event.target.value);
+
+  };
+
+  const handleClick = (event) => {
+    onSearch(word);
+  };
+
 
   return (
     <div className="SearchBar">
       <input
+        value={word}
+        onChange={handleChange}
         type="text"
         aria-label="Type song request here"
         placeholder="Type song here ..."
       />
-      <button onClick={onSearch} >Search</button>
+      <button id="search-button" onClick={handleClick}>Search</button>
     </div>
   );
 }

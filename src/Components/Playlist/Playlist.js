@@ -2,8 +2,11 @@ import React from "react";
 import "./Playlist.css";
 import Tracklist from "../Tracklist/Tracklist";
 
-function Playlist({searchResults}) {
+  const Playlist = ({searchResults}) => {
+  
+
   return (
+      
     <div className="Playlist">
       <input
         type="text"
@@ -12,13 +15,14 @@ function Playlist({searchResults}) {
       >
       </input>
       
-      <Tracklist searchResults={searchResults} />
-
+      
+      <Tracklist searchResults={searchResults}  />
+  
       <button>
         Save To Spotify
       </button>
     </div>
   );
-}
+};
 
 export default Playlist;

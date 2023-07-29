@@ -5,6 +5,7 @@ import Playlist from "./Components/Playlist/Playlist";
 import { useState } from "react";
 
 function App() {
+    
 
   const kenyArray = [
     {
@@ -64,45 +65,51 @@ function App() {
     }];
     
     const [searchResults, setSearchResults] = useState([]);
-    const [word, setWord] = useState("");
+    // const [word, setWord] = useState("defaultttt");
 
 
     const onSearch = (word) => {
       if(word === "keny"){
+        console.log("arkana");
         setSearchResults(kenyArray);
       }
       else if (word === "tsr"){
+        console.log("tsrtsr");
         setSearchResults(tsrArray);
       }
       else {
+        console.log("pas trouve RIENN");
         setSearchResults([]);
       }
       
     };
-    // setTimeout(() => {
-    //   changeArray(tsrArray);
-    // }, "3000");
+
+    // Exemple pour probleme de loading pages
+
+    
+
 
   return (
+    
     <div className="App">
-      
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
       </header>
 
        <div className="App-search">
-          <SearchBar onSearch={onSearch} setWord={setWord} />
+          <SearchBar onSearch={onSearch} />
          
           <div className="App-results">
-          <SearchResults searchResults={searchResults} trackList="kenyTracklist" />
+          <SearchResults searchResults={searchResults} />
+          
           <Playlist searchResults={searchResults} />
           </div>
       </div>
 
-      <footer>Yo la famille</footer>
+     
 
     </div>
   );
-}
+};
 
 export default App;
