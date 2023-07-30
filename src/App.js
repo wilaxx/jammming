@@ -1,8 +1,10 @@
 import "./App.css";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
-import Playlist from "./Components/Playlist/Playlist";
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
+const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));   
+
+
 
 function App() {
     
@@ -64,8 +66,7 @@ function App() {
         id: "04"
     }];
     
-    const [searchResults, setSearchResults] = useState([]);
-    // const [word, setWord] = useState("defaultttt");
+  const [searchResults, setSearchResults] = useState([]);
 
 
     const onSearch = (word) => {
@@ -84,7 +85,6 @@ function App() {
       
     };
 
-    // Exemple pour probleme de loading pages
 
     
 
@@ -101,11 +101,11 @@ function App() {
          
           <div className="App-results">
           <SearchResults searchResults={searchResults} />
-          
+          <Suspense fallback={<h1>HELLO LAILAAAAAAAAAAAAAAA</h1>}>
           <Playlist searchResults={searchResults} />
+          </Suspense>
           </div>
       </div>
-
      
 
     </div>

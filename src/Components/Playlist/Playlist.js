@@ -4,6 +4,10 @@ import Tracklist from "../Tracklist/Tracklist";
 
   const Playlist = ({searchResults}) => {
   
+    setTimeout(() =>{
+      console.log('hello');
+    }, 10000);
+
 
   return (
       
@@ -15,8 +19,7 @@ import Tracklist from "../Tracklist/Tracklist";
       >
       </input>
       
-      
-      <Tracklist searchResults={searchResults}  />
+      <Tracklist searchResults={searchResults} />
   
       <button>
         Save To Spotify

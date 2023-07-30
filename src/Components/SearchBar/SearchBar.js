@@ -19,6 +19,7 @@ function SearchBar({onSearch}) {
     <div className="SearchBar">
       <input
         value={word}
+        onkeydown
         onChange={handleChange}
         type="text"
         aria-label="Type song request here"
