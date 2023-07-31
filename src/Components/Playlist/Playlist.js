@@ -2,15 +2,12 @@ import React from "react";
 import "./Playlist.css";
 import Tracklist from "../Tracklist/Tracklist";
 
-  const Playlist = ({searchResults}) => {
-  
-    setTimeout(() =>{
-      console.log('hello');
-    }, 10000);
+  const Playlist = ({ searchResults }) => {
 
+    // sleep(10000);
 
   return (
-      
+  
     <div className="Playlist">
       <input
         type="text"
@@ -18,8 +15,8 @@ import Tracklist from "../Tracklist/Tracklist";
         placeholder="Type playlist name ..."
       >
       </input>
-      
-      <Tracklist searchResults={searchResults} />
+
+      <Tracklist searchResults={searchResults}/>
   
       <button>
         Save To Spotify

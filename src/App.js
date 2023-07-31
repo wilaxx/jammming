@@ -9,7 +9,8 @@ const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 function App() {
     
 
-  const kenyArray = [
+
+  const keny = [
     {
       name: "Le Missile est lance",
       artist: "Keny Arkana",
@@ -40,7 +41,7 @@ function App() {
       id: "05"
     }];
 
-  const tsrArray = [
+  const tsr = [
       {
         name: "Point final",
         artist: "TSR",
@@ -65,18 +66,20 @@ function App() {
         album: "Flaque de Samples",
         id: "04"
     }];
-    
-  const [searchResults, setSearchResults] = useState([]);
+   
+  // const results = [...keny, ...tsr]
+  // console.log(results);
 
+  const [searchResults, setSearchResults] = useState([]);
 
     const onSearch = (word) => {
       if(word === "keny"){
         console.log("arkana");
-        setSearchResults(kenyArray);
+        setSearchResults(keny);
       }
       else if (word === "tsr"){
         console.log("tsrtsr");
-        setSearchResults(tsrArray);
+        setSearchResults(tsr);
       }
       else {
         console.log("pas trouve RIENN");
@@ -84,9 +87,6 @@ function App() {
       }
       
     };
-
-
-    
 
 
   return (

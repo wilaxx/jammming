@@ -2,7 +2,7 @@ import React from "react";
 import "./Tracklist.css";
 import Track from "../Track/Track"
 
-function Tracklist({searchResults}) {
+function Tracklist({ searchResults }) {
   
   const arrayToLoop = [...searchResults];
 
