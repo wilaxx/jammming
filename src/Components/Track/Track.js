@@ -1,18 +1,32 @@
 import React from "react";
 import "./Track.css";
 
-function Track({track}) {
+function Track(props) {
   
+
+
+  const action = () => {
+    if (props.isRemoval) {
+      return (
+      <button> - </button>
+      );
+    }
+      return (
+      <button> + </button>
+      );
+    
+};
+
   return (
     <div className="Track">
       <div className="content-track">
-        <h3>{track.name}</h3>
-        <h4>{track.artist}</h4>
-        <p>{track.album}</p>
+        <h3>{props.track.name}</h3>
+        <h4>{props.track.artist}</h4>
+        <p>{props.track.album}</p>
       </div>
-      <button>+</button>
+      <button>{action()}</button>
     </div>  
   );
-}
+};
 
 export default Track;

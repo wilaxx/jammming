@@ -2,10 +2,13 @@ import React from "react";
 import "./Playlist.css";
 import Tracklist from "../Tracklist/Tracklist";
 
-  const Playlist = ({ tracksPlaylist, onRemove }) => {
+  const Playlist = ({ tracksPlaylist, onRemove, onNameChange }) => {
 
-    // sleep(10000);
+    const updateName = ({target}) => {
+      onNameChange(target.value)
+    }
 
+    const handleClick
   return (
   
     <div className="Playlist">
@@ -13,12 +16,17 @@ import Tracklist from "../Tracklist/Tracklist";
         type="text"
         aria-label="Name of the playlist"
         placeholder="Type playlist name ..."
+        onChange={updateName}
       >
       </input>
 
-      <Tracklist tracks={tracksPlaylist} action={onRemove} />
+      <Tracklist 
+      tracks={tracksPlaylist} 
+      onRemove={onRemove}  
+      isRemoval={true} 
+      />
   
-      <button>
+      <button onClick={}>
         Save To Spotify
       </button>
     </div>

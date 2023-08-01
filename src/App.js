@@ -5,11 +5,8 @@ import { useState, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));   
 
 
-
 function App() {
     
-
-
   const keny = [
     {
       name: "Le Missile est lance",
@@ -40,7 +37,6 @@ function App() {
       album: "Avant l'Exode",
       id: "05"
     }];
-
   const tsr = [
       {
         name: "Point final",
@@ -67,24 +63,28 @@ function App() {
         id: "04"
     }];
    
- 
-    // Init array to use in tracksResults
+  // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
-  // Init array to use in Playlist
-  const [tracksPlaylist, setTracksPlaylist] = useState([]);
-  
-  // fonction onAdd
-const onAdd = (track) => {
-  const updArray = [...tracksResults];
-  setTracksResults(updArray => [...updArray, track]);
-};
-
-// fonction onRemove
-const onRemove = (track) => {
-  
-};
-
-    const onSearch = (word) => {
+  // Init tracksPlaylist to store tracks added when clicking the + button from a Track in SearchResults's Tracklist
+  const [tracksPlaylist, setTracksPlaylist] = useState([{
+    name: "Le Missile est lance",
+    artist: "Keny Arkana",
+    album: "L'esquisse (Mix-Tape Vol.1) (2005)",
+    id: "01"
+  }]);
+  //Init Playlist name
+  const [namePlaylist, setNamePlaylist] = useState("New playlist");
+  // fonction onAdd to pass to SearchResults --> Tracklist --> Track: onClick button + 
+  const onAdd = (track) => {
+    const updArray = [...tracksResults];
+    setTracksResults(updArray => [...updArray, track]);
+  };
+  // fonction onRemove to pass to Playlist --> Tracklist --> Track->  onClick button -
+  const onRemove = (track) => {
+  console.log("removing.....");
+  };
+  // fonction onSearch to pass to SearchBar-> onClick button search
+  const onSearch = (word) => {
       if(word === "keny"){
         console.log("arkana");
         setTracksResults(keny);
@@ -98,7 +98,11 @@ const onRemove = (track) => {
         setTracksResults([]);
       }
       
-    };
+  };
+  //fonction handleNameChange to pass to Playlist-> onChange input field
+  const handleNameChange = (name) => {
+      setNamePlaylist(name);
+  };
 
 
   return (
@@ -108,13 +112,13 @@ const onRemove = (track) => {
         <h1>Ja<span>mmm</span>ing</h1>
       </header>
 
-       <div className="App-search">
+      <div className="App-search">
           <SearchBar onSearch={onSearch} />
          
           <div className="App-results">
           <SearchResults tracksResults={tracksResults} onAdd={onAdd} />
           <Suspense fallback={<h1>HELLO LAILAAAAAAAAAAAAAAA</h1>}>
-          <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} />
+          <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} namePlaylist={namePlaylist} onNameChange={handleNameChange} />
           </Suspense>
           </div>
       </div>
