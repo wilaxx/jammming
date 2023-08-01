@@ -74,6 +74,11 @@ function App() {
   }]);
   //Init Playlist name
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
+  //fonction updatePlaylistName to pass to Playlist-> onChange input field
+  const updatePlaylistName = (name) => {
+    setNamePlaylist(name);
+    console.log("LE NOM DE LA PLAYLIST EST : " + name);
+};
   // fonction onAdd to pass to SearchResults --> Tracklist --> Track: onClick button + 
   const onAdd = (track) => {
     const updArray = [...tracksResults];
@@ -99,11 +104,11 @@ function App() {
       }
       
   };
-  //fonction handleNameChange to pass to Playlist-> onChange input field
-  const handleNameChange = (name) => {
-      setNamePlaylist(name);
-  };
-
+  //fonction onSave to pass to Playlist-> onClick button save
+  const onSave = () => {
+    console.log("le nom de la playlist est : " + namePlaylist);
+  }
+  
 
   return (
     
@@ -118,7 +123,7 @@ function App() {
           <div className="App-results">
           <SearchResults tracksResults={tracksResults} onAdd={onAdd} />
           <Suspense fallback={<h1>HELLO LAILAAAAAAAAAAAAAAA</h1>}>
-          <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} namePlaylist={namePlaylist} onNameChange={handleNameChange} />
+          <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} namePlaylist={namePlaylist} onNameChange={updatePlaylistName} onSave={onSave} />
           </Suspense>
           </div>
       </div>

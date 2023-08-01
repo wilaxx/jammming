@@ -3,16 +3,22 @@ import "./Track.css";
 
 function Track(props) {
   
+  const removeTrack = () => {
 
+  };
+
+  const addTrack = () => {
+
+  };
 
   const action = () => {
     if (props.isRemoval) {
       return (
-      <button> - </button>
+      <button onClick={removeTrack} > - </button>
       );
     }
       return (
-      <button> + </button>
+      <button onClick={addTrack} > + </button>
       );
     
 };
