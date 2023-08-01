@@ -2,7 +2,7 @@ import React from "react";
 import "./Track.css";
 
 function Track({track}) {
-  let text = "+";
+  
   return (
     <div className="Track">
       <div className="content-track">
@@ -10,7 +10,7 @@ function Track({track}) {
         <h4>{track.artist}</h4>
         <p>{track.album}</p>
       </div>
-      <button>{text}</button>
+      <button>+</button>
     </div>  
   );
 }

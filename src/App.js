@@ -67,23 +67,35 @@ function App() {
         id: "04"
     }];
    
-  // const results = [...keny, ...tsr]
-  // console.log(results);
+ 
+    // Init array to use in tracksResults
+  const [tracksResults, setTracksResults] = useState([]);
+  // Init array to use in Playlist
+  const [tracksPlaylist, setTracksPlaylist] = useState([]);
+  
+  // fonction onAdd
+const onAdd = (track) => {
+  const updArray = [...tracksResults];
+  setTracksResults(updArray => [...updArray, track]);
+};
 
-  const [searchResults, setSearchResults] = useState([]);
+// fonction onRemove
+const onRemove = (track) => {
+  
+};
 
     const onSearch = (word) => {
       if(word === "keny"){
         console.log("arkana");
-        setSearchResults(keny);
+        setTracksResults(keny);
       }
       else if (word === "tsr"){
         console.log("tsrtsr");
-        setSearchResults(tsr);
+        setTracksResults(tsr);
       }
       else {
         console.log("pas trouve RIENN");
-        setSearchResults([]);
+        setTracksResults([]);
       }
       
     };
@@ -100,9 +112,9 @@ function App() {
           <SearchBar onSearch={onSearch} />
          
           <div className="App-results">
-          <SearchResults searchResults={searchResults} />
+          <SearchResults tracksResults={tracksResults} onAdd={onAdd} />
           <Suspense fallback={<h1>HELLO LAILAAAAAAAAAAAAAAA</h1>}>
-          <Playlist searchResults={searchResults} />
+          <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} />
           </Suspense>
           </div>
       </div>

@@ -2,12 +2,13 @@ import React from "react";
 import "./Tracklist.css";
 import Track from "../Track/Track"
 
-function Tracklist({ searchResults }) {
+function Tracklist({ tracks, action }) {
   
-  const arrayToLoop = [...searchResults];
+  const arrayToLoop = [...tracks];
+
 
   const listOfTracks = arrayToLoop.map((element, key) => {
-    return <Track track={element} key={key} /> 
+    return <Track track={element} key={key} action={action} /> 
   });
   
   console.log(listOfTracks);

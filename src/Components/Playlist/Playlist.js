@@ -2,7 +2,7 @@ import React from "react";
 import "./Playlist.css";
 import Tracklist from "../Tracklist/Tracklist";
 
-  const Playlist = ({ searchResults }) => {
+  const Playlist = ({ tracksPlaylist, onRemove }) => {
 
     // sleep(10000);
 
@@ -16,7 +16,7 @@ import Tracklist from "../Tracklist/Tracklist";
       >
       </input>
 
-      <Tracklist searchResults={searchResults}/>
+      <Tracklist tracks={tracksPlaylist} action={onRemove} />
   
       <button>
         Save To Spotify
