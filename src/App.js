@@ -12,55 +12,55 @@ function App() {
       name: "Le Missile est lance",
       artist: "Keny Arkana",
       album: "L'esquisse (Mix-Tape Vol.1) (2005)",
-      id: "01"
+      id: "keny01"
     },
     {
       name: "La Main sur le Coeur",
       artist: "Keny Arkana",
       album: "mixtape: L'esquisse (Mix-Tape Vol.1) (2005)",
-      id: "02"
+      id: "keny02"
     },
     {
       name: "Ils Ont Peur de la Liberte",
       artist: "Keny Arkana",
       album: "Entre Ciment Et Belle Etoile",
-      id: "03"
+      id: "keny03"
     },
     {
       name: "Cinquieme Soleil",
       artist: "Keny Arkana",
       album: "Desobeissance",
-      id: "04"
+      id: "keny04"
     }, {
       name: "Elan de Vie",
       artist: "Keny Arkana",
       album: "Avant l'Exode",
-      id: "05"
+      id: "keny05"
     }];
   const tsr = [
       {
         name: "Point final",
         artist: "TSR",
         album: "Fenetre sur Cour",
-        id: "01"
+        id: "tsr01"
       },
       {
         name: "REI",
         artist: "TSR",
         album: "Tant Qu'on Est La",
-        id: "02"
+        id: "tsr02"
       },
       {
         name: "Mot de Tete",
         artist: "TSR",
         album: "La Bombe H",
-        id: "03"
+        id: "tsr03"
       },
       {
         name: "Pas D'Paradis",
         artist: "TSR",
         album: "Flaque de Samples",
-        id: "04"
+        id: "tsr04"
     }];
    
   // Init tracksResults to store results to render in SearchResults's Tracklist component
@@ -71,6 +71,11 @@ function App() {
     artist: "Keny Arkana",
     album: "L'esquisse (Mix-Tape Vol.1) (2005)",
     id: "01"
+  }, {
+    name: "La Main sur le Coeur",
+    artist: "Keny Arkana",
+    album: "mixtape: L'esquisse (Mix-Tape Vol.1) (2005)",
+    id: "02"
   }]);
   //Init Playlist name
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
@@ -81,8 +86,12 @@ function App() {
 };
   // fonction onAdd to pass to SearchResults --> Tracklist --> Track: onClick button + 
   const onAdd = (track) => {
-    const updArray = [...tracksResults];
-    setTracksResults(updArray => [...updArray, track]);
+    console.log('La playlist vaut avant :' + tracksPlaylist);
+    // const updArray = [...tracksPlaylist];
+    // setTracksPlaylist(...updArray, keny[1]);
+    // console.log("La playlist contient" + tracksPlaylist)
+    setTracksPlaylist([...tracksPlaylist, track]);
+    console.log('La playlist vaut APRES :' + tracksPlaylist);
   };
   // fonction onRemove to pass to Playlist --> Tracklist --> Track->  onClick button -
   const onRemove = (track) => {

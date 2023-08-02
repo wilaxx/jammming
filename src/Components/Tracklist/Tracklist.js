@@ -2,31 +2,35 @@ import React from "react";
 import "./Tracklist.css";
 import Track from "../Track/Track"
 
-function Tracklist({ tracks, onAdd, onRemove, isRemoval }) {
+function Tracklist({ onAdd, onRemove, isRemoval, tracks }) {
   
   const arrayToLoop = [...tracks];
-
-  
-
-  const listOfTracks = arrayToLoop.map((element, key) => {
+  console.log(arrayToLoop);
     
-    return (<Track 
-    track={element} 
-    key={key}
-    onAdd={onAdd}
-    onRemove={onRemove}
-    isRemoval={isRemoval} 
-    />); 
-  });
+    return (
+      <div className="Tracklist">
+      {arrayToLoop.map((element) => {
+        return (
+            <Track 
+            track={element} 
+            key={element.id}
+            onAdd={onAdd}
+            onRemove={onRemove}
+            isRemoval={isRemoval} 
+            />
+            ); 
+        })
+      }
+          
+      </div>
+  
+    );
+    
+        };
   
 
-  return (
-    <div className="Tracklist">
-      {listOfTracks}
-    </div>
+  
 
-  );
-
-  }
+  
 
 export default Tracklist;
