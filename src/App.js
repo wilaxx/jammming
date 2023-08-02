@@ -1,14 +1,15 @@
 import "./App.css";
+import { v4 as uuidv4 } from 'uuid';
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, Suspense, lazy } from "react";
-const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));   
-
-
+const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
+  
 function App() {
     
   const generateId = () => {
-    let uuid = crypto.randomUUID();
+    //Doesn't work if you dont use certificate (to use HTTPS)
+    let uuid = uuidv4();
     return uuid;
   }
   const keny = [
@@ -71,12 +72,7 @@ function App() {
   // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
   // Init tracksPlaylist to store tracks added when clicking the + button from a Track in SearchResults's Tracklist
-  const [tracksPlaylist, setTracksPlaylist] = useState([{
-    name: "Le Missile est lance",
-    artist: "Keny Arkana",
-    album: "L'esquisse (Mix-Tape Vol.1) (2005)",
-    id: generateId()
-  }]);
+  const [tracksPlaylist, setTracksPlaylist] = useState([]);
   //Init Playlist name
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
   //fonction updatePlaylistName to pass to Playlist-> onChange input field
@@ -123,7 +119,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
-        
       </header>
 
       <div className="App-search">
@@ -131,6 +126,7 @@ function App() {
          
           <div className="App-results">
           <SearchResults tracksResults={tracksResults} onAdd={onAdd} />
+          
           <Suspense fallback={<h1>HELLO LAILAAAAAAAAAAAAAAA</h1>}>
           <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} namePlaylist={namePlaylist} onNameChange={updatePlaylistName} onSave={onSave} />
           </Suspense>
@@ -141,4 +137,5 @@ function App() {
     </div>
   );
   };
+
 export default App;
