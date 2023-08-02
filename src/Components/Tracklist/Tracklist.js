@@ -5,7 +5,6 @@ import Track from "../Track/Track"
 function Tracklist({ onAdd, onRemove, isRemoval, tracks }) {
   
   const arrayToLoop = [...tracks];
-  console.log(arrayToLoop);
     
     return (
       <div className="Tracklist">

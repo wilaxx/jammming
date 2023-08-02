@@ -1,14 +1,14 @@
 import React from "react";
 import "./Track.css";
 
-function Track({ onRemove, onAdd, track, key, isRemoval }) {
+function Track({ onRemove, onAdd, track, isRemoval }) {
   
   const removeTrack = (event) => {
     onRemove(track);
   };
 
   const addTrack = (event) => {
-    console.log("on essaie d'ajouter : " + key)
+    console.log("on essaie d'ajouter : " + track.id + " de" + track.album)
     onAdd(track);
   };
 

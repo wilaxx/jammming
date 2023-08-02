@@ -10,7 +10,7 @@ function SearchBar({onSearch}) {
 
   };
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     onSearch(word);
   };
 

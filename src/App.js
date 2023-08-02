@@ -7,60 +7,65 @@ const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
 function App() {
     
+  const generateId = () => {
+    let uuid = crypto.randomUUID();
+    return uuid;
+  }
   const keny = [
     {
       name: "Le Missile est lance",
       artist: "Keny Arkana",
       album: "L'esquisse (Mix-Tape Vol.1) (2005)",
-      id: "keny01"
+      id: generateId()
     },
     {
       name: "La Main sur le Coeur",
       artist: "Keny Arkana",
       album: "mixtape: L'esquisse (Mix-Tape Vol.1) (2005)",
-      id: "keny02"
+      id: generateId()
     },
     {
       name: "Ils Ont Peur de la Liberte",
       artist: "Keny Arkana",
       album: "Entre Ciment Et Belle Etoile",
-      id: "keny03"
+      id: generateId()
     },
     {
       name: "Cinquieme Soleil",
       artist: "Keny Arkana",
       album: "Desobeissance",
-      id: "keny04"
-    }, {
+      id: generateId()
+    }, 
+    {
       name: "Elan de Vie",
       artist: "Keny Arkana",
       album: "Avant l'Exode",
-      id: "keny05"
+      id: generateId()
     }];
   const tsr = [
       {
         name: "Point final",
         artist: "TSR",
         album: "Fenetre sur Cour",
-        id: "tsr01"
+        id: generateId()
       },
       {
         name: "REI",
         artist: "TSR",
         album: "Tant Qu'on Est La",
-        id: "tsr02"
+        id: generateId()
       },
       {
         name: "Mot de Tete",
         artist: "TSR",
         album: "La Bombe H",
-        id: "tsr03"
+        id: generateId()
       },
       {
         name: "Pas D'Paradis",
         artist: "TSR",
         album: "Flaque de Samples",
-        id: "tsr04"
+        id: generateId()
     }];
    
   // Init tracksResults to store results to render in SearchResults's Tracklist component
@@ -70,52 +75,46 @@ function App() {
     name: "Le Missile est lance",
     artist: "Keny Arkana",
     album: "L'esquisse (Mix-Tape Vol.1) (2005)",
-    id: "01"
-  }, {
-    name: "La Main sur le Coeur",
-    artist: "Keny Arkana",
-    album: "mixtape: L'esquisse (Mix-Tape Vol.1) (2005)",
-    id: "02"
+    id: generateId()
   }]);
   //Init Playlist name
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
   //fonction updatePlaylistName to pass to Playlist-> onChange input field
   const updatePlaylistName = (name) => {
     setNamePlaylist(name);
-    console.log("LE NOM DE LA PLAYLIST EST : " + name);
-};
+  };
   // fonction onAdd to pass to SearchResults --> Tracklist --> Track: onClick button + 
   const onAdd = (track) => {
-    console.log('La playlist vaut avant :' + tracksPlaylist);
-    // const updArray = [...tracksPlaylist];
-    // setTracksPlaylist(...updArray, keny[1]);
-    // console.log("La playlist contient" + tracksPlaylist)
-    setTracksPlaylist([...tracksPlaylist, track]);
-    console.log('La playlist vaut APRES :' + tracksPlaylist);
+    const arrayPlaylist = [...tracksPlaylist];
+    console.log("AVANT LE TEST IF EVERY, tracksPlaylist vaut : " + tracksPlaylist)
+    
+    if (arrayPlaylist.every(element => element.id !== track.id)){
+      setTracksPlaylist([track, ...arrayPlaylist]);
+    }
+    else {
+      alert("deja dans la playlist")
+    }
   };
   // fonction onRemove to pass to Playlist --> Tracklist --> Track->  onClick button -
   const onRemove = (track) => {
-  console.log("removing.....");
+  console.log("removing....." + track.id + track.album);
   };
   // fonction onSearch to pass to SearchBar-> onClick button search
   const onSearch = (word) => {
       if(word === "keny"){
-        console.log("arkana");
         setTracksResults(keny);
       }
       else if (word === "tsr"){
-        console.log("tsrtsr");
         setTracksResults(tsr);
       }
       else {
-        console.log("pas trouve RIENN");
         setTracksResults([]);
       }
       
   };
   //fonction onSave to pass to Playlist-> onClick button save
   const onSave = () => {
-    console.log("le nom de la playlist est : " + namePlaylist);
+    console.log("apres SAVE tracksPlaylist vaut " + tracksPlaylist);
   }
   
 
@@ -124,6 +123,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
+        
       </header>
 
       <div className="App-search">
@@ -140,6 +140,5 @@ function App() {
 
     </div>
   );
-};
-
+  };
 export default App;
