@@ -4,7 +4,7 @@ import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
-  
+//import dbSongs from "../aassets/dBsongs";
 function App() {
     
   const generateId = () => {
@@ -12,63 +12,80 @@ function App() {
     let uuid = uuidv4();
     return uuid;
   }
+  
   const keny = [
     {
       name: "Le Missile est lance",
       artist: "Keny Arkana",
       album: "L'esquisse (Mix-Tape Vol.1) (2005)",
-      id: generateId()
+      id: generateId(),
+      uri: '"spotify:tracks:" + this.id'
     },
     {
       name: "La Main sur le Coeur",
       artist: "Keny Arkana",
       album: "mixtape: L'esquisse (Mix-Tape Vol.1) (2005)",
-      id: generateId()
+      id: generateId(),
+      uri: '"spotify:tracks:" + this.id'
     },
     {
       name: "Ils Ont Peur de la Liberte",
       artist: "Keny Arkana",
       album: "Entre Ciment Et Belle Etoile",
-      id: generateId()
+      id: generateId(),
+      uri: '"spotify:tracks:" + this.id'
     },
     {
       name: "Cinquieme Soleil",
       artist: "Keny Arkana",
       album: "Desobeissance",
-      id: generateId()
+      id: generateId(),
+      uri: '"spotify:tracks:" + this.id'
     }, 
     {
       name: "Elan de Vie",
       artist: "Keny Arkana",
       album: "Avant l'Exode",
-      id: generateId()
+      id: generateId(),
+      uri: '"spotify:tracks:" + this.id'
     }];
   const tsr = [
       {
         name: "Point final",
         artist: "TSR",
         album: "Fenetre sur Cour",
-        id: generateId()
+        id: generateId(),
+        uri: '"spotify:tracks:" + this.id'
       },
       {
         name: "REI",
         artist: "TSR",
         album: "Tant Qu'on Est La",
-        id: generateId()
+        id: generateId(),
+        uri: '"spotify:tracks:" + this.id'
       },
       {
         name: "Mot de Tete",
         artist: "TSR",
         album: "La Bombe H",
-        id: generateId()
+        id: generateId(),
+        uri: '"spotify:tracks:" + this.id'
       },
       {
         name: "Pas D'Paradis",
         artist: "TSR",
         album: "Flaque de Samples",
-        id: generateId()
+        id: generateId(),
+        uri: '"spotify:tracks:" + this.id'
     }];
    
+  const dbSongs = [...keny, ...tsr];
+  const genURI = (array) => {
+    const urisToGen = [...array];
+    return urisToGen.map((element) => `spotify:tracks:${element.id}`);
+  };
+  const uris = genURI(dbSongs);
+
   // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
   // Init tracksPlaylist to store tracks added when clicking the + button from a Track in SearchResults's Tracklist
@@ -77,7 +94,7 @@ function App() {
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
   //fonction updatePlaylistName to pass to Playlist-> onChange input field
   const updatePlaylistName = (name) => {
-    setNamePlaylist(name);
+    setNamePlaylist((prevName) => name);
   };
   // fonction onAdd to pass to SearchResults --> Tracklist --> Track: onClick button + 
   const onAdd = (track) => {    
@@ -90,7 +107,6 @@ function App() {
   };
   // fonction onRemove to pass to Playlist --> Tracklist --> Track->  onClick button -
   const onRemove = (track) => {
-  console.log("removing..... : " + track.id + track.album);
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
   // fonction onSearch to pass to SearchBar-> onClick button search
@@ -108,7 +124,7 @@ function App() {
   };
   //fonction onSave to pass to Playlist-> onClick button save
   const onSave = () => {
-    console.log("apres SAVE tracksPlaylist vaut " + tracksPlaylist);
+    console.log(uris);
   }
   
 

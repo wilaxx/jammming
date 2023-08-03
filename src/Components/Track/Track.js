@@ -3,6 +3,8 @@ import "./Track.css";
 
 function Track({ onRemove, onAdd, track, isRemoval }) {
   
+  let luri = track.id;
+
   const removeTrack = () => {
     onRemove(track);
   };
@@ -26,7 +28,7 @@ function Track({ onRemove, onAdd, track, isRemoval }) {
   return (
     <div className="Track">
       <div className="content-track">
-        <h3>{track.name}</h3>
+        <h3>{track.name} | {luri} </h3>
         <h4>{track.artist}</h4>
         <p>{track.album}</p>
       </div>
