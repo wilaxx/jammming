@@ -33,7 +33,7 @@
 
 .App-results {
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   /* width: max(50%, 300px); */
   gap: 1rem;
   justify-content: space-around;
