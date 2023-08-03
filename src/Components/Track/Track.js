@@ -3,12 +3,11 @@ import "./Track.css";
 
 function Track({ onRemove, onAdd, track, isRemoval }) {
   
-  const removeTrack = (event) => {
+  const removeTrack = () => {
     onRemove(track);
   };
 
-  const addTrack = (event) => {
-    console.log("on essaie d'ajouter : " + track.id + " de" + track.album)
+  const addTrack = () => {
     onAdd(track);
   };
 

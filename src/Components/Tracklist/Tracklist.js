@@ -25,7 +25,7 @@ function Tracklist({ onAdd, onRemove, isRemoval, tracks }) {
   
     );
     
-        };
+  };
   
 
   

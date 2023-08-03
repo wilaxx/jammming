@@ -80,12 +80,9 @@ function App() {
     setNamePlaylist(name);
   };
   // fonction onAdd to pass to SearchResults --> Tracklist --> Track: onClick button + 
-  const onAdd = (track) => {
-    const arrayPlaylist = [...tracksPlaylist];
-    console.log("AVANT LE TEST IF EVERY, tracksPlaylist vaut : " + tracksPlaylist)
-    
-    if (arrayPlaylist.every(element => element.id !== track.id)){
-      setTracksPlaylist([track, ...arrayPlaylist]);
+  const onAdd = (track) => {    
+    if (tracksPlaylist.every(element => element.id !== track.id)){
+      setTracksPlaylist((prevTracks) => [...prevTracks, track] );
     }
     else {
       alert("deja dans la playlist")
@@ -93,18 +90,19 @@ function App() {
   };
   // fonction onRemove to pass to Playlist --> Tracklist --> Track->  onClick button -
   const onRemove = (track) => {
-  console.log("removing....." + track.id + track.album);
+  console.log("removing..... : " + track.id + track.album);
+    setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
   // fonction onSearch to pass to SearchBar-> onClick button search
   const onSearch = (word) => {
       if(word === "keny"){
-        setTracksResults(keny);
+        setTracksResults((prevTracks) => [...keny]);
       }
       else if (word === "tsr"){
-        setTracksResults(tsr);
+        setTracksResults((prevTracks) => [...tsr]);
       }
       else {
-        setTracksResults([]);
+        setTracksResults((prevTracks) => []);
       }
       
   };
