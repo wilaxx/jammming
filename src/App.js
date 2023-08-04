@@ -1,6 +1,5 @@
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
-import { database } from "./Utils/dbSongs";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, Suspense, lazy } from "react";
@@ -12,18 +11,8 @@ const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
 function App() {
   
-  const generateId = () => {
-    //Doesn't work if you dont use certificate (to use HTTPS)
-    let uuid = uuidv4();
-    return uuid;
-  };
-const genURI = (object) => {
-    const urisToGen = [...array];
-    return urisToGen.map((element) => `spotify:tracks:${element.id}`);
-  };
+  
 
-  const arrayOfSongs = [... database];
-  console.log(`array of song vaut ${arrayOfSongs}`);
 
   // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
