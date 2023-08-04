@@ -1,10 +1,20 @@
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
+import AZlyrics from "./Utils/AZlyrics";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
+
+const keny_url= "https://www.azlyrics.com/k/kenyarkana.html";
+async function gethttp(url) {
+  const response = await fetch(url);
+  const responseToText = await response.text();
+  return responseToText;
+};
+
+  let document = gethttp(keny_url);
 
 
 
@@ -61,6 +71,8 @@ function App() {
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
       </header>
+
+      <AZlyrics titre={document()} />
 
       <div className="App-search">
           <SearchBar onSearch={onSearch} />
