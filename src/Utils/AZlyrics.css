@@ -1,0 +1,14 @@
+.AZlyrics {
+    height: 100vh;
+    /* display: none; */
+}
+
+.iframeaz {
+    /* display: none; */
+    width: 100%;
+    height: 50%;
+}
+
+.iframeaz > #listAlbum {
+    background-color: blue;
+}

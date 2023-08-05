@@ -1,10 +1,17 @@
+import { ReactDOM } from "react";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 import AZlyrics from "./Utils/AZlyrics";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
-import { useState, Suspense, lazy } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
+
+
+
+
+
+
 
 // const keny_url = "https://www.azlyrics.com/k/kenyarkana.html";
 
@@ -19,30 +26,14 @@ const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
   // }
 
 function App() {
-  
-  
-  // async function fetchSource() {      
-  //     let response = await fetch('https://www.azlyrics.com/k/kenyarkana.html', {
-  //       mode: 'cors',
-  //       headers: {
-  //         'Origin': 'https://82.64.190.99:443',
-  //         'Access-Control-Allow-Origin':'*',
-  //         'Content-Type': 'text/html'
-  //       }
-  //     });
-  //     if(response) {
-  //       console.log('response exist')
-  //       console.log(response)
-  //     }
-  //     if (response.ok){
-  //       console.log("response.ok existe")
-  //     }
-  //     else {
-  //       console.log("response.ok est false")
-  //       console.log(response.ok)
-  //     }
-      
-  // };
+
+
+  useEffect(() => {
+    let mylist = document.getElementById("listAlbum")
+    return () => {
+      console.log(mylist)
+    };
+  });
 
   // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
@@ -84,6 +75,7 @@ function App() {
   const onSave = () => {
   }
 
+
   return (
     
     <div className="App">
@@ -92,8 +84,11 @@ function App() {
       
       </header>
 
-      <AZlyrics />
+      {process.env.REACT_APP_AZLYRICS}
 
+
+      <AZlyrics />
+      
       <div className="App-search">
           <SearchBar onSearch={onSearch} />
          
