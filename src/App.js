@@ -6,23 +6,43 @@ import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
-
-const keny_url= "https://www.azlyrics.com/k/kenyarkana.html";
-async function gethttp(url) {
-  const response = await fetch(url);
-  const responseToText = await response.text();
-  return responseToText;
-};
-
-  let document = gethttp(keny_url);
+// const keny_url = "https://www.azlyrics.com/k/kenyarkana.html";
 
 
-
+  // async function fetchMyDocument() {      
+  //   try {
+  //     let response = await fetch('/path/to/file.html'); // Gets a promise
+  //     document.body.innerHTML = await response.text(); // Replaces body with response
+  //   } catch (err) {
+  //     console.log('Fetch error:' + err); // Error handling
+  //   }
+  // }
 
 function App() {
   
   
-
+  // async function fetchSource() {      
+  //     let response = await fetch('https://www.azlyrics.com/k/kenyarkana.html', {
+  //       mode: 'cors',
+  //       headers: {
+  //         'Origin': 'https://82.64.190.99:443',
+  //         'Access-Control-Allow-Origin':'*',
+  //         'Content-Type': 'text/html'
+  //       }
+  //     });
+  //     if(response) {
+  //       console.log('response exist')
+  //       console.log(response)
+  //     }
+  //     if (response.ok){
+  //       console.log("response.ok existe")
+  //     }
+  //     else {
+  //       console.log("response.ok est false")
+  //       console.log(response.ok)
+  //     }
+      
+  // };
 
   // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
@@ -63,21 +83,22 @@ function App() {
   //fonction onSave to pass to Playlist-> onClick button save
   const onSave = () => {
   }
-  
 
   return (
     
     <div className="App">
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
+      
       </header>
 
-      <AZlyrics titre={document()} />
+      <AZlyrics />
 
       <div className="App-search">
           <SearchBar onSearch={onSearch} />
          
           <div className="App-results">
+          
           <SearchResults tracksResults={tracksResults} onAdd={onAdd} />
           
           <Suspense fallback={<h1>HELLO LAILAAAAAAAAAAAAAAA</h1>}>
