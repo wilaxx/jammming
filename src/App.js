@@ -9,31 +9,7 @@ const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
 
 
-
-
-
-
-// const keny_url = "https://www.azlyrics.com/k/kenyarkana.html";
-
-
-  // async function fetchMyDocument() {      
-  //   try {
-  //     let response = await fetch('/path/to/file.html'); // Gets a promise
-  //     document.body.innerHTML = await response.text(); // Replaces body with response
-  //   } catch (err) {
-  //     console.log('Fetch error:' + err); // Error handling
-  //   }
-  // }
-
 function App() {
-
-
-  useEffect(() => {
-    let mylist = document.getElementById("listAlbum")
-    return () => {
-      console.log(mylist)
-    };
-  });
 
   // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
@@ -81,14 +57,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
-      
       </header>
 
-      {process.env.REACT_APP_AZLYRICS}
-
-
       <AZlyrics />
-      
+
       <div className="App-search">
           <SearchBar onSearch={onSearch} />
          
@@ -101,7 +73,6 @@ function App() {
           </Suspense>
           </div>
       </div>
-     
 
     </div>
   );
