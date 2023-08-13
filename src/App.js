@@ -1,7 +1,5 @@
-import { ReactDOM } from "react";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
-import AZlyrics from "./Utils/AZlyrics";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, useEffect, Suspense, lazy } from "react";
@@ -58,8 +56,6 @@ function App() {
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
       </header>
-
-      <AZlyrics />
 
       <div className="App-search">
           <SearchBar onSearch={onSearch} />
