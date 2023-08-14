@@ -9,17 +9,37 @@ const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
 function App() {
 
-  // Init tracksResults to store results to render in SearchResults's Tracklist component
   const [tracksResults, setTracksResults] = useState([]);
-  // Init tracksPlaylist to store tracks added when clicking the + button from a Track in SearchResults's Tracklist
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
-  //Init Playlist name
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
-  //fonction updatePlaylistName to pass to Playlist-> onChange input field
+
+  const dbaz = [
+    {
+    name:"SummertimeOfOurLives",
+    album: "HereimeWeCome",
+    artist:"a1"
+    },
+    {
+    name:"ReadyOrNot",
+    album:"HereWeCome",
+    artist:"a1"
+    }, 
+    {
+    name:"Everytime",
+    album:"HereWeCome",
+    artist:"a1"
+    },
+    {
+    name:"IfOnly",
+    album:"HereWeCome",
+    artist:"a1"
+    }
+]
+
   const updatePlaylistName = (name) => {
     setNamePlaylist((prevName) => name);
   };
-  // fonction onAdd to pass to SearchResults --> Tracklist --> Track: onClick button + 
+
   const onAdd = (track) => {    
     if (tracksPlaylist.every(element => element.id !== track.id)){
       setTracksPlaylist((prevTracks) => [...prevTracks, track] );
@@ -28,26 +48,30 @@ function App() {
       alert("deja dans la playlist")
     }
   };
-  // fonction onRemove to pass to Playlist --> Tracklist --> Track->  onClick button -
+
   const onRemove = (track) => {
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
-  // fonction onSearch to pass to SearchBar-> onClick button search
+
   const onSearch = (word) => {
-      // if(word === "keny"){
-      //   setTracksResults((prevTracks) => [...keny]);
-      // }
-      // else if (word === "tsr"){
-      //   setTracksResults((prevTracks) => [...tsr]);
-      // }
-      // else {
-      //   setTracksResults((prevTracks) => []);
-      // }
+    const results = [];
+
+    for (const element of dbaz) {
+      for (const property in element) {
+          let mot = `${element[property]}`;
+          if (mot.includes(word)) {
+            results.push(element);
+          }
+          };
+  
       
-  };
-  //fonction onSave to pass to Playlist-> onClick button save
+    };
+
+    setTracksResults((prevTracks) => [...results]);
+
+}
   const onSave = () => {
-  }
+  };
 
 
   return (
