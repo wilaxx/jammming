@@ -8,9 +8,9 @@ import Tracklist from "../Tracklist/Tracklist";
       onNameChange(target.value)
     };
 
-    // const handleClick = () => {
-    //   onSave(playlistname.value);
-    // }
+    const handleClick = () => {
+      onSave();
+    }
   return (
   
     <div className="Playlist">
@@ -28,7 +28,7 @@ import Tracklist from "../Tracklist/Tracklist";
       isRemoval={true} 
       />
   
-      <button onClick={onSave}>
+      <button onClick={handleClick}>
         Save To Spotify
       </button>
     </div>

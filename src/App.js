@@ -40,10 +40,13 @@ function App() {
     for (const element of dbaz) {
         let results = [];
       for (const property in element) {
+        if (`${property}` === "name" || `${property}` === "album" || `${property}` === "artist") {
           let str = `${element[property]}`;
           let str_lc = str.toLowerCase();
           results.push(str_lc);
           };
+        }
+          
         let cpt = 0;
         for (const i of results) {
             if (i.includes(word_lc)){
@@ -53,17 +56,26 @@ function App() {
           if (cpt !== 0){
             setTracksResults(prevTracks => [...prevTracks, element]);
           }      
-      
-    };
-    
-  }
+    } 
+  }    
+};
+
+  const onSave = () => {
+    let pltracks = [...tracksPlaylist];
+    let plUris = pltracks.map((element) => element.trackURI);
+    console.log("tracksPlaylist avant reset vaut : " + tracksPlaylist);
+    console.log("name playlist avant reset vaut :" + namePlaylist);
+    console.log(plUris);
+    setTracksPlaylist(prev => []);
+    setNamePlaylist(prev => "");
+    console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
+    console.log("name playlist apres reset vaut :" + namePlaylist);
     
 
-}
-  const onSave = () => {
   };
 
-
+  console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
+  console.log("name playlist apres reset vaut :" + namePlaylist);
   return (
     
     <div className="App">
