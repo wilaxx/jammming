@@ -1,5 +1,5 @@
 import "./App.css";
-import { v4 as uuidv4 } from "uuid";
+import dbaz from "./Utils/searchdb";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, useEffect, Suspense, lazy } from "react";
@@ -12,29 +12,6 @@ function App() {
   const [tracksResults, setTracksResults] = useState([]);
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
-
-  const dbaz = [
-    {
-    name:"SummertimeOfOurLives",
-    album: "HereimeWeCome",
-    artist:"a1"
-    },
-    {
-    name:"ReadyOrNot",
-    album:"HereWeCome",
-    artist:"a1"
-    }, 
-    {
-    name:"Everytime",
-    album:"HereWeCome",
-    artist:"a1"
-    },
-    {
-    name:"IfOnly",
-    album:"HereWeCome",
-    artist:"a1"
-    }
-]
 
   const updatePlaylistName = (name) => {
     setNamePlaylist((prevName) => name);
@@ -54,20 +31,33 @@ function App() {
   };
 
   const onSearch = (word) => {
-    const results = [];
-
+    setTracksResults(prevTracks => []);
+    if (word === "") {
+      setTracksResults(prevTracks => []);
+    }
+    else {
+      let word_lc = word.toLowerCase();
     for (const element of dbaz) {
+        let results = [];
       for (const property in element) {
-          let mot = `${element[property]}`;
-          if (mot.includes(word)) {
-            results.push(element);
-          }
+          let str = `${element[property]}`;
+          let str_lc = str.toLowerCase();
+          results.push(str_lc);
           };
-  
+        let cpt = 0;
+        for (const i of results) {
+            if (i.includes(word_lc)){
+              cpt += 1;
+            }
+        }
+          if (cpt !== 0){
+            setTracksResults(prevTracks => [...prevTracks, element]);
+          }      
       
     };
-
-    setTracksResults((prevTracks) => [...results]);
+    
+  }
+    
 
 }
   const onSave = () => {
