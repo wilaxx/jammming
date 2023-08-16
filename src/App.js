@@ -1,5 +1,5 @@
 import "./App.css";
-import dbaz from "./Utils/searchdb";
+import getAccessToken from "./Utils/spotify";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
 import { useState, useEffect, Suspense, lazy } from "react";
@@ -31,33 +31,7 @@ function App() {
   };
 
   const onSearch = (word) => {
-    setTracksResults(prevTracks => []);
-    if (word === "") {
-      setTracksResults(prevTracks => []);
-    }
-    else {
-      let word_lc = word.toLowerCase();
-    for (const element of dbaz) {
-        let results = [];
-      for (const property in element) {
-        if (`${property}` === "name" || `${property}` === "album" || `${property}` === "artist") {
-          let str = `${element[property]}`;
-          let str_lc = str.toLowerCase();
-          results.push(str_lc);
-          };
-        }
-          
-        let cpt = 0;
-        for (const i of results) {
-            if (i.includes(word_lc)){
-              cpt += 1;
-            }
-        }
-          if (cpt !== 0){
-            setTracksResults(prevTracks => [...prevTracks, element]);
-          }      
-    } 
-  }    
+    
 };
 
   const onSave = () => {
@@ -76,6 +50,8 @@ function App() {
 
   console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
   console.log("name playlist apres reset vaut :" + namePlaylist);
+
+  getAccessToken();
   return (
     
     <div className="App">
