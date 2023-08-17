@@ -1,8 +1,8 @@
 import "./App.css";
-import getAccessToken from "./Utils/spotify";
+import { Spotify } from "./Utils/spotify";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
-import { useState, useEffect, Suspense, lazy } from "react";
+import { useState, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
 
@@ -30,8 +30,21 @@ function App() {
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
 
-  const onSearch = (word) => {
-    
+  const onSearch = () => {
+    Spotify.getAccessToken();
+    window.addEventListener('hashchange', function () {
+      const urlParams = new URLSearchParams(window.location.href); // Remove the leading '#'
+      const authCode = urlParams.get('code');
+  
+      if (authCode) {
+          console.log("The auth code is: " + authCode);
+          // Call the method to exchange the authorization code for an access token
+          Spotify.requestAccessToken(authCode);
+      } else {
+          console.log('Authentication code not found in the URL.');
+      }
+  });
+    Spotify.requestAccessToken();
 };
 
   const onSave = () => {
@@ -51,14 +64,14 @@ function App() {
   console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
   console.log("name playlist apres reset vaut :" + namePlaylist);
 
-  getAccessToken();
+ 
   return (
     
     <div className="App">
       <header className="App-header">
         <h1>Ja<span>mmm</span>ing</h1>
       </header>
-
+      
       <div className="App-search">
           <SearchBar onSearch={onSearch} />
          
@@ -73,6 +86,9 @@ function App() {
       </div>
 
     </div>
+
+
+
   );
   };
 
