@@ -19,6 +19,7 @@ import Tracklist from "../Tracklist/Tracklist";
         aria-label="Name of the playlist"
         placeholder="Type playlist name ..."
         onChange={handleNameChange}
+        id="plname-input"
       >
       </input>
 

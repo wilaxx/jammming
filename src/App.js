@@ -31,7 +31,7 @@ function App() {
   };
 
   const onSearch = () => {
-    
+    let response = Spotify.search();
 };
 
   const onSave = () => {

@@ -23,6 +23,7 @@ function SearchBar({onSearch}) {
         type="text"
         aria-label="Type song request here"
         placeholder="Type song here ..."
+        id="search-input"
       />
       <button id="search-button" onClick={handleClick}>Search</button>
     </div>
