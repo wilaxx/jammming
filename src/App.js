@@ -31,20 +31,7 @@ function App() {
   };
 
   const onSearch = () => {
-    Spotify.getAccessToken();
-    window.addEventListener('hashchange', function () {
-      const urlParams = new URLSearchParams(window.location.href); // Remove the leading '#'
-      const authCode = urlParams.get('code');
-  
-      if (authCode) {
-          console.log("The auth code is: " + authCode);
-          // Call the method to exchange the authorization code for an access token
-          Spotify.requestAccessToken(authCode);
-      } else {
-          console.log('Authentication code not found in the URL.');
-      }
-  });
-    Spotify.requestAccessToken();
+    
 };
 
   const onSave = () => {
