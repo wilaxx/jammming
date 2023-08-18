@@ -30,8 +30,9 @@ function App() {
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
 
-  const onSearch = () => {
-    let response = Spotify.search();
+  const onSearch = async () => {
+    await Spotify.search();
+
 };
 
   const onSave = () => {
@@ -48,9 +49,7 @@ function App() {
 
   };
 
-  console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
-  console.log("name playlist apres reset vaut :" + namePlaylist);
-
+  
  
   return (
     
