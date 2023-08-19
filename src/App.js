@@ -2,12 +2,15 @@ import "./App.css";
 import { Spotify } from "./Utils/spotify";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
-import { useState, Suspense, lazy } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
 
 
 function App() {
+
+  
+
 
   const [tracksResults, setTracksResults] = useState([]);
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
@@ -30,22 +33,20 @@ function App() {
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
 
-  const onSearch = async () => {
-    await Spotify.search();
-
+  const onSearch = () => {
+    Spotify.search();
 };
 
   const onSave = () => {
-    let pltracks = [...tracksPlaylist];
-    let plUris = pltracks.map((element) => element.trackURI);
-    console.log("tracksPlaylist avant reset vaut : " + tracksPlaylist);
-    console.log("name playlist avant reset vaut :" + namePlaylist);
-    console.log(plUris);
-    setTracksPlaylist(prev => []);
-    setNamePlaylist(prev => "");
-    console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
-    console.log("name playlist apres reset vaut :" + namePlaylist);
-    
+    // let pltracks = [...tracksPlaylist];
+    // let plUris = pltracks.map((element) => element.trackURI);
+    // console.log("tracksPlaylist avant reset vaut : " + tracksPlaylist);
+    // console.log("name playlist avant reset vaut :" + namePlaylist);
+    // console.log(plUris);
+    // setTracksPlaylist(prev => []);
+    // setNamePlaylist(prev => "");
+    // console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
+    // console.log("name playlist apres reset vaut :" + namePlaylist);
 
   };
 
