@@ -6,7 +6,7 @@ const Spotify = {
 
   
 
-getAuthCode() {
+async getAuthCode() {
         function generateRandomString(length) {
             let text = '';
             let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -16,27 +16,25 @@ getAuthCode() {
             }
             return text;
           };
-        function generateCodeChallenge(codeVerifier) {
-            function base64encode(string) {
-              return btoa(String.fromCharCode.apply(null, new Uint8Array(string)))
+          async function generateCodeChallenge(codeVerifier) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(codeVerifier);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashBase64 = btoa(String.fromCharCode(...hashArray))
                 .replace(/\+/g, '-')
                 .replace(/\//g, '_')
                 .replace(/=+$/, '');
-            }
-          
-            const encoder = new TextEncoder();
-            const data = encoder.encode(codeVerifier);
-            const digest = window.crypto.subtle.digest('SHA-256', data);
-          
-            return base64encode(digest);
-          };
-        function authorize() {
+        
+            return hashBase64;
+        };
+        async function authorize() {
             // Generate and store a code verifier
             const codeVerifier = generateRandomString(128);
             localStorage.setItem('code_verifier', codeVerifier);
             console.log("le codeVerifier est : " + codeVerifier);
             // Generate the code challenge
-            const codeChallenge = generateCodeChallenge(codeVerifier);
+            const codeChallenge = await generateCodeChallenge(codeVerifier);
             // Construct the authorization URL
             let state = generateRandomString(16);
             console.log("le state est : " + state);
@@ -55,13 +53,14 @@ getAuthCode() {
 
             window.location.href = authorizationUrl;   
           };
-          authorize();
+          await authorize();
 },      
         
 
 
-getAccessToken() {
+async getAccessToken() {
   if (accessToken) {
+    console.log("vous avez deja un access token qui est le suivant : " + accessToken);
     return accessToken;
   }
     const queryString = window.location.search;
@@ -98,7 +97,7 @@ getAccessToken() {
           .then(data => {
             localStorage.setItem('access_token', data.access_token);
             let accessToken = localStorage.getItem('access_token')
-            console.log("le PUTAIN de token est : " + accessToken)
+            console.log("letoken est : " + accessToken)
           })
           .catch(error => {
             console.error('Error:', error);
@@ -106,12 +105,12 @@ getAccessToken() {
       return accessToken;
     }
     else {
-        this.getAuthCode();
+        await this.getAuthCode();
     }
 
 },
-search(){
-  const accessToken = Spotify.getAccessToken();
+async search(){
+  const accessToken = await Spotify.getAccessToken();
       
 },
 

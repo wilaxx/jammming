@@ -11,7 +11,6 @@ function App() {
 
   
 
-
   const [tracksResults, setTracksResults] = useState([]);
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New playlist");
@@ -33,8 +32,20 @@ function App() {
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
 
+
+  // retrievedAccessToken !== null && retrievedAccessToken !== ""
+
+
   const onSearch = () => {
-    Spotify.search();
+    const retrievedAccessToken = localStorage.getItem('access_token');
+    if (retrievedAccessToken) {
+      console.log("le token existe deja vous pouvez faire les call" + retrievedAccessToken);
+    }
+    
+    else {
+      Spotify.search();
+    }
+   
 };
 
   const onSave = () => {

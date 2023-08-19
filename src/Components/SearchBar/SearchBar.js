@@ -19,7 +19,6 @@ function SearchBar({onSearch}) {
     <div className="SearchBar">
       <input
         value={word}
-        onFocus={() => console.log("le focus est la")}
         onChange={handleChange}
         type="text"
         aria-label="Type song request here"
