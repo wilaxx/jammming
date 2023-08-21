@@ -32,37 +32,24 @@ function App() {
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
 
-
-  // retrievedAccessToken !== null && retrievedAccessToken !== ""
-
-
   const onSearch = () => {
-    const retrievedAccessToken = localStorage.getItem('access_token');
-    if (retrievedAccessToken) {
-      console.log("le token existe deja vous pouvez faire les call" + retrievedAccessToken);
-    }
-    
-    else {
       Spotify.search();
-    }
    
 };
 
   const onSave = () => {
-    // let pltracks = [...tracksPlaylist];
-    // let plUris = pltracks.map((element) => element.trackURI);
-    // console.log("tracksPlaylist avant reset vaut : " + tracksPlaylist);
-    // console.log("name playlist avant reset vaut :" + namePlaylist);
-    // console.log(plUris);
-    // setTracksPlaylist(prev => []);
-    // setNamePlaylist(prev => "");
-    // console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
-    // console.log("name playlist apres reset vaut :" + namePlaylist);
+    let pltracks = [...tracksPlaylist];
+    let plUris = pltracks.map((element) => element.trackURI);
+    console.log("tracksPlaylist avant reset vaut : " + tracksPlaylist);
+    console.log("name playlist avant reset vaut :" + namePlaylist);
+    console.log(plUris);
+    setTracksPlaylist(prev => []);
+    setNamePlaylist(prev => "");
+    console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
+    console.log("name playlist apres reset vaut :" + namePlaylist);
 
   };
 
-  
- 
   return (
     
     <div className="App">
