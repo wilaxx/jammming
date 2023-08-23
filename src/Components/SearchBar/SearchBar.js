@@ -10,8 +10,8 @@ function SearchBar({onSearch}) {
 
   };
 
-  const handleClick = () => {
-    onSearch(word);
+  const handleClick = async () => {
+    await onSearch(word);
   };
 
 

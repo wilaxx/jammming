@@ -32,8 +32,14 @@ function App() {
     setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
 
-  const onSearch = () => {
-      Spotify.search();
+  const onSearch = async (word) => {
+    try {
+      const accessToken = await Spotify.search();
+      console.log('access token vaut ' + accessToken);
+      console.log("le word vaut : " + word);
+    } catch (error) {
+      console.error('An error occurred during the search:', error);
+    }
    
 };
 
@@ -64,7 +70,7 @@ function App() {
           
           <SearchResults tracksResults={tracksResults} onAdd={onAdd} />
           
-          <Suspense fallback={<h1>HELLO LAILAAAAAAAAAAAAAAA</h1>}>
+          <Suspense fallback={<h1>HELLO </h1>}>
           <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} namePlaylist={namePlaylist} onNameChange={updatePlaylistName} onSave={onSave} />
           </Suspense>
           </div>
