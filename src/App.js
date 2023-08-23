@@ -34,8 +34,8 @@ function App() {
 
   const onSearch = async (word) => {
     try {
-      const accessToken = await Spotify.search();
-      console.log('access token vaut ' + accessToken);
+      const searchData = await Spotify.search();
+      console.log('access token vaut ' + searchData);
       console.log("le word vaut : " + word);
     } catch (error) {
       console.error('An error occurred during the search:', error);

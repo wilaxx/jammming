@@ -1,7 +1,5 @@
 const clientId = '58e94fb2fa6e4c598384c4b0ccb0d000';
 const redirectUri = 'https://localhost:3000';
-let access_Token;
-
 
 
 const Spotify = {
@@ -158,11 +156,30 @@ const Spotify = {
     }
   },
 
+  displayObject(obj) {
+    console.log('Le contenu de l\'objet est : ');
+    for (const prop in obj) {
+      console.log(`${prop} : ${obj[prop]}`);
+    }
+  },
+
 	async search() {
 		let accessToken = await Spotify.getAccessToken();
 		console.log("Spotify.search() a bien recup le token " + accessToken);
-    return accessToken;
-	}
+
+    const response = await fetch('https://api.spotify.com/v1/me', {
+    headers: {
+      Authorization: 'Bearer ' + accessToken
+    }
+  });
+
+  const data = await response.json();
+  this.displayObject(data);
+  return data;
+}
+
+   
+	
 };
 
 
