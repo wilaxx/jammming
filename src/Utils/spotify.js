@@ -163,19 +163,31 @@ const Spotify = {
     }
   },
 
-	async search() {
-		let accessToken = await Spotify.getAccessToken();
+	async search(word) {
+		let accessToken = await this.getAccessToken();
 		console.log("Spotify.search() a bien recup le token " + accessToken);
 
-    const response = await fetch('https://api.spotify.com/v1/me', {
+    const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${word}`, {
     headers: {
       Authorization: 'Bearer ' + accessToken
     }
   });
-
+  
   const data = await response.json();
-  this.displayObject(data);
-  return data;
+  this.displayObject(data.tracks);
+  if(!data.tracks){
+    return [];
+  }
+  const results =  await data.tracks.items.map(track => ({
+    id: track.id,
+    name: track.name,
+    artist: track.artists[0].name,
+    album: track.album.name,
+    uri: track.uri
+
+  }));
+
+  return results;
 }
 
    

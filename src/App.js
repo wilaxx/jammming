@@ -2,7 +2,7 @@ import "./App.css";
 import { Spotify } from "./Utils/spotify";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import SearchResults from "./Components/SearchResults/SearchResults";
-import { useState, useEffect, Suspense, lazy } from "react";
+import { useState, Suspense, lazy } from "react";
 const Playlist = lazy(() => import ("./Components/Playlist/Playlist"));
 
 
@@ -33,13 +33,14 @@ function App() {
   };
 
   const onSearch = async (word) => {
-    try {
-      const searchData = await Spotify.search();
-      console.log('access token vaut ' + searchData);
-      console.log("le word vaut : " + word);
-    } catch (error) {
-      console.error('An error occurred during the search:', error);
-    }
+      try {
+        const searchData = await Spotify.search(word);
+        setTracksResults((prev) => searchData)
+      } catch (error) {
+        console.error('An error occurred during the search:', error);
+      }
+    
+    
    
 };
 
