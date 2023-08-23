@@ -1,4 +1,4 @@
-const clientId = '';
+const clientId = '58e94fb2fa6e4c598384c4b0ccb0d000';
 const redirectUri = 'https://localhost:3000';
 let access_Token;
 
@@ -53,10 +53,13 @@ const Spotify = {
   },
 
 	async getAccessToken() {
-		access_Token = localStorage.getItem('access_token');
+		let access_Token = localStorage.getItem('access_token');
 		const expirationDateAccessToken = localStorage.getItem('expiration_date');
+    const now = Date.now();
+    console.log("expirationDateAccessToken vaut : " + expirationDateAccessToken);
+    console.log("now vaut : " + now);
 		 
-		if((access_Token) && (Date.now() - expirationDateAccessToken < 0)) {
+		if((access_Token) && (now - expirationDateAccessToken < 0)) {
       console.log("Il existe deja un token qui n'a pas expire : " + access_Token);
 			return access_Token;
 		}
@@ -65,6 +68,7 @@ const Spotify = {
 	
     if (refresh_Token){
       access_Token = await this.refreshToken(refresh_Token);
+      localStorage.setItem('access_token', access_Token);
       return access_Token;
     }
 		else {
@@ -99,15 +103,16 @@ const Spotify = {
           }
         
           const data = await response.json();
-          localStorage.setItem('access_token', data.access_token);
-          localStorage.setItem('expires_in', data.expires_in);
-          localStorage.setItem('refresh_token', data.refresh_token);
-          let expiresIn = data.expires_in;
-          let expirationDate = Date.now() + expiresIn;
+          let access_Token = data.access_token;
+          let expires_in = data.expires_in
+          let refresh_token = data.refresh_token
+          localStorage.setItem('access_token', access_Token);
+          localStorage.setItem('expires_in', expires_in);
+          localStorage.setItem('refresh_token', refresh_token);
+          let now = Date.now();
+          let expirationDate = now + expires_in * 1000;
           console.log("la date d'expiration est" + expirationDate);
           localStorage.setItem('expiration_date', expirationDate);
-          access_Token = data.access_token;
-          window.setTimeout(() => access_Token = '', expiresIn * 1000);
         
           return access_Token;
         } catch (error) {
@@ -144,8 +149,9 @@ const Spotify = {
         const data = await response.json(); // Await the JSON parsing here
         localStorage.setItem('access_token', data.access_token);
         localStorage.setItem('refresh_token', data.refresh_token);
-        let expiration_date = Date.now() + data.expires_in;
+        let expiration_date = Date.now() + data.expires_in * 1000;
         localStorage.setItem('expiration_date', expiration_date);
+        return data.access_token;
       }
     } catch (error) {
       console.log("An error occurred while refreshing the token: ", error);
