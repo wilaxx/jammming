@@ -34,7 +34,7 @@ const Spotify = {
     // Construct the authorization URL
     let state = this.generateRandomString(16);
     console.log("le state est : " + state);
-    let scope = 'user-read-private user-read-email';
+    let scope = 'user-read-private user-read-email playlist-modify-public';
     const args = new URLSearchParams({
       response_type: 'code',
       client_id: clientId,
@@ -97,7 +97,7 @@ const Spotify = {
         
           if (!response.ok) {
             console.log("There was a problem exchanging the code for a token: " + response.status);
-            return;
+            throw new Error("There was an error during token exchange");
           }
         
           const data = await response.json();
@@ -115,6 +115,7 @@ const Spotify = {
           return access_Token;
         } catch (error) {
           console.log("An error occurred while exchanging the code for a token: ", error);
+          throw error;
           } 
           
         }
@@ -143,6 +144,8 @@ const Spotify = {
   
       if (!response.ok) {
         console.log("probleme de refresh : " + response.status);
+        throw new Error("An error occurred during token refresh");
+
       } else {
         const data = await response.json(); // Await the JSON parsing here
         localStorage.setItem('access_token', data.access_token);
@@ -153,6 +156,7 @@ const Spotify = {
       }
     } catch (error) {
       console.log("An error occurred while refreshing the token: ", error);
+      throw error;
     }
   },
 
@@ -167,12 +171,17 @@ const Spotify = {
 		let accessToken = await this.getAccessToken();
 		console.log("Spotify.search() a bien recup le token " + accessToken);
 
+    try {
     const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${word}`, {
     headers: {
       Authorization: 'Bearer ' + accessToken
     }
   });
-  
+  if (!response.ok) {
+    console.log("An error occurred during the search: " + response.status);
+    throw new Error("An error occurred during the search");
+  }
+
   const data = await response.json();
   this.displayObject(data.tracks);
   if(!data.tracks){
@@ -188,7 +197,58 @@ const Spotify = {
   }));
 
   return results;
-}
+  }
+   catch (error) {
+    console.log("An error occurred during the search: ", error);
+        throw error; // Rethrow the error
+    }
+  },
+
+  async savePlaylist(name, tracks) {
+    let accessToken = await this.getAccessToken();
+
+
+    const response = await fetch(`https://api.spotify.com/v1/me`, {
+    headers: {
+      Authorization: 'Bearer ' + accessToken
+    }
+  });
+    const data = await response.json();
+    const user_id = data.id;
+
+    const response2 = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      },
+      body: JSON.stringify({name: name})
+
+  });
+
+  const data2 = await response2.json();
+  const playlistId = data2.id;
+  console.log("l'id de la playlist est : " + playlistId);
+
+  if (playlistId) {
+    const urisArray = tracks.map(track => track.uri);
+    
+    const addTracksResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ uris: urisArray })
+    });
+
+    if (addTracksResponse.ok) {
+      console.log("Tracks added to playlist successfully.");
+    } else {
+      console.error("An error occurred while adding tracks to the playlist.");
+    }
+  }
+
+  }
 
    
 	

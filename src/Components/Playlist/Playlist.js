@@ -2,14 +2,15 @@ import React from "react";
 import "./Playlist.css";
 import Tracklist from "../Tracklist/Tracklist";
 
-  const Playlist = ({ tracksPlaylist, onRemove, onNameChange, onSave }) => {
+  const Playlist = ({ tracksPlaylist, onRemove, onNameChange, onSave, namePlaylist }) => {
+
 
     const handleNameChange = ({target}) => {
       onNameChange(target.value)
     };
 
     const handleClick = () => {
-      onSave();
+      onSave(namePlaylist, tracksPlaylist);
     }
   return (
   

@@ -13,7 +13,7 @@ function App() {
 
   const [tracksResults, setTracksResults] = useState([]);
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
-  const [namePlaylist, setNamePlaylist] = useState("New playlist");
+  const [namePlaylist, setNamePlaylist] = useState("New Playlist");
 
   const updatePlaylistName = (name) => {
     setNamePlaylist((prevName) => name);
@@ -34,6 +34,12 @@ function App() {
 
   const onSearch = async (word) => {
       try {
+
+        if (word.trim() === "") {
+          setTracksResults([]); // Clear the search results when the word is empty
+          return;
+        }
+
         const searchData = await Spotify.search(word);
         setTracksResults((prev) => searchData)
       } catch (error) {
@@ -44,18 +50,24 @@ function App() {
    
 };
 
-  const onSave = () => {
-    let pltracks = [...tracksPlaylist];
-    let plUris = pltracks.map((element) => element.trackURI);
-    console.log("tracksPlaylist avant reset vaut : " + tracksPlaylist);
-    console.log("name playlist avant reset vaut :" + namePlaylist);
-    console.log(plUris);
-    setTracksPlaylist(prev => []);
-    setNamePlaylist(prev => "");
-    console.log("tracksPlaylist apres reset vaut : " + tracksPlaylist);
-    console.log("name playlist apres reset vaut :" + namePlaylist);
+  const onSave = async (namePaylist, tracksPlaylist) => {
+    try {
+      const namepl = namePaylist;
+      const trackspl = [...tracksPlaylist];
+
+      await Spotify.savePlaylist(namepl, trackspl);
+      console.log("Playlist and tracks saved successfully.");
+      
+      // Réinitialiser les états
+      setTracksPlaylist(prev => []); // Effacer la liste des morceaux
+      setNamePlaylist("New Playlist");
+    } catch (error) {
+      console.error('An error occurred while saving the playlist:', error);
+    }
 
   };
+
+
 
   return (
     
