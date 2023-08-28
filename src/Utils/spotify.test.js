@@ -1,5 +1,5 @@
 // spotify.test.js
-import { Spotify } from '../src/Utils/spotify';
+import { Spotify } from './spotify';
 
 describe('Spotify', () => {
   describe('generateRandomString', () => {
