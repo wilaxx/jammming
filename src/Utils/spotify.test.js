@@ -1,10 +1,12 @@
 // spotify.test.js
 import { Spotify } from './spotify';
 
-
-
-
 describe('Spotify', () => {
+
+  const clientId = '58e94fb2fa6e4c598384c4b0ccb0d000';
+  const redirectUri = 'https://localhost:3000';
+
+
   describe('generateRandomString', () => {
     it('generates a random string of specified length', () => {
       const length = 10;
@@ -41,21 +43,71 @@ describe('Spotify', () => {
     });
   });
 
-  // describe('authorize', () => {
-  //   it('opens new window to spotify auth page', () => {
-  //     const variable =;
-  //     const other_var = Spotify.authorize();
-  //     expect(randomString.length).toBe(length);
-  //   });
-  // });
+  describe('authorize', () => {
+    it('constructs the authorization URL', async () => {
+    const codeVerifier = Spotify.generateRandomString(128);
+    const codeChallenge =  await Spotify.generateCodeChallenge(codeVerifier);
+    // Construct the authorization URL
+    let state = Spotify.generateRandomString(16);
+    let scope = 'user-read-private user-read-email playlist-modify-public';
+    const args = new URLSearchParams({
+      response_type: 'code',
+      client_id: clientId,
+      scope: scope,
+      redirect_uri: redirectUri,
+      state: state, 
+      code_challenge_method: 'S256',
+      code_challenge: codeChallenge,
+    });
+    
+    const authorizationUrl = 'https://accounts.spotify.com/authorize?' + args;
 
-  // describe('getAccessToken', () => {
-  //   it('returns access_token and refresh_token', () => {
-  //     const variable =;
-  //     const other_var = Spotify.getAccessToken();
-  //     expect().toBe();
-  //   });
-  // });
+    console.log("The URL to check is : " + authorizationUrl)
+    console.log("Manual verification needed: open URL in the browser and check if it works. \
+    After being redirected on localhost from spotify, use the args in the url to test getAccessToken function "); 
+    });
+  });
+
+  describe('getAccessToken', () => {
+    let originalLocalStorage;
+
+    beforeEach(() => {
+      originalLocalStorage = window.localStorage;
+      window.localStorage = {}; // Clear localStorage before each test
+    });
+  
+    afterEach(() => {
+      window.localStorage = originalLocalStorage; // Restore original localStorage
+    });
+  
+    it('returns access_token when it is valid', async () => {
+      window.localStorage.setItem('access_token', 'validAccessToken');
+      const accessToken = await Spotify.getAccessToken();
+      expect(accessToken).toBe('validAccessToken');
+    });
+  
+    it('fetches a new access_token when it is expired and refresh_token is available', async () => {
+      window.localStorage.setItem('access_token', 'expiredAccessToken');
+      window.localStorage.setItem('refresh_token', 'validRefreshToken');
+  
+      // Simulate successful response
+      const mockRefreshResponse = {
+        ok: true,
+        json: () => Promise.resolve({ access_token: 'newAccessToken' })
+      };
+      global.fetch = jest.fn().mockResolvedValueOnce(mockRefreshResponse);
+  
+      const accessToken = await Spotify.getAccessToken();
+      expect(accessToken).toBe('newAccessToken');
+    });
+  
+    it('calls authorize when both access_token and refresh_token are missing', async () => {
+      jest.spyOn(Spotify, 'authorize').mockImplementationOnce(() => {});
+      const accessToken = await Spotify.getAccessToken();
+      expect(accessToken).toBeUndefined();
+      expect(Spotify.authorize).toHaveBeenCalled();
+    });
+  });
 
   // describe('refreshToken', () => {
   //   it('returns new access_toekn and refresh_token from spotify', () => {
