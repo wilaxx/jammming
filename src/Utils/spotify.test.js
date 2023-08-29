@@ -1,6 +1,9 @@
 // spotify.test.js
 import { Spotify } from './spotify';
 
+
+
+
 describe('Spotify', () => {
   describe('generateRandomString', () => {
     it('generates a random string of specified length', () => {
@@ -10,13 +13,33 @@ describe('Spotify', () => {
     });
   });
 
-  // describe('generateCodeChallenge', () => {
-  //   it('returns a hashBase64 code', () => {
-  //     const codeVerifier =;
-  //     const other_var = Spotify.function(codeVerifier);
-  //     expect().toBe();
-  //   });
-  // });
+  describe('generateCodeChallenge', () => {
+
+    global.TextEncoder = class {
+      encode(str) {
+        // You can return a simple mock of Uint8Array here
+        return new Uint8Array([...str].map(char => char.charCodeAt(0)));
+      }
+    };
+
+    const isBase64Encoded = (str) => {
+      return /^[A-Za-z0-9+/=]+$/.test(str);
+    };
+
+    it('generates a challengeCode', async () => {
+
+      const mockDigest = jest.fn().mockResolvedValue(new Uint8Array([1, 2, 3]));
+      global.crypto = {
+        subtle: {
+          digest: mockDigest
+        }
+      };
+
+      const codeVerifier = Spotify.generateRandomString(128);
+      const hash = await Spotify.generateCodeChallenge(codeVerifier);
+      expect(isBase64Encoded(hash)).toBe(true);
+    });
+  });
 
   // describe('authorize', () => {
   //   it('opens new window to spotify auth page', () => {
