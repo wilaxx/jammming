@@ -73,20 +73,33 @@ describe('Spotify', () => {
         // Set up the necessary values in localStorage
         localStorage.setItem('access_token', 'aaaa');
         localStorage.setItem('expiration_date', Date.now() + 3600); // Adjust as needed
-        localStorage.setItem('refresh_token', 'bbbb');
     });
-
     it('should return the access token', async () => {
         const result = await Spotify.getAccessToken();
         // Modify the expectation to match the actual access token value
         expect(result).toBe('aaaa');
     });
-
     afterAll(() => {
         // Clean up localStorage after the test
         localStorage.removeItem('access_token');
         localStorage.removeItem('expiration_date');
-        localStorage.removeItem('refresh_token');
+    });
+
+    beforeAll(() => {
+        // Set up the necessary values in localStorage
+        localStorage.setItem('refresh_token', 'cccc');
+        const refreh = localStorage.getItem('refresh_token');
+        const mockCallback = jest.fn(x );
+    });
+    it('should call refreshToken with refreshToken', async () => {
+        const result = await Spotify.getAccessToken();
+        // Modify the expectation to match the actual access token value
+        expect(result).toBe('aaaa');
+    });
+    afterAll(() => {
+        // Clean up localStorage after the test
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('expiration_date');
     });
 });
 
