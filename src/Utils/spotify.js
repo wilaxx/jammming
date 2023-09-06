@@ -1,4 +1,4 @@
-const clientId = '58e94fb2fa6e4c598384c4b0ccb0d000';
+const clientId = '';
 const redirectUri = 'https://localhost:3000';
 
 
@@ -160,13 +160,6 @@ const Spotify = {
     }
   },
 
-  displayObject(obj) {
-    console.log('Le contenu de l\'objet est : ');
-    for (const prop in obj) {
-      console.log(`${prop} : ${obj[prop]}`);
-    }
-  },
-
 	async search(word) {
 		let accessToken = await this.getAccessToken();
 		console.log("Spotify.search() a bien recup le token " + accessToken);
@@ -183,7 +176,6 @@ const Spotify = {
   }
 
   const data = await response.json();
-  this.displayObject(data.tracks);
   if(!data.tracks){
     return [];
   }
