@@ -1,10 +1,43 @@
 // spotify.test.js
+
 import { Spotify } from './spotify';
+import '@testing-library/jest-dom'
+
+
+// class LocalStorageMock {
+//   constructor() {
+//     this.store = {};
+//   }
+
+//   clear() {
+//     this.store = {};
+//   }
+
+//   getItem(key) {
+//     return this.store[key] || null;
+//   }
+
+//   setItem(key, value) {
+//     this.store[key] = String(value);
+//   }
+
+//   removeItem(key) {
+//     delete this.store[key];
+//   }
+// }
+
+// window.localStorage = new LocalStorageMock;
+
+
+
 
 describe('Spotify', () => {
 
   const clientId = '58e94fb2fa6e4c598384c4b0ccb0d000';
   const redirectUri = 'https://localhost:3000';
+
+
+
 
 
   describe('generateRandomString', () => {
@@ -69,38 +102,66 @@ describe('Spotify', () => {
   });
 
   describe('getAccessToken', () => {
+   
     beforeAll(() => {
-        // Set up the necessary values in localStorage
-        localStorage.setItem('access_token', 'aaaa');
-        localStorage.setItem('expiration_date', Date.now() + 3600); // Adjust as needed
-    });
-    it('should return the access token', async () => {
-        const result = await Spotify.getAccessToken();
-        // Modify the expectation to match the actual access token value
-        expect(result).toBe('aaaa');
-    });
-    afterAll(() => {
-        // Clean up localStorage after the test
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('expiration_date');
+        
+
+        localStorage.setItem('access_token', null);
+        localStorage.setItem('expiration_date', null);
+        localStorage.setItem('refresh_token', null);
+
+        let access_Token = "";
+        
+        let now = null;
+
+
+        jest.spyOn(Spotify, 'refreshToken').mockImplementation((arg) => {
+          if (arg === 'refresh1') {
+            return 'newAccessTokenFrom-refresh1';
+          } else if (arg === 'refresh2') {
+            return 'newAccessTokenFrom-refresh2';
+          } else {
+            // Gérer d'autres cas ici si nécessaire
+            return 'need to auth to spotify, no access token returned';
+          }
+        });
+    
+
     });
 
-    beforeAll(() => {
-        // Set up the necessary values in localStorage
-        localStorage.setItem('refresh_token', 'cccc');
-        const refreh = localStorage.getItem('refresh_token');
-        const mockCallback = jest.fn(x );
-    });
-    it('should call refreshToken with refreshToken', async () => {
+
+    //test with access_Token valid
+    it('should return the access token', async () => {
+      console.log("avant tout, access_token dans  localStorage vaut : " + localStorage.getItem('access_token'));
+      localStorage.setItem('access_token', 'access-token-1')
+        let access_Token = localStorage.getItem('access_token');
+        console.log("le accesstokeeeeeeeeen est : " + access_Token)
+        const expirationDateAccessToken = localStorage.setItem('expiration_date', 15555555555555);
+        let now = Date.now() + 3600;
+
+        
         const result = await Spotify.getAccessToken();
         // Modify the expectation to match the actual access token value
-        expect(result).toBe('aaaa');
+        expect(result).toEqual('access-token-1');
     });
-    afterAll(() => {
-        // Clean up localStorage after the test
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('expiration_date');
-    });
+
+    //second test
+    
+    // it('should call refreshToken with refreshToken', async () => {
+    //   const refresh_Token = localStorage.setItem('refresh_token', 'cccc');
+    //   const mockRefreshToken = jest.spyOn(Spotify, 'refreshToken');
+    //   mockRefreshToken.mockResolvedValue('access-returned');
+
+
+    //   access_Token = await Spotify.getAccessToken();
+
+    //   localStorage.setItem('access_token', access_Token);
+    //   expect(access_Token).toBe('aaa-new');
+
+    //   // Optionally, you can also assert that refreshToken was called with the expected arguments
+    //   expect(mockRefreshToken).toHaveBeenCalledWith('cccc');
+    // });
+  
 });
 
   // describe('refreshToken', () => {
