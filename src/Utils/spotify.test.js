@@ -1,43 +1,12 @@
 // spotify.test.js
 
 import { Spotify } from './spotify';
-import '@testing-library/jest-dom'
-
-
-// class LocalStorageMock {
-//   constructor() {
-//     this.store = {};
-//   }
-
-//   clear() {
-//     this.store = {};
-//   }
-
-//   getItem(key) {
-//     return this.store[key] || null;
-//   }
-
-//   setItem(key, value) {
-//     this.store[key] = String(value);
-//   }
-
-//   removeItem(key) {
-//     delete this.store[key];
-//   }
-// }
-
-// window.localStorage = new LocalStorageMock;
-
-
 
 
 describe('Spotify', () => {
 
   const clientId = '58e94fb2fa6e4c598384c4b0ccb0d000';
   const redirectUri = 'https://localhost:3000';
-
-
-
 
 
   describe('generateRandomString', () => {
@@ -102,21 +71,17 @@ describe('Spotify', () => {
   });
 
   describe('getAccessToken', () => {
-   
-    beforeAll(() => {
-        
+ 
+    let refresh_Token; 
+
+    beforeEach(() => {
 
         localStorage.setItem('access_token', null);
         localStorage.setItem('expiration_date', null);
         localStorage.setItem('refresh_token', null);
 
-        let access_Token = "";
-        
-        let now = null;
-
-
         jest.spyOn(Spotify, 'refreshToken').mockImplementation((arg) => {
-          if (arg === 'refresh1') {
+          if (arg == 'refresh1') {
             return 'newAccessTokenFrom-refresh1';
           } else if (arg === 'refresh2') {
             return 'newAccessTokenFrom-refresh2';
@@ -126,41 +91,33 @@ describe('Spotify', () => {
           }
         });
     
-
     });
-
 
     //test with access_Token valid
     it('should return the access token', async () => {
-      console.log("avant tout, access_token dans  localStorage vaut : " + localStorage.getItem('access_token'));
-      localStorage.setItem('access_token', 'access-token-1')
+        localStorage.setItem('access_token', 'access-token-1');
         let access_Token = localStorage.getItem('access_token');
-        console.log("le accesstokeeeeeeeeen est : " + access_Token)
-        const expirationDateAccessToken = localStorage.setItem('expiration_date', 15555555555555);
+        const expirationDateAccessToken = localStorage.setItem('expiration_date', Date.now() + 7200);
         let now = Date.now() + 3600;
 
         
         const result = await Spotify.getAccessToken();
         // Modify the expectation to match the actual access token value
-        expect(result).toEqual('access-token-1');
+        expect(result).toBe('access-token-1');
     });
 
-    //second test
-    
-    // it('should call refreshToken with refreshToken', async () => {
-    //   const refresh_Token = localStorage.setItem('refresh_token', 'cccc');
-    //   const mockRefreshToken = jest.spyOn(Spotify, 'refreshToken');
-    //   mockRefreshToken.mockResolvedValue('access-returned');
+    // second test
+    it('should call refreshToken with refresh_Token', async () => {
+        localStorage.setItem('refresh_token', 'refresh1');
+        refresh_Token = localStorage.getItem('refresh_token');
+        console.log("refresh_Token vaut : " + refresh_Token);
 
+        const expirationDateAccessToken = localStorage.getItem('expiration_date', Date.now() + 3600);
+        let now = Date.now() + 7200;
+        const result = await Spotify.getAccessToken();
+        expect(result).toBe('newAccessTokenFrom-refresh1');
 
-    //   access_Token = await Spotify.getAccessToken();
-
-    //   localStorage.setItem('access_token', access_Token);
-    //   expect(access_Token).toBe('aaa-new');
-
-    //   // Optionally, you can also assert that refreshToken was called with the expected arguments
-    //   expect(mockRefreshToken).toHaveBeenCalledWith('cccc');
-    // });
+    });
   
 });
 
