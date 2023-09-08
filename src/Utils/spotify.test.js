@@ -72,14 +72,12 @@ describe('Spotify', () => {
 
   describe('getAccessToken', () => {
  
-    let refresh_Token; 
 
     beforeEach(() => {
-
         localStorage.setItem('access_token', null);
         localStorage.setItem('expiration_date', null);
         localStorage.setItem('refresh_token', null);
-
+        localStorage.setItem('code_verifier', null);
         jest.spyOn(Spotify, 'refreshToken').mockImplementation((arg) => {
           if (arg == 'refresh1') {
             return 'newAccessTokenFrom-refresh1';
@@ -90,14 +88,14 @@ describe('Spotify', () => {
             return 'need to auth to spotify, no access token returned';
           }
         });
-    
-    });
+      });
 
-    //test with access_Token valid
-    it('should return the access token', async () => {
+    // ------- test with access_Token valid ------------
+    it('should return the valid existing accessToken', async () => {
         localStorage.setItem('access_token', 'access-token-1');
         let access_Token = localStorage.getItem('access_token');
-        const expirationDateAccessToken = localStorage.setItem('expiration_date', Date.now() + 7200);
+        const expirationDateAccessToken = Date.now() + 7200;
+        localStorage.setItem('expiration_date', expirationDateAccessToken.toString());
         let now = Date.now() + 3600;
 
         
@@ -106,19 +104,94 @@ describe('Spotify', () => {
         expect(result).toBe('access-token-1');
     });
 
-    // second test
-    it('should call refreshToken with refresh_Token', async () => {
+    // ------- test with refresh_Token which has been mocked to return an access token 
+    // based on argument value ----------------- 
+    it('should call refreshToken() with refresh_Token and return a new access token', async () => {
         localStorage.setItem('refresh_token', 'refresh1');
-        refresh_Token = localStorage.getItem('refresh_token');
-        console.log("refresh_Token vaut : " + refresh_Token);
-
+        let refresh_Token = localStorage.getItem('refresh_token');
         const expirationDateAccessToken = localStorage.getItem('expiration_date', Date.now() + 3600);
         let now = Date.now() + 7200;
         const result = await Spotify.getAccessToken();
         expect(result).toBe('newAccessTokenFrom-refresh1');
 
     });
+
+    // ---- test fetch with response ok -------
+    it('should returns a successful response', async () => {
+      const response = { ok: true, status: 200 };
+      global.fetch = jest.fn().mockResolvedValue(response);
+    
+      // Appeler la fonction qui effectue l'appel API
+      const result = await Spotify.getAccessToken();
+    
+      try {
+        await Spotify.getAccessToken();
+      } catch (error) {
+        expect(error).toBe();
+      }
+    });
+    
+    it('should returns an error response', async () => {
+      const response = { ok: false, status: 400 };
+      global.fetch = jest.fn().mockResolvedValue(response);
+    
+    
+      try {
+        await Spotify.getAccessToken();
+      } catch (error) {
+        expect(error).toBe();
+      }
+    });
   
+    // test with the code in the URL. 
+    it('should retrieve access_token by fetching spotify', async () => {
+      const queryString = "?code=the-fake-code-from-the-url&client_id=005dfg52fg55ds215dsf5";
+      const urlParams = new URLSearchParams(queryString);
+      const codeFromUrl = urlParams.get('code');
+      localStorage.setItem('code_verifier', 'fake_codeverifier_64598');
+      let codeverifier = localStorage.getItem('code_verifier');
+      console.log("URL code after redirect is : " + codeFromUrl);
+      console.log("Code Verifier is: " + codeverifier);
+      
+      let redirectUri = 'https://localhost:3000';
+      let clientId = "fakeClientId-5423123454";
+
+      let body = new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: codeFromUrl,
+        redirect_uri: redirectUri,
+        client_id: clientId,
+        code_verifier: codeverifier
+      });
+  
+      console.log("body vaut : " + body);
+
+      const mockFetch = jest.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          access_token: 'newAccessTokenFrom-refresh1'
+        })
+      });
+      global.fetch = mockFetch;
+    
+      // Appeler la fonction getAccessToken
+      const result = await Spotify.getAccessToken();
+    
+      // Vérifier que fetch a été appelé avec les bonnes données
+      expect(mockFetch).toHaveBeenCalledWith('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body // Vous pouvez également vérifier le contenu exact ici si nécessaire
+      });
+    
+      // Vérifier que le résultat est le bon access_token
+      expect(result).toBe('newAccessTokenFrom-refresh1');
+    
+
+    });
+
 });
 
   // describe('refreshToken', () => {
@@ -138,7 +211,7 @@ describe('Spotify', () => {
   // });
 
   // describe('savePlaylist', () => {
-  //   it('generates a random string of specified length', () => {
+  //   it('generates a string of specified length', () => {
   //     const name = "playlist1";
   //     const tracks = [{}, {}, {}];
   //     const other_var = Spotify.savePlaylist(name, tracks);

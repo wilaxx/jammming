@@ -73,10 +73,11 @@ const Spotify = {
 			const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const codeFromUrl = urlParams.get('code');
+      console.log("le codefronurl vaut : " + codeFromUrl);
       if (codeFromUrl) {
         let codeverifier = localStorage.getItem('code_verifier');
-        console.log("URL code after redirect is : " + codeFromUrl)
-        console.log("Code Verifier is: " + codeverifier)
+        console.log("URL code after redirect is : " + codeFromUrl);
+        console.log("Code Verifier is: " + codeverifier);
 
         let body = new URLSearchParams({
           grant_type: 'authorization_code',
