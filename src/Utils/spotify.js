@@ -116,7 +116,7 @@ const Spotify = {
           let expirationDate = now + expires_in * 1000;
           console.log("la date d'expiration est" + expirationDate);
           localStorage.setItem('expiration_date', expirationDate);
-          console.log("access_Token vaut : " + access_Token)
+          console.log("access_Token vaut : " + access_Token);
           return access_Token;
         } catch (error) {
           console.log("An error occurred while exchanging the code for a token: ", error);

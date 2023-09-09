@@ -2,7 +2,6 @@
 
 import { Spotify } from './spotify';
 
-global.fetch = require('node-fetch');
 
 
 describe('Spotify', () => {
@@ -100,7 +99,7 @@ describe('Spotify', () => {
       });
 
     // ------- test4a with access_Token valid ------------ 
-    it('test4a should return the valid existing accessToken', async () => {
+    it('test4a should return the valid existing access_Token', async () => {
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 4a ++++++++++++++++++++");
         localStorage.setItem('access_token', 'access-token-1');
         let access_Token = localStorage.getItem('access_token');
@@ -198,6 +197,7 @@ describe('Spotify', () => {
         expect(error.message).toBe("There was an error during token exchange");
       }
     });
+
 
 
    });
