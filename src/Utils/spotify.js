@@ -1,4 +1,4 @@
-const clientId = '';
+const clientId = '58e94fb2fa6e4c598384c4b0ccb0d000';
 const redirectUri = 'https://localhost:3000';
 
 
@@ -28,6 +28,7 @@ const Spotify = {
   },
 
   async authorize() {
+    console.log("lancement de authorize() ...");
     const codeVerifier = this.generateRandomString(128);
     localStorage.setItem('code_verifier', codeVerifier);
     const codeChallenge =  await this.generateCodeChallenge(codeVerifier);
@@ -67,14 +68,17 @@ const Spotify = {
     if (refresh_Token){
       access_Token = await this.refreshToken(refresh_Token);
       localStorage.setItem('access_token', access_Token);
+      console.log("le access_Token grace au refresh() vaut : " + access_Token);
       return access_Token;
     }
 		else {
 			const queryString = window.location.search;
+      console.log("vrai QueryString vaut : " + queryString)
       const urlParams = new URLSearchParams(queryString);
       const codeFromUrl = urlParams.get('code');
-      console.log("le codefronurl vaut : " + codeFromUrl);
+      
       if (codeFromUrl) {
+        console.log("just apres if(codeFromUrl), codeFromUrl vaut : " + codeFromUrl);
         let codeverifier = localStorage.getItem('code_verifier');
         console.log("URL code after redirect is : " + codeFromUrl);
         console.log("Code Verifier is: " + codeverifier);
@@ -100,7 +104,7 @@ const Spotify = {
             console.log("There was a problem exchanging the code for a token: " + response.status);
             throw new Error("There was an error during token exchange");
           }
-        
+          console.log("reponse is ok, on cree le reste")
           const data = await response.json();
           let access_Token = data.access_token;
           let expires_in = data.expires_in
@@ -112,7 +116,7 @@ const Spotify = {
           let expirationDate = now + expires_in * 1000;
           console.log("la date d'expiration est" + expirationDate);
           localStorage.setItem('expiration_date', expirationDate);
-        
+          console.log("access_Token vaut : " + access_Token)
           return access_Token;
         } catch (error) {
           console.log("An error occurred while exchanging the code for a token: ", error);
