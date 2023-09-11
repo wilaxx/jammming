@@ -24,7 +24,6 @@ describe('Spotify', () => {
 
     global.TextEncoder = class {
       encode(str) {
-        // You can return a simple mock of Uint8Array here
         return new Uint8Array([...str].map(char => char.charCodeAt(0)));
       }
     };
@@ -54,7 +53,7 @@ describe('Spotify', () => {
     console.log("++++++++++++++++++++ LANCEMENT DU TEST : 3 ++++++++++++++++++++");
     const codeVerifier = Spotify.generateRandomString(128);
     const codeChallenge =  await Spotify.generateCodeChallenge(codeVerifier);
-    // Construct the authorization URL
+
     let state = Spotify.generateRandomString(16);
     let scope = 'user-read-private user-read-email playlist-modify-public';
     const args = new URLSearchParams({
@@ -64,14 +63,25 @@ describe('Spotify', () => {
       redirect_uri: redirectUri,
       state: state, 
       code_challenge_method: 'S256',
-      code_challenge: codeChallenge,
+      code_challenge: codeChallenge
     });
     
     const authorizationUrl = 'https://accounts.spotify.com/authorize?' + args;
 
-    console.log(" testlogThe URL to check is : " + authorizationUrl)
-    console.log(" testlogManual verification needed: open URL in the browser and check if it works. \
-    After being redirected on localhost from spotify, use the args in the url to test getAccessToken function "); 
+    const originalLocation = { ...window.location };
+    delete window.location;
+    window.location = {
+      href: authorizationUrl
+    };
+
+    console.log(" testlogThe URL to check is : " + authorizationUrl);
+    console.log("test Tester l'url à la main");
+
+    await Spotify.authorize();
+
+    expect(window.location.href).toBeDefined();
+
+  
     });
   });
 
@@ -96,6 +106,7 @@ describe('Spotify', () => {
 
       afterEach(() => {
         localStorage.clear();
+        jest.restoreAllMocks()
       });
 
     // ------- test4a with access_Token valid ------------ 
@@ -107,9 +118,7 @@ describe('Spotify', () => {
         localStorage.setItem('expiration_date', expirationDateAccessToken.toString());
         let now = Date.now() + 3600;
 
-        
         const result = await Spotify.getAccessToken();
-        // Modify the expectation to match the actual access token value
         expect(result).toBe('access-token-1');
     });
 
@@ -164,7 +173,6 @@ describe('Spotify', () => {
         body: expect.anything()
       });
       
-      // Vérifiez que la fonction renvoie l'access_token simulé
       expect(result).toBe('fakeAccessToken');
     });
 
@@ -178,7 +186,6 @@ describe('Spotify', () => {
 
       window.location = { search: '?code=fake_URL-code-545sdf54sdf587dsf2' };
 
-      // Espionner fetch pour simuler une réponse non ok (status 400)
       jest.spyOn(global, 'fetch').mockResolvedValue({
         ok: false, // Réponse non ok
         status: 400
@@ -192,33 +199,189 @@ describe('Spotify', () => {
         expect(consoleSpy).toHaveBeenCalledWith("There was a problem exchanging the code for a token: 400");
         expect(errorSpy).toHaveBeenCalledWith("An error occurred while exchanging the code for a token: Error: There was an error during token exchange");
       } catch (error) {
-        // Le code devrait générer une erreur
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe("There was an error during token exchange");
       }
     });
 
+    // ---- test4e should call authorize() when there is no code in the URL -------
+    it('test4e should call authorize() when there is no code in the URL', async () => {
+  console.log("++++++++++++++++++++ LANCEMENT DU TEST : 4e ++++++++++++++++++++");
+  localStorage.clear();
+  delete global.window.location;
+
+  window.location = { search: '' }; 
+
+  const authorizeSpy = jest.spyOn(Spotify, 'authorize');
+
+  await Spotify.getAccessToken();
+
+  expect(authorizeSpy).toHaveBeenCalled();
+    });
 
 
-   });
+  });
 
+  describe('refreshToken', () => {
 
+    // ------- test5a calls refreshToken with refToken and receives an "ok" response ------------
+    it('test5a should return new access_token from fetch when response is "ok"', async () => {
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 5a ++++++++++++++++++++");
+  
+      localStorage.clear();
+  
+      jest.restoreAllMocks();
+  
+      localStorage.setItem('refresh_token', 'refresh1');
+  
+      jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          access_token: 'newAccessTokenFromFetch',
+          refresh_token: 'newRefreshTokenFromFetch',
+          expires_in: 3600
+        })
+      });
+  
+      const result = await Spotify.refreshToken('refresh1');
+  
+      expect(fetch).toHaveBeenCalledWith('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: expect.anything()
+      });
+  
+      expect(result).toBe('newAccessTokenFromFetch');
+    });
+  
+    // ------- test5b calls refreshToken with refToken and receives a non-ok response ------------
+    it('test5b should throw an error for non-ok response', async () => {
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 5b ++++++++++++++++++++");
+  
+      localStorage.clear();
+  
+      jest.restoreAllMocks();
+  
+      localStorage.setItem('refresh_token', 'refresh2');
+  
+      jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: false, 
+        status: 400
+      });
+  
+      try {
+        await Spotify.refreshToken('refresh2');
+        
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error.message).toBe("An error occurred during token refresh");
+      }
+    });
+  });
+  
 
-  // describe('refreshToken', () => {
-  //   it('returns new access_toekn and refresh_token from spotify', () => {
-  //     const refToken =;
-  //     const other_var = Spotify.refreshToken(refToken);
-  //     expect().toBe();
-  //   });
-  // });
-
-  // describe('search', () => {
-  //   it('returns results as object', () => {
-  //     const variable =;
-  //     const other_var = Spotify.search(word);
-  //     expect().toBe();
-  //   });
-  // });
+  describe('search', () => {
+    beforeEach(() => {
+      localStorage.clear();
+    });
+  
+    afterEach(() => {
+      localStorage.clear();
+      jest.restoreAllMocks();
+    });
+  
+    // ------- Test lorsque la recherche renvoie des résultats ----------
+    it('should return search results when successful', async () => {
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 6a ++++++++++++++++++++");
+  
+      localStorage.clear();
+  
+      // Mock de la fonction getAccessToken pour retourner un token fictif
+      jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken');
+  
+      jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          tracks: {
+            items: [
+              { name: 'Song 1', artists: [{ name: 'Artist 1' }], album: { name: 'Album 1' }, uri: 'uri1' },
+              { name: 'Song 2', artists: [{ name: 'Artist 2' }], album: { name: 'Album 2' }, uri: 'uri2' },
+            ],
+          },
+        }),
+      });
+  
+      // Appelez la méthode search
+      const result = await Spotify.search('song');
+  
+      // Vérifiez que fetch a été appelé avec l'URL et les paramètres attendus
+      expect(fetch).toHaveBeenCalledWith(
+        'https://api.spotify.com/v1/search?type=track&q=song',  // Modification de l'ordre des paramètres dans l'URL
+        {
+          method: 'GET',
+          headers: {
+            Authorization: 'Bearer fakeAccessToken',
+          },
+        }
+      );
+  
+      // Vérifiez que la fonction renvoie les résultats simulés
+      expect(result).toEqual([
+        {
+          id: 'uri1',
+          name: 'Song 1',
+          artist: 'Artist 1',
+          album: 'Album 1',
+          uri: 'uri1',
+        },
+        {
+          id: 'uri2',
+          name: 'Song 2',
+          artist: 'Artist 2',
+          album: 'Album 2',
+          uri: 'uri2',
+        },
+      ]);
+    });
+  
+    // ------- Test lorsque la recherche renvoie une erreur ----------
+    it('should throw an error when search fails', async () => {
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 6b ++++++++++++++++++++");
+  
+      // Supprimez tout contenu précédent dans le localStorage
+      localStorage.clear();
+  
+      // Mock de la fonction getAccessToken pour retourner un token fictif
+      jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken');
+  
+      // Mock de l'appel fetch avec une réponse non-ok (erreur)
+      jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: false,
+        status: 500, // Un exemple de code d'erreur
+      });
+  
+      // Espionnez console.error pour vérifier si une erreur est correctement affichée
+      const errorSpy = jest.spyOn(console, 'error');
+  
+      try {
+        // Appelez la méthode search
+        await Spotify.search('song');
+      } catch (error) {
+        // Vérifiez que l'erreur est correcte
+        expect(error).toBeInstanceOf(Error);
+        expect(error.message).toBe('An error occurred during the search');
+  
+        // Vérifiez que console.error a été appelé avec le message d'erreur
+        expect(errorSpy).toHaveBeenCalledWith('An error occurred during the search');
+      }
+    });
+  });
+  
+  
+  
+  
 
   // describe('savePlaylist', () => {
   //   it('generates a string of specified length', () => {
