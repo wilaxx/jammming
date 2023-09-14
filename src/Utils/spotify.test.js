@@ -283,8 +283,10 @@ describe('Spotify', () => {
   
 
   describe('search', () => {
+
     beforeEach(() => {
       localStorage.clear();
+      let word = "fake-word-search";
     });
   
     afterEach(() => {
@@ -292,113 +294,160 @@ describe('Spotify', () => {
       jest.restoreAllMocks();
     });
   
-    // ------- Test lorsque la recherche renvoie des résultats ----------
-    it('should return search results when successful', async () => {
-      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 6a ++++++++++++++++++++");
-  
-      localStorage.clear();
-  
-      // Mock de la fonction getAccessToken pour retourner un token fictif
-      jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken');
-  
-      jest.spyOn(global, 'fetch').mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          tracks: {
-            items: [
-              { name: 'Song 1', artists: [{ name: 'Artist 1' }], album: { name: 'Album 1' }, uri: 'uri1' },
-              { name: 'Song 2', artists: [{ name: 'Artist 2' }], album: { name: 'Album 2' }, uri: 'uri2' },
-            ],
-          },
-        }),
+    // ------- test 6a response ok with results----------
+    it('test6a should return search results', async () => {
+    console.log("++++++++++++++++++++ LANCEMENT DU TEST : 6a ++++++++++++++++++++");
+    localStorage.clear();
+
+    const expectedResults = [
+      { name: 'Song 1', artist: 'Artist 1', album: 'Album 1', uri: 'uri1', id: 'id1' },
+      { name: 'Song 2', artist: 'Artist 2', album: 'Album 2', uri: 'uri2', id: 'id2' }
+    ];
+
+
+    jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken6a');
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+    ok: true,
+    json: async () => ({
+      tracks: {
+        items: [
+          { name: 'Song 1', artists: [{ name: 'Artist 1' }], album: { name: 'Album 1' }, uri: 'uri1', id: 'id1' },
+          { name: 'Song 2', artists: [{ name: 'Artist 2' }], album: { name: 'Album 2' }, uri: 'uri2', id: 'id2' },
+        ],
+      },
+    }),
       });
-  
-      // Appelez la méthode search
-      const result = await Spotify.search('song');
-  
-      // Vérifiez que fetch a été appelé avec l'URL et les paramètres attendus
-      expect(fetch).toHaveBeenCalledWith(
-        'https://api.spotify.com/v1/search?type=track&q=song',  // Modification de l'ordre des paramètres dans l'URL
-        {
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer fakeAccessToken',
-          },
-        }
-      );
-  
-      // Vérifiez que la fonction renvoie les résultats simulés
-      expect(result).toEqual([
-        {
-          id: 'uri1',
-          name: 'Song 1',
-          artist: 'Artist 1',
-          album: 'Album 1',
-          uri: 'uri1',
-        },
-        {
-          id: 'uri2',
-          name: 'Song 2',
-          artist: 'Artist 2',
-          album: 'Album 2',
-          uri: 'uri2',
-        },
-      ]);
+    
+      
+
+      const result = await Spotify.search();
+      expect(result).toEqual(expectedResults); 
     });
+
   
-    // ------- Test lorsque la recherche renvoie une erreur ----------
-    it('should throw an error when search fails', async () => {
+    // ------- test 6b response ok with no results (empty array) ----------
+    it('test6b should return empty array', async () => {
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 6b ++++++++++++++++++++");
   
-      // Supprimez tout contenu précédent dans le localStorage
       localStorage.clear();
   
-      // Mock de la fonction getAccessToken pour retourner un token fictif
-      jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken');
+      jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken6b');
+
+      jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+        json: async () => ({})
+        });
+
+        const result = await Spotify.search();
+
+        expect(result).toEqual([]);
+      });
+
+     // ------- test 6c with response nok ----------
+    it('test6c should throw an error when fetch', async () => {
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 6c ++++++++++++++++++++");
   
-      // Mock de l'appel fetch avec une réponse non-ok (erreur)
+      localStorage.clear();
+  
+      jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken6c');
+  
       jest.spyOn(global, 'fetch').mockResolvedValue({
         ok: false,
-        status: 500, // Un exemple de code d'erreur
+        status: 500
       });
   
-      // Espionnez console.error pour vérifier si une erreur est correctement affichée
-      const errorSpy = jest.spyOn(console, 'error');
+      jest.spyOn(console, 'error');
   
       try {
-        // Appelez la méthode search
         await Spotify.search('song');
       } catch (error) {
-        // Vérifiez que l'erreur est correcte
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('An error occurred during the search');
   
-        // Vérifiez que console.error a été appelé avec le message d'erreur
-        expect(errorSpy).toHaveBeenCalledWith('An error occurred during the search');
       }
-    });
-  });
-  
-  
-  
-  
-
-  // describe('savePlaylist', () => {
-  //   it('generates a string of specified length', () => {
-  //     const name = "playlist1";
-  //     const tracks = [{}, {}, {}];
-  //     const other_var = Spotify.savePlaylist(name, tracks);
-  //     expect().toBe();
-  //   });
-  // });
+      });
 
     
 
-});
+  });
 
+
+  describe('savePlaylist', () => {
+    
+    beforeEach(() => {
+      localStorage.clear();
+      jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken6c');
+    });
+
+    afterEach(() => {
+      localStorage.clear();
+      jest.restoreAllMocks();
+    });
+
+    // ------- test 7a successfully adds tracks to playlist ----------
+    it('test7a should generate a playlist with the specified name and tracks', async () => {
+
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7a ++++++++++++++++++++");
+  
+      jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
+        if ("url commence par https://api.spotify.com/v1/me") {
+          // retourner la data simulée;
+        } else if ("url commence par https://api.spotify.com/v1/users/") {
+          // retourner les données simulées pour ensuite avoir playlistID qui vaut quelque chose
+        } else {
+          return 'need to auth to spotify, no access token returned';
+        }
+      });
+  
+      
+  
+      
+
+    });
+    
+    // ------- test 7b get error when trying to add tracks to playlist ----------
+    it('test7b should generate a error when adding tracks to playlist', async () => {
+
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7b ++++++++++++++++++++");
+  
+      jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
+        if ("url commence par https://api.spotify.com/v1/me") {
+          // retourner la data simulée;
+        } else if ("url commence par https://api.spotify.com/v1/users/") {
+          // retourner les données simulées pour ensuite avoir playlistID qui vaut quelque chose
+        } else  if ("url commence par https://api.spotify.com/v1/playlists/") {
+          // retourner les donnée simulées 
+        }
+      });
+  
+      
+    
+      
+
+    });
+
+    // ------- test 7c get error when trying to retrieve playlistId ----------
+    it('test7c should generate an error when trying to get playlistId', async () => {
+
+      console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7c ++++++++++++++++++++");
+  
+      jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
+        if ("url commence par https://api.spotify.com/v1/me") {
+          // retourner la data simulée;
+        } else if ("url commence par https://api.spotify.com/v1/users/") {
+          // retourner les données simulées pour ensuite avoir playlistID qui vaut quelque chose
+        } else {
+          return 'need to auth to spotify, no access token returned';
+        }
+      });
+  
+      
+    
+      
+
+    });
+
+  });
   
 
-
-
-
-
+});

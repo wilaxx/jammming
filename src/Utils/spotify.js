@@ -244,6 +244,9 @@ const Spotify = {
       console.error("An error occurred while adding tracks to the playlist.");
     }
   }
+  else {
+    console.log("Erreur lors de la recuperation de la playlist");
+  }
 
   }
 
