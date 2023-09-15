@@ -374,9 +374,15 @@ describe('Spotify', () => {
 
   describe('savePlaylist', () => {
     
+    // pour nos tests, il faut simuler name et tracks qui sont les parametres de la fonction 
+    // savePlaylist du module spotify
+
     beforeEach(() => {
       localStorage.clear();
       jest.spyOn(Spotify, 'getAccessToken').mockResolvedValue('fakeAccessToken6c');
+
+      
+
     });
 
     afterEach(() => {
@@ -389,19 +395,34 @@ describe('Spotify', () => {
 
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7a ++++++++++++++++++++");
   
+      const name = 'My Test Playlist';
+      const tracks = [
+        { uri: 'track_uri_1' },
+        { uri: 'track_uri_2' }
+      ];
+
       jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
-        if ("url commence par https://api.spotify.com/v1/me") {
-          // retourner la data simulée;
-        } else if ("url commence par https://api.spotify.com/v1/users/") {
-          // retourner les données simulées pour ensuite avoir playlistID qui vaut quelque chose
-        } else {
-          return 'need to auth to spotify, no access token returned';
+        if (url.startsWith("https://api.spotify.com/v1/me")) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ id: 'fakeUserId' }) 
+          });
+        } else if (url.startsWith("https://api.spotify.com/v1/users/")) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ id: 'fakePlaylistId' }) 
+          });
+        } else if (url.startsWith("https://api.spotify.com/v1/playlists/")) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({})
+          });
         }
       });
   
-      
-  
-      
+      const result = await Spotify.savePlaylist(name, tracks);
+
+      expect(result).toBe('Success');
 
     });
     
@@ -411,12 +432,22 @@ describe('Spotify', () => {
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7b ++++++++++++++++++++");
   
       jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
-        if ("url commence par https://api.spotify.com/v1/me") {
-          // retourner la data simulée;
-        } else if ("url commence par https://api.spotify.com/v1/users/") {
-          // retourner les données simulées pour ensuite avoir playlistID qui vaut quelque chose
-        } else  if ("url commence par https://api.spotify.com/v1/playlists/") {
-          // retourner les donnée simulées 
+        if (url.startsWith("https://api.spotify.com/v1/me")) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ id: 'fakeUserId' })
+          });
+        } else if (url.startsWith("https://api.spotify.com/v1/users/")) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ id: 'fakePlaylistId' })
+          });
+        } else if (url.startsWith("https://api.spotify.com/v1/playlists/")) {
+          return Promise.resolve({
+            ok: false,
+            status: 400,
+            statusText: 'Bad Request'
+          });
         }
       });
   
@@ -432,14 +463,25 @@ describe('Spotify', () => {
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7c ++++++++++++++++++++");
   
       jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
-        if ("url commence par https://api.spotify.com/v1/me") {
-          // retourner la data simulée;
-        } else if ("url commence par https://api.spotify.com/v1/users/") {
-          // retourner les données simulées pour ensuite avoir playlistID qui vaut quelque chose
-        } else {
-          return 'need to auth to spotify, no access token returned';
+        if (url.startsWith("https://api.spotify.com/v1/me")) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ id: 'fakeUserId' }) 
+          });
+        } else if (url.startsWith("https://api.spotify.com/v1/users/")) {
+          return Promise.resolve({
+            ok: false,
+            status: 500,
+            statusText: 'Internal Server Error'
+          });
+        } else if (url.startsWith("https://api.spotify.com/v1/playlists/")) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({})
+          });
         }
       });
+    
   
       
     
