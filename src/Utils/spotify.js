@@ -242,8 +242,8 @@ const Spotify = {
       console.log("Tracks added to playlist successfully.");
       return 'Success';
     } else {
-      console.error("An error occurred while adding tracks to the playlist.");
-      throw new Error('Error when trying to add tracks to playlist')
+      console.log("An error occurred while adding tracks to the playlist.");
+      throw new Error('Error when trying to add tracks to playlist');
     }
   }
   else {

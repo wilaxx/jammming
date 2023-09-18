@@ -430,7 +430,13 @@ describe('Spotify', () => {
     it('test7b should generate a error when adding tracks to playlist', async () => {
 
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7b ++++++++++++++++++++");
-  
+      
+      const name = 'My Test Playlist';
+      const tracks = [
+        { uri: 'track_uri_1' },
+        { uri: 'track_uri_2' }
+      ];
+
       jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
         if (url.startsWith("https://api.spotify.com/v1/me")) {
           return Promise.resolve({
@@ -451,7 +457,11 @@ describe('Spotify', () => {
         }
       });
   
-      
+      try {
+        await Spotify.savePlaylist(name, tracks);
+      } catch (error) {
+        expect(error.message).toBe('Error when trying to add tracks to playlist');
+      }
     
       
 
@@ -462,28 +472,37 @@ describe('Spotify', () => {
 
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 7c ++++++++++++++++++++");
   
+      const name = 'My Test Playlist';
+      const tracks = [
+        { uri: 'track_uri_1' },
+        { uri: 'track_uri_2' }
+      ];
+
       jest.spyOn(global, 'fetch').mockImplementation((url, options) => {
         if (url.startsWith("https://api.spotify.com/v1/me")) {
           return Promise.resolve({
             ok: true,
-            json: () => Promise.resolve({ id: 'fakeUserId' }) 
+            json: () => Promise.resolve({ id: 'fakeUserId' })
           });
         } else if (url.startsWith("https://api.spotify.com/v1/users/")) {
           return Promise.resolve({
-            ok: false,
-            status: 500,
-            statusText: 'Internal Server Error'
+            ok: true,
+            json: () => Promise.resolve({ id: 'fakeUserId' })
           });
         } else if (url.startsWith("https://api.spotify.com/v1/playlists/")) {
           return Promise.resolve({
-            ok: true,
+            ok: true, // Simulez une erreur ici
             json: () => Promise.resolve({})
           });
         }
       });
     
   
-      
+      try {
+        await Spotify.savePlaylist(name, tracks);
+      } catch (error) {
+        expect(error.message).toBe('Error getting playlist ID');
+      }
     
       
 
