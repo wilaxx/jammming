@@ -11,6 +11,9 @@ import Tracklist from "../Tracklist/Tracklist";
 
     const handleClick = () => {
       onSave(namePlaylist, tracksPlaylist);
+      const resetInput = document.getElementById('plname-input');
+      resetInput.value = "";
+
     }
   return (
   
