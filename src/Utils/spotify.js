@@ -90,7 +90,6 @@ const Spotify = {
           client_id: clientId,
           code_verifier: codeverifier
         });
-
         try {
           const response = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
@@ -259,3 +258,5 @@ const Spotify = {
 
 
 export {Spotify};
+
+

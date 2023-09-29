@@ -36,7 +36,7 @@ function App() {
       try {
 
         if (word.trim() === "") {
-          setTracksResults([]); // Clear the search results when the word is empty
+          setTracksResults([]); 
           return;
         }
 
@@ -49,6 +49,8 @@ function App() {
     
    
 };
+
+
 
   const onSave = async (namePaylist, tracksPlaylist) => {
     try {
@@ -83,7 +85,7 @@ function App() {
           
           <SearchResults tracksResults={tracksResults} onAdd={onAdd} />
           
-          <Suspense fallback={<h1>HELLO </h1>}>
+          <Suspense fallback={<h1> HELLO </h1>}>
           <Playlist onRemove={onRemove} tracksPlaylist={tracksPlaylist} namePlaylist={namePlaylist} onNameChange={updatePlaylistName} onSave={onSave} />
           </Suspense>
           </div>
