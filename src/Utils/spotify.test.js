@@ -12,7 +12,7 @@ describe('Spotify', () => {
   
   describe('generateRandomString', () => {
     // ------- test1 generate random string ------------
-    it('test1 should generate a random string of specified length', () => {
+    it('test1 should generate a random string of specified length', () => { 
       console.log("++++++++++++++++++++ LANCEMENT DU TEST : 1 ++++++++++++++++++++");
       const length = 10;
       const randomString = Spotify.generateRandomString(length);

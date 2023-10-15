@@ -41,9 +41,11 @@ function App() {
         }
 
         const searchData = await Spotify.search(word);
-        setTracksResults((prev) => searchData)
+        setTracksResults((prev) => searchData);
+        
       } catch (error) {
         console.error('An error occurred during the search:', error);
+        throw error;
       }
     
     

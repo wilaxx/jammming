@@ -63,7 +63,7 @@ const Spotify = {
 			return access_Token;
 		}
 		else {
-      const refresh_Token = localStorage.getItem('refresh_token');
+      let refresh_Token = localStorage.getItem('refresh_token');
 	
     if (refresh_Token){
       access_Token = await this.refreshToken(refresh_Token);
@@ -106,8 +106,8 @@ const Spotify = {
           console.log("reponse is ok, on cree le reste")
           const data = await response.json();
           let access_Token = data.access_token;
-          let expires_in = data.expires_in
-          let refresh_token = data.refresh_token
+          let expires_in = data.expires_in;
+          let refresh_token = data.refresh_token;
           localStorage.setItem('access_token', access_Token);
           localStorage.setItem('expires_in', expires_in);
           localStorage.setItem('refresh_token', refresh_token);
@@ -150,14 +150,14 @@ const Spotify = {
         console.log("probleme de refresh : " + response.status);
         throw new Error("An error occurred during token refresh");
 
-      } else {
+      }
         const data = await response.json(); 
         localStorage.setItem('access_token', data.access_token);
         localStorage.setItem('refresh_token', data.refresh_token);
         let expiration_date = Date.now() + data.expires_in * 1000;
         localStorage.setItem('expiration_date', expiration_date);
         return data.access_token;
-      }
+      
     } catch (error) {
       console.log("An error occurred while refreshing the token: ", error);
       throw error;

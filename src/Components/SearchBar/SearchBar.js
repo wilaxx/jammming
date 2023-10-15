@@ -3,6 +3,8 @@ import "./SearchBar.css";
 
 function SearchBar({onSearch}) {
   
+  const [logged, setLogged] = useState(false);
+
   const [word, setWord] = useState("");
 
   const handleChange = (event) => {
@@ -12,6 +14,7 @@ function SearchBar({onSearch}) {
 
   const handleClick = async () => {
     await onSearch(word);
+    setWord("");
   };
 
 
