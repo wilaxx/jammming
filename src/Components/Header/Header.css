@@ -1,0 +1,29 @@
+
+.Header {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    /* height: 9vh; */
+    /* text-align: center; */
+    font-size: 1rem;
+    background-color: rgb(109, 102, 134);
+    padding: 0.8rem;
+    
+  }
+
+  .Header span {
+    color: orange;
+  }
+
+  .Header > * {
+    flex: 1;
+  }
+
+  .header-center {
+    text-align: center;
+  }
+
+ .header-right {
+  text-align: right;
+ }

@@ -180,7 +180,7 @@ const Spotify = {
   }
 
   const data = await response.json();
-  if(!data.tracks){
+  if(data.tracks.items.length === 0){
     return [];
   }
   const results =  await data.tracks.items.map(track => ({

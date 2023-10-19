@@ -1,0 +1,23 @@
+
+.AppSearch {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+  
+  }
+
+  .AppSearch-results {
+    display: flex;
+    flex-direction: column;
+    /* width: max(50%, 300px); */
+    gap: 1rem;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+  }
+
+  .AppSearch-results > * {
+    border-radius: 0.5rem;
+    padding: 1rem 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.24) -3px 3px 3px;
+  }

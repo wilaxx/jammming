@@ -1,48 +1,18 @@
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   /* gap: 1rem; */
   background-color: rgba(109, 102, 134, 0.923);
+  min-height: 100vh;
 }
 
 
-.App-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* height: 9vh; */
-  /* text-align: center; */
-  font-size: 1rem;
-  background-color: rgb(109, 102, 134);
-  padding: 0.8rem;
-  
-}
 
-.App span {
-  color: orange;
-}
 
-.App-search {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 1rem 0;
 
-}
 
-.App-results {
-  display: flex;
-  flex-direction: column;
-  /* width: max(50%, 300px); */
-  gap: 1rem;
-  justify-content: space-around;
-  padding: 0 0.5rem;
-}
 
-.App-results > * {
-  border-radius: 0.5rem;
-  padding: 1rem 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.24) -3px 3px 3px;
-}
+
+
 
