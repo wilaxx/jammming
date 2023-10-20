@@ -3,6 +3,7 @@ const redirectUri = 'https://localhost:3000';
 
 
 const Spotify = {
+  redirectUri: 'https://localhost:3000',
 
   generateRandomString(length) {
     let text = '';
@@ -13,7 +14,6 @@ const Spotify = {
     }
     return text;
   },
-
   async generateCodeChallenge(codeVerifier) {
     const encoder = new TextEncoder();
     const data = encoder.encode(codeVerifier);
@@ -26,12 +26,11 @@ const Spotify = {
 
     return hashBase64;
   },
-
   async authorize() {
     console.log("lancement de authorize() ...");
-    const codeVerifier = this.generateRandomString(128);
+    let codeVerifier = this.generateRandomString(128);
     localStorage.setItem('code_verifier', codeVerifier);
-    const codeChallenge =  await this.generateCodeChallenge(codeVerifier);
+    let codeChallenge = await this.generateCodeChallenge(codeVerifier);
     // Construct the authorization URL
     let state = this.generateRandomString(16);
     console.log("le state est : " + state);
@@ -50,7 +49,6 @@ const Spotify = {
 
     window.location.href = authorizationUrl;   
   },
-
 	async getAccessToken() {
 		let access_Token = localStorage.getItem('access_token');
 		const expirationDateAccessToken = localStorage.getItem('expiration_date');
@@ -71,65 +69,59 @@ const Spotify = {
       console.log("le access_Token grace au refresh() vaut : " + access_Token);
       return access_Token;
     }
-		else {
-			const queryString = window.location.search;
-      console.log("vrai QueryString vaut : " + queryString)
-      const urlParams = new URLSearchParams(queryString);
-      const codeFromUrl = urlParams.get('code');
-      
-      if (codeFromUrl) {
-        console.log("just apres if(codeFromUrl), codeFromUrl vaut : " + codeFromUrl);
-        let codeverifier = localStorage.getItem('code_verifier');
-        console.log("URL code after redirect is : " + codeFromUrl);
-        console.log("Code Verifier is: " + codeverifier);
-
-        let body = new URLSearchParams({
-          grant_type: 'authorization_code',
-          code: codeFromUrl,
-          redirect_uri: redirectUri,
-          client_id: clientId,
-          code_verifier: codeverifier
-        });
-        try {
-          const response = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: body
-          });
-        
-          if (!response.ok) {
-            console.log("There was a problem exchanging the code for a token: " + response.status);
-            throw new Error("There was an error during token exchange");
-          }
-          console.log("reponse is ok, on cree le reste")
-          const data = await response.json();
-          let access_Token = data.access_token;
-          let expires_in = data.expires_in;
-          let refresh_token = data.refresh_token;
-          localStorage.setItem('access_token', access_Token);
-          localStorage.setItem('expires_in', expires_in);
-          localStorage.setItem('refresh_token', refresh_token);
-          let now = Date.now();
-          let expirationDate = now + expires_in * 1000;
-          console.log("la date d'expiration est" + expirationDate);
-          localStorage.setItem('expiration_date', expirationDate);
-          console.log("access_Token vaut : " + access_Token);
-          return access_Token;
-        } catch (error) {
-          console.log("An error occurred while exchanging the code for a token: ", error);
-          throw error;
-          } 
-          
-        }
-      else {
-           await this.authorize();
-      }
-		}
 	}
 	},
-
+  async handleAuthorizationCode(code) {
+    try {
+      // Récupérez le code_verifier de localStorage
+      const codeVerifier = localStorage.getItem('code_verifier');
+  
+      // Créez un objet FormData pour envoyer la demande au point de terminaison de token
+      const formData = new FormData();
+      formData.append('grant_type', 'authorization_code');
+      formData.append('code', code);
+      formData.append('redirect_uri', redirectUri);
+      formData.append('client_id', clientId);
+      formData.append('code_verifier', codeVerifier);
+  
+      const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        console.error('Error exchanging the code for a token:', response.status);
+        throw new Error('Token exchange error');
+      }
+  
+      const data = await response.json();
+      const accessToken = data.access_token;
+      const expiresIn = data.expires_in;
+      const refreshToken = data.refresh_token;
+  
+      // Stockez les jetons dans localStorage
+      localStorage.setItem('access_token', accessToken);
+      localStorage.setItem('expiration_date', Date.now() + expiresIn * 1000);
+      localStorage.setItem('refresh_token', refreshToken);
+    } catch (error) {
+      console.error('An error occurred during code exchange:', error);
+      throw error;
+    }
+  },
+  async urlCodeToToken() {
+    const queryString = window.location.search;
+    console.log("vrai QueryString vaut : " + queryString)
+    const urlParams = new URLSearchParams(queryString);
+    const codeFromUrl = urlParams.get('code');
+    
+    if (codeFromUrl) {
+      await this.handleAuthorizationCode(codeFromUrl);
+      window.location.href = '/';
+      }
+  },
 	async refreshToken(refToken) {
     let body = new URLSearchParams({
       grant_type: 'refresh_token',
@@ -163,7 +155,6 @@ const Spotify = {
       throw error;
     }
   },
-
 	async search(word) {
 		let accessToken = await this.getAccessToken();
 		console.log("Spotify.search() a bien recup le token " + accessToken);
@@ -199,7 +190,6 @@ const Spotify = {
         throw error; // Rethrow the error
     }
   },
-
   async savePlaylist(name, tracks) {
     let accessToken = await this.getAccessToken();
 
@@ -251,6 +241,7 @@ const Spotify = {
   }
 
   }
+
 
    
 	

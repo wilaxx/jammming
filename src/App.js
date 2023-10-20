@@ -9,58 +9,14 @@ import { useState, useEffect } from "react";
 
 function App() {
 
-  const getLogState = (localTok) => {
-    if(!localTok){
-      return true;
-    }
-    else {
-      return false;
-    }
-  };
-
-  const loadComp = (status) => {
-      if(status) {
-        return (
-          <AppSearch 
-          onSearch={onSearch}
-          tracksResults={tracksResults} 
-          onAdd={onAdd}
-          onRemove={onRemove} 
-          tracksPlaylist={tracksPlaylist} 
-          namePlaylist={namePlaylist} 
-          onNameChange={updatePlaylistName} 
-          onSave={onSave}
-          />
-        );
-      }
-      else {
-        return (
-          <Landing />
-        );
-      }
-  };
-
-
   // Je choisis de vérifier le token access et jutilise un booleen true ou false comme dependance du useEfect car 
   // si j utilise le token access, comme il est rafraichit toutes les heures, et donc que sa valeur change,
   // ça relancera le useEffect comme la dépendanc change
-  const [localAccessToken, setLocalAccessToken] = useState(localStorage.getItem('access_token'));
   const [tracksResults, setTracksResults] = useState([]);
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New Playlist");
-  const [isAuth, setIsAuth] = useState(getLogState(localAccessToken));
+  const [isAuth, setIsAuth] = useState(null);
   
-  useEffect(() => {
-    // Vérifier si l'utilisateur est connecté (vérifiez le token d'accès ici)
-    if (isAuth) {
-      // On récupère les infos utilisateur nécessaires
-      
-    }
-    else {
-    
-    }
-  }, [isAuth]);
-
 
   const updatePlaylistName = (name) => {
     setNamePlaylist((prevName) => name);
@@ -112,13 +68,69 @@ function App() {
 
   };
 
-  
+  const logIn = async () => {
+  await Spotify.authorize();
+    };
+
+  const logOut = () => {
+    localStorage.clear();
+    setIsAuth(false);
+    };
+
+    const checkLoginStatus = async () => {
+    let accessTokenCheck = await Spotify.getAccessToken();
+    console.log('le tessssssssssssst vaut : ' + accessTokenCheck)
+    if(accessTokenCheck){
+      setIsAuth(true);
+    }
+    else {
+      let tokenUrlCheck = await Spotify.urlCodeToToken();
+      if(tokenUrlCheck) {
+        setIsAuth(true);
+      }
+      else {
+        setIsAuth(false);
+      }
+    }
+    };
+
+    useEffect(() => {
+      const checkStatus = async () => {
+        await checkLoginStatus();
+        await Spotify.urlCodeToToken(); // Appelez cette fonction au chargement de la page
+      };
+    
+      checkStatus();
+    }, []);
+
+
+  const loadComp = (isAuth) => {
+    if(isAuth) {
+      return (
+        <AppSearch 
+        onSearch={onSearch}
+        tracksResults={tracksResults} 
+        onAdd={onAdd}
+        onRemove={onRemove} 
+        tracksPlaylist={tracksPlaylist} 
+        namePlaylist={namePlaylist} 
+        onNameChange={updatePlaylistName} 
+        onSave={onSave}
+        />
+      );
+    }
+    else {
+      return (
+        <Landing />
+      );
+    }
+  };
 
   return (
     
     <div className="App">
 
-      <Header isAuth={isAuth} />
+      <Header isAuth={isAuth} logIn={logIn} logOut={logOut} />
 
       {loadComp(isAuth)}
       

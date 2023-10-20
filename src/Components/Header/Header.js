@@ -2,14 +2,14 @@ import "./Header.css";
 import { Spotify } from "../../Utils/spotify";
 
 
-function Header ({ isAuth }) {
+function Header ({ isAuth, logIn, logOut }) {
 
-    const handleLogin = () => {
-        Spotify.authorize();
+    const handleLogin = async () => {
+        await logIn();
     };
 
     const handleLogout = () => {
-        localStorage.clear();
+        logOut();
     };
 
 
