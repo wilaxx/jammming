@@ -23,7 +23,7 @@ function AppSearch (props) {
           onRemove={props.onRemove} 
           tracksPlaylist={props.tracksPlaylist} 
           namePlaylist={props.namePlaylist} 
-          onNameChange={props.updatePlaylistName} 
+          onNameChange={props.onNameChange} 
           onSave={props.onSave} />
           </Suspense>
           </div>

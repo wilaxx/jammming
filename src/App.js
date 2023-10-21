@@ -71,7 +71,6 @@ function App() {
   const logIn = async () => {
   await Spotify.authorize();
     };
-
   const logOut = () => {
     localStorage.clear();
     setIsAuth(false);

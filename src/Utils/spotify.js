@@ -73,23 +73,22 @@ const Spotify = {
 	},
   async handleAuthorizationCode(code) {
     try {
-      // Récupérez le code_verifier de localStorage
       const codeVerifier = localStorage.getItem('code_verifier');
   
-      // Créez un objet FormData pour envoyer la demande au point de terminaison de token
-      const formData = new FormData();
-      formData.append('grant_type', 'authorization_code');
-      formData.append('code', code);
-      formData.append('redirect_uri', redirectUri);
-      formData.append('client_id', clientId);
-      formData.append('code_verifier', codeVerifier);
-  
+      let body = new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: redirectUri,
+        client_id: clientId,
+        code_verifier: codeVerifier
+      });
+
       const response = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: formData,
+        body: body,
       });
   
       if (!response.ok) {
@@ -102,7 +101,6 @@ const Spotify = {
       const expiresIn = data.expires_in;
       const refreshToken = data.refresh_token;
   
-      // Stockez les jetons dans localStorage
       localStorage.setItem('access_token', accessToken);
       localStorage.setItem('expiration_date', Date.now() + expiresIn * 1000);
       localStorage.setItem('refresh_token', refreshToken);
@@ -118,8 +116,15 @@ const Spotify = {
     const codeFromUrl = urlParams.get('code');
     
     if (codeFromUrl) {
-      await this.handleAuthorizationCode(codeFromUrl);
+      try {
+        await this.handleAuthorizationCode(codeFromUrl);
       window.location.href = '/';
+      } catch (error) {
+        console.error('error exchange with code from url : ', error);
+      }
+
+
+      
       }
   },
 	async refreshToken(refToken) {

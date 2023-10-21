@@ -7,7 +7,7 @@ function Landing() {
     return (
         <div className="Landing">
 
-            <p className="land-message">HELLO SOON LA CAILLERA</p>
+            <p className="land-message">Jammming Landing Page</p>
 
         </div>
     );
