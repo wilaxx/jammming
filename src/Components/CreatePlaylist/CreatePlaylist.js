@@ -1,20 +1,21 @@
-import "./AppSearch.css";
+import "./CreatePlaylist.css";
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
-import { Suspense, lazy } from "react";
+import Playlist from "../Playlist/Playlist";
+import { Suspense } from "react";
 
-const Playlist = lazy(() => import ("../Playlist/Playlist"));
 
 
-function AppSearch (props) {
+
+function CreatePlaylist (props) {
 
 
     return (
 
-        <div className="AppSearch">
+        <div className="CreatePlaylist">
           <SearchBar onSearch={props.onSearch} />
          
-          <div className="AppSearch-results">
+          <div className="CreatePlaylist-results">
           
           <SearchResults tracksResults={props.tracksResults} onAdd={props.onAdd} />
           
@@ -32,5 +33,5 @@ function AppSearch (props) {
     );
 };
 
-export default AppSearch;
+export default CreatePlaylist;
 

@@ -27,13 +27,11 @@ const Spotify = {
     return hashBase64;
   },
   async authorize() {
-    console.log("lancement de authorize() ...");
     let codeVerifier = this.generateRandomString(128);
     localStorage.setItem('code_verifier', codeVerifier);
     let codeChallenge = await this.generateCodeChallenge(codeVerifier);
     // Construct the authorization URL
     let state = this.generateRandomString(16);
-    console.log("le state est : " + state);
     let scope = 'user-read-private user-read-email playlist-modify-public';
     const args = new URLSearchParams({
       response_type: 'code',
@@ -53,22 +51,25 @@ const Spotify = {
 		let access_Token = localStorage.getItem('access_token');
 		const expirationDateAccessToken = localStorage.getItem('expiration_date');
     const now = Date.now();
-    console.log("expirationDateAccessToken vaut : " + expirationDateAccessToken);
-    console.log("now vaut : " + now);
 		 
 		if((access_Token) && (now - expirationDateAccessToken < 0)) {
-      console.log("Il existe deja un token qui n'a pas expire : " + access_Token);
 			return access_Token;
 		}
 		else {
       let refresh_Token = localStorage.getItem('refresh_token');
 	
     if (refresh_Token){
+
+      try {
       access_Token = await this.refreshToken(refresh_Token);
       localStorage.setItem('access_token', access_Token);
-      console.log("le access_Token grace au refresh() vaut : " + access_Token);
       return access_Token;
+      } catch (error) {
+        console.error("problem trying to refresh access token", error)
+      }
+      
     }
+  
 	}
 	},
   async handleAuthorizationCode(code) {
@@ -111,14 +112,13 @@ const Spotify = {
   },
   async urlCodeToToken() {
     const queryString = window.location.search;
-    console.log("vrai QueryString vaut : " + queryString)
     const urlParams = new URLSearchParams(queryString);
     const codeFromUrl = urlParams.get('code');
     
     if (codeFromUrl) {
       try {
         await this.handleAuthorizationCode(codeFromUrl);
-      window.location.href = '/';
+        window.location.href = '/';
       } catch (error) {
         console.error('error exchange with code from url : ', error);
       }
@@ -144,8 +144,7 @@ const Spotify = {
       });
   
       if (!response.ok) {
-        console.log("probleme de refresh : " + response.status);
-        throw new Error("An error occurred during token refresh");
+        throw new Error("An error occurred during token refresh : " + response.message);
 
       }
         const data = await response.json(); 
@@ -156,13 +155,12 @@ const Spotify = {
         return data.access_token;
       
     } catch (error) {
-      console.log("An error occurred while refreshing the token: ", error);
+      console.error(error);
       throw error;
     }
   },
 	async search(word) {
 		let accessToken = await this.getAccessToken();
-		console.log("Spotify.search() a bien recup le token " + accessToken);
 
     try {
     const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${word}`, {
@@ -171,8 +169,7 @@ const Spotify = {
     }
   });
   if (!response.ok) {
-    console.log("An error occurred during the search: " + response.status);
-    throw new Error("An error occurred during the search");
+    throw new Error("An error occurred during the search : " + response.message);
   }
 
   const data = await response.json();
@@ -191,7 +188,7 @@ const Spotify = {
   return results;
   }
    catch (error) {
-    console.log("An error occurred during the search: ", error);
+    console.error("An error occurred during the search: ", error.status + " " + error.message);
         throw error; // Rethrow the error
     }
   },
@@ -233,22 +230,40 @@ const Spotify = {
     });
 
     if (addTracksResponse.ok) {
-      console.log("Tracks added to playlist successfully.");
+      alert("Tracks added to playlist successfully.");
       return 'Success';
     } else {
-      console.log("An error occurred while adding tracks to the playlist.");
-      throw new Error('Error when trying to add tracks to playlist');
+      throw new Error('Error when trying to add tracks to playlist : ' + addTracksResponse.message);
     }
   }
   else {
-    console.log("Erreur lors de la recuperation de la playlist");
     throw new Error('Error getting playlist ID');
   }
 
+  },
+  async getCurrentUserProfile() {
+    let accessToken = await this.getAccessToken();
+
+    try {
+      const response = await fetch(`https://api.spotify.com/v1/me`, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }
+    });
+    if (!response.ok) {
+      throw new Error("An error occurred during profile retrieval");
+    }
+  
+    const data = await response.json();
+    console.log(data.display_name);
+    } catch (error) {
+      console.error(error, error.status + " " + error.message);
+          throw error; // Rethrow the error
+      }
   }
 
 
-   
+
 	
 };
 

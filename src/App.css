@@ -1,10 +1,20 @@
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
   /* gap: 1rem; */
-  background-color: rgba(109, 102, 134, 0.923);
+  background-color: transparent;
   min-height: 100vh;
+  /* background-image: url('./background.jpg'); */
+
+  background-image: url('./music-jammming.jpg');
+  /* background-image: url('./music-jammming.jpg'); */
+
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
 }
 
 

@@ -1,0 +1,29 @@
+.HomeFeatures {
+    display: flex;
+    column-gap: 1rem;
+  }
+  
+  .HomeFeatures > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1rem;
+    line-height: 4rem;
+  
+    /* align-self: center; */
+    /* text-align: justify; */
+  }
+
+  [class$="-guidelines"] > p {
+    /* background-color: blue;
+    opacity: 0.8; */
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7), rgba(30, 8, 0, 0.9));
+    font-family: 'Patrick Hand SC', cursive;
+    font-size: 3rem;
+    padding: 1rem 6rem;
+    border-radius: 1rem;
+    text-align: center;
+    /* align-content: center; */
+    color: rgb(216, 144, 12);
+    
+  }

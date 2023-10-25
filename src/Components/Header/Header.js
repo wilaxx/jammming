@@ -1,6 +1,4 @@
 import "./Header.css";
-import { Spotify } from "../../Utils/spotify";
-
 
 function Header ({ isAuth, logIn, logOut }) {
 
@@ -12,12 +10,11 @@ function Header ({ isAuth, logIn, logOut }) {
         logOut();
     };
 
-
     const buttonRender = (auth) => {
 
         if(auth) {
             return (
-                <button onClick={handleLogout}>
+                <button className="logout-btn" onClick={handleLogout}>
                     Log out
                  </button>
             );
@@ -25,7 +22,7 @@ function Header ({ isAuth, logIn, logOut }) {
         else {
             return (
 
-                <button onClick={handleLogin}>
+                <button className="login-btn" onClick={handleLogin}>
                     Log in
                 </button>  
 
@@ -33,6 +30,8 @@ function Header ({ isAuth, logIn, logOut }) {
         }
 
     };
+
+
 
     return (
 

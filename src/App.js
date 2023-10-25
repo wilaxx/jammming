@@ -1,7 +1,7 @@
 import "./App.css";
 import { Spotify } from "./Utils/spotify";
 import Header from "./Components/Header/Header";
-import AppSearch from "./Components/AppSearch/AppSearch";
+import AppLoggedIn from "./Components/AppLoggedIn/AppLoggedIn";
 import Landing from "./Components/Landing/Landing";
 import { useState, useEffect } from "react";
 
@@ -16,7 +16,6 @@ function App() {
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New Playlist");
   const [isAuth, setIsAuth] = useState(null);
-  
 
   const updatePlaylistName = (name) => {
     setNamePlaylist((prevName) => name);
@@ -57,7 +56,7 @@ function App() {
       const trackspl = [...tracksPlaylist];
 
       await Spotify.savePlaylist(namepl, trackspl);
-      console.log("Playlist and tracks saved successfully.");
+      alert("Playlist and tracks saved successfully.");
       
       // Réinitialiser les états
       setTracksPlaylist(prev => []); // Effacer la liste des morceaux
@@ -78,7 +77,6 @@ function App() {
 
     const checkLoginStatus = async () => {
     let accessTokenCheck = await Spotify.getAccessToken();
-    console.log('le tessssssssssssst vaut : ' + accessTokenCheck)
     if(accessTokenCheck){
       setIsAuth(true);
     }
@@ -96,7 +94,7 @@ function App() {
     useEffect(() => {
       const checkStatus = async () => {
         await checkLoginStatus();
-        await Spotify.urlCodeToToken(); // Appelez cette fonction au chargement de la page
+        await Spotify.getCurrentUserProfile();
       };
     
       checkStatus();
@@ -106,7 +104,7 @@ function App() {
   const loadComp = (isAuth) => {
     if(isAuth) {
       return (
-        <AppSearch 
+        <AppLoggedIn
         onSearch={onSearch}
         tracksResults={tracksResults} 
         onAdd={onAdd}
@@ -116,6 +114,7 @@ function App() {
         onNameChange={updatePlaylistName} 
         onSave={onSave}
         />
+
       );
     }
     else {
