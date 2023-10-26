@@ -4,11 +4,14 @@ import CreatePlaylist from "../CreatePlaylist/CreatePlaylist";
 import ModifyPlaylist from "../ModifyPlaylist/ModifyPlaylist";
 import SearchAlbums from "../SearchAlbums/SearchAlbums";
 import HomeFeatures from "../HomeFeatures/HomeFeatures";
+import homefeatures from "./home-features.png";
 
 
 function Features(props) {
 
-  const [activeComp, setActiveComp] = useState("");
+  const [activeComp, setActiveComp] = useState("home");
+
+
 
   const handleCreate = (e) => {
     setActiveComp("create");
@@ -24,6 +27,11 @@ function Features(props) {
   const handleSearchAlbums = (e) => {
     setActiveComp("search-albums");
     e.target.classList.add("active")
+  };
+
+  const handleHomeClick = () => {
+    setActiveComp("home");
+    setActiveButton("home");
   };
 
   const loadComp = (comp) => {
@@ -57,19 +65,30 @@ function Features(props) {
     }
   };
 
+  const setActiveButton = (comp) => {
+    const navButtons = document.querySelectorAll('.btn-wrapper button');
+    const homeImage = document.querySelector('.Features img');
+  
+    navButtons.forEach((button) => {
+      button.classList.remove('active');
+    });
+
+    homeImage.classList.remove('active');
+  
+    if (comp === "create") {
+      document.querySelector('.create-playlist').classList.add('active');
+    } else if (comp === "modify") {
+      document.querySelector('.modify-playlist').classList.add('active');
+    } else if (comp === "search-albums") {
+      document.querySelector('.search-albums').classList.add('active');
+    } else if (comp === "home") {
+      homeImage.classList.add('active');
+    }
+    
+  }
+
   useEffect(() => {
-    if (activeComp === "create") {
-       setActiveComp(activeComp) 
-    }
-    else if (activeComp === "modify") {
-      setActiveComp(activeComp)
-    }
-    else if (activeComp === "search-albums") {
-      setActiveComp(activeComp)
-    }
-    else {
-      setActiveComp("home");
-    }
+    setActiveButton(activeComp);
   }, [activeComp]);
 
 
@@ -77,7 +96,7 @@ function Features(props) {
 
     <div className="Features">
 
-      <img src={homeloggedin} alt="loggedin-home" onClick={() => {setActiveComp("home")}} />
+      <img src={homefeatures} alt="home-features" onClick={handleHomeClick} />
 
       <div className="banner">
         <nav className="banner-nav">
