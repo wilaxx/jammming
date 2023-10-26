@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./SearchBar.css";
 
 function SearchBar({onSearch}) {
-  
-  const [logged, setLogged] = useState(false);
 
   const [word, setWord] = useState("");
 

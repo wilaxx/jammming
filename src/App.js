@@ -1,7 +1,7 @@
 import "./App.css";
 import { Spotify } from "./Utils/spotify";
 import Header from "./Components/Header/Header";
-import AppLoggedIn from "./Components/AppLoggedIn/AppLoggedIn";
+import Features from "./Components/Features/Features";
 import Landing from "./Components/Landing/Landing";
 import { useState, useEffect } from "react";
 
@@ -16,6 +16,7 @@ function App() {
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New Playlist");
   const [isAuth, setIsAuth] = useState(null);
+  const [activeComp, setActiveComp] = useState("");
 
   const updatePlaylistName = (name) => {
     setNamePlaylist((prevName) => name);
@@ -74,7 +75,6 @@ function App() {
     localStorage.clear();
     setIsAuth(false);
     };
-
     const checkLoginStatus = async () => {
     let accessTokenCheck = await Spotify.getAccessToken();
     if(accessTokenCheck){
@@ -104,7 +104,7 @@ function App() {
   const loadComp = (isAuth) => {
     if(isAuth) {
       return (
-        <AppLoggedIn
+        <Features
         onSearch={onSearch}
         tracksResults={tracksResults} 
         onAdd={onAdd}
@@ -123,6 +123,21 @@ function App() {
       );
     }
   };
+  
+  // const toggleActiveComp = (comp) => {
+  //     if(comp === "create") {
+  //       setActiveComp(comp)
+  //     }
+  //     else if (comp === "modify") {
+  //       setActiveComp(comp)
+  //     }
+  //     else if (comp === "search-albums") {
+  //       setActiveComp(comp)
+  //     }
+  //     else {
+  //       setActiveComp("home")
+  //     }
+  // };
 
   return (
     

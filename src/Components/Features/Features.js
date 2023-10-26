@@ -1,30 +1,28 @@
-import React, { useCallback } from "react";
-import "./AppLoggedIn.css";
+import React, { useState, useEffect } from "react";
+import "./Features.css";
 import CreatePlaylist from "../CreatePlaylist/CreatePlaylist";
-import BannerFeatures from "../BannerFeatures/BannerFeatures";
-import HomeFeatures from "../HomeFeatures/HomeFeatures";
 import ModifyPlaylist from "../ModifyPlaylist/ModifyPlaylist";
 import SearchAlbums from "../SearchAlbums/SearchAlbums";
-import homeloggedin from "../AppLoggedIn/home-logged-in.png";
-import { useEffect, useState } from "react";
+import HomeFeatures from "../HomeFeatures/HomeFeatures";
 
-function AppLoggedIn(props) {
+function Features(props) {
 
   const [activeComp, setActiveComp] = useState("");
 
-  const toggleActivComp = (comp) => {
-      if(comp === "create") {
-        setActiveComp(comp)
-      }
-      else if (comp === "modify") {
-        setActiveComp(comp)
-      }
-      else if (comp === "search-albums") {
-        setActiveComp(comp)
-      }
-      else {
-        setActiveComp("home")
-      }
+  const handleCreate = (e) => {
+    setActiveComp("create");
+    e.target.classList.add("active");
+
+  };
+
+  const handleModify = (e) => {
+    setActiveComp("modify");
+    e.target.classList.add("active");
+  };
+
+  const handleSearchAlbums = (e) => {
+    setActiveComp("search-albums");
+    e.target.classList.add("active")
   };
 
   const loadComp = (comp) => {
@@ -76,16 +74,35 @@ function AppLoggedIn(props) {
 
   return (
 
-    <div className="AppLoggedIn">
+    <div className="Features">
 
-        <img src={homeloggedin} alt="loggedin-home" onClick={() => {setActiveComp("home")}} />
+      <div className="banner">
+        <nav className="banner-nav">
 
-        <BannerFeatures toggleActiveComp={toggleActivComp} activeComp={activeComp} />
-
-        {loadComp(activeComp)}
+        <div className="btn-wrapper">
+          <button className="create-playlist" onClick={handleCreate} >
+            Create playlist
+          </button>
+        </div>
   
+        <div className="btn-wrapper">
+          <button className="modify-playlist" onClick={handleModify} >
+            Modify Playlists
+          </button>
+        </div>
+
+        <div className="btn-wrapper"> 
+          <button className="search-albums" onClick={handleSearchAlbums} >
+            Search for albums
+          </button>
+        </div>
+        </nav>
+      </div>
+
+   {loadComp(activeComp)}
+
     </div>
   );
 }
 
-export default AppLoggedIn;
+export default Features;
