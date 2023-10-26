@@ -16,7 +16,7 @@ function App() {
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New Playlist");
   const [isAuth, setIsAuth] = useState(null);
-  const [activeComp, setActiveComp] = useState("");
+  // const [activeComp, setActiveComp] = useState("");
 
   const updatePlaylistName = (name) => {
     setNamePlaylist((prevName) => name);
@@ -94,11 +94,14 @@ function App() {
     useEffect(() => {
       const checkStatus = async () => {
         await checkLoginStatus();
-        await Spotify.getCurrentUserProfile();
+        if(isAuth) {
+           await Spotify.getCurrentUserProfile();
+        }
+       
       };
     
       checkStatus();
-    }, []);
+    }, [isAuth]);
 
 
   const loadComp = (isAuth) => {
@@ -124,20 +127,6 @@ function App() {
     }
   };
   
-  // const toggleActiveComp = (comp) => {
-  //     if(comp === "create") {
-  //       setActiveComp(comp)
-  //     }
-  //     else if (comp === "modify") {
-  //       setActiveComp(comp)
-  //     }
-  //     else if (comp === "search-albums") {
-  //       setActiveComp(comp)
-  //     }
-  //     else {
-  //       setActiveComp("home")
-  //     }
-  // };
 
   return (
     

@@ -5,6 +5,7 @@ import ModifyPlaylist from "../ModifyPlaylist/ModifyPlaylist";
 import SearchAlbums from "../SearchAlbums/SearchAlbums";
 import HomeFeatures from "../HomeFeatures/HomeFeatures";
 
+
 function Features(props) {
 
   const [activeComp, setActiveComp] = useState("");
@@ -75,6 +76,8 @@ function Features(props) {
   return (
 
     <div className="Features">
+
+      <img src={homeloggedin} alt="loggedin-home" onClick={() => {setActiveComp("home")}} />
 
       <div className="banner">
         <nav className="banner-nav">
