@@ -18,7 +18,7 @@
     /* background-color: blue;
     opacity: 0.8; */
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7), rgba(30, 8, 0, 0.9));
-    font-family: 'Patrick Hand SC', cursive;
+    font-family: 'Patrick Hand SC';
     font-size: 3rem;
     padding: 1rem 6rem;
     border-radius: 1rem;

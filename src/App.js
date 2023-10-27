@@ -90,21 +90,7 @@ function App() {
       }
     }
     };
-
-    useEffect(() => {
-      const checkStatus = async () => {
-        await checkLoginStatus();
-        if(isAuth) {
-           await Spotify.getCurrentUserProfile();
-        }
-       
-      };
-    
-      checkStatus();
-    }, [isAuth]);
-
-
-  const loadComp = (isAuth) => {
+    const loadComp = (isAuth) => {
     if(isAuth) {
       return (
         <Features
@@ -125,8 +111,44 @@ function App() {
         <Landing />
       );
     }
-  };
+    };
+
+
+    useEffect(() => {
+      const checkStatus = async () => {
+        await checkLoginStatus();
+        if(isAuth) {
+           await Spotify.getCurrentUserProfile();
+           await Spotify.getCurrentUserPlaylists();
+        }
+       
+      };
+    
+      checkStatus();
+    }, [isAuth]);
+
+    useEffect(() => {
+      const handleScroll = () => {
+        const header = document.querySelector('.Header');
+        const scrollPosition = window.scrollY;
+      
+        if (scrollPosition > 0) {
+          header.style.background = 'rgba(109, 102, 134, 0.98)'; 
+        } else {
+          header.style.backgroundColor = 'rgba(109, 102, 134, 0.4)';
+        }
+      };
   
+      // Ajoutez un écouteur d'événement de défilement
+      window.addEventListener('scroll', handleScroll);
+  
+      // Nettoyez l'écouteur lorsque le composant est démonté
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+
+
 
   return (
     

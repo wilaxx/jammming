@@ -50,7 +50,15 @@ function Features(props) {
     }
     else if(comp === "modify") {
       return (
-        <ModifyPlaylist />
+        <ModifyPlaylist
+        onSearch={props.onSearch}
+        onAdd={props.onAdd}
+        onRemove={props.onRemove}
+        tracksPlaylist={props.tracksPlaylist}
+        namePlaylist={props.namePlaylist} 
+        onNameChange={props.onNameChange} 
+        onSave={props.onSave}
+          />
       );
     }
     else if(comp === "search-albums") {
