@@ -11,7 +11,27 @@ function Features(props) {
 
   const [activeComp, setActiveComp] = useState("home");
 
+  const setActiveButton = (comp) => {
+    const navButtons = document.querySelectorAll('.btn-wrapper button');
+    const homeImage = document.querySelector('.Features img');
+  
+    navButtons.forEach((button) => {
+      button.classList.remove('active');
+    });
 
+    homeImage.classList.remove('active');
+  
+    if (comp === "create") {
+      document.querySelector('.create-playlist').classList.add('active');
+    } else if (comp === "modify") {
+      document.querySelector('.modify-playlist').classList.add('active');
+    } else if (comp === "search-albums") {
+      document.querySelector('.search-albums').classList.add('active');
+    } else if (comp === "home") {
+      homeImage.classList.add('active');
+    }
+    
+  };
 
   const handleCreate = (e) => {
     setActiveComp("create");
@@ -52,6 +72,7 @@ function Features(props) {
       return (
         <ModifyPlaylist
         onSearch={props.onSearch}
+        tracksResults={props.tracksResults}
         onAdd={props.onAdd}
         onRemove={props.onRemove}
         tracksPlaylist={props.tracksPlaylist}
@@ -73,27 +94,7 @@ function Features(props) {
     }
   };
 
-  const setActiveButton = (comp) => {
-    const navButtons = document.querySelectorAll('.btn-wrapper button');
-    const homeImage = document.querySelector('.Features img');
   
-    navButtons.forEach((button) => {
-      button.classList.remove('active');
-    });
-
-    homeImage.classList.remove('active');
-  
-    if (comp === "create") {
-      document.querySelector('.create-playlist').classList.add('active');
-    } else if (comp === "modify") {
-      document.querySelector('.modify-playlist').classList.add('active');
-    } else if (comp === "search-albums") {
-      document.querySelector('.search-albums').classList.add('active');
-    } else if (comp === "home") {
-      homeImage.classList.add('active');
-    }
-    
-  }
 
   useEffect(() => {
     setActiveButton(activeComp);

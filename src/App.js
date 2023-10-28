@@ -9,9 +9,8 @@ import { useState, useEffect } from "react";
 
 function App() {
 
-  // Je choisis de vérifier le token access et jutilise un booleen true ou false comme dependance du useEfect car 
-  // si j utilise le token access, comme il est rafraichit toutes les heures, et donc que sa valeur change,
-  // ça relancera le useEffect comme la dépendanc change
+  const [userName, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
   const [tracksResults, setTracksResults] = useState([]);
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New Playlist");
@@ -119,7 +118,9 @@ function App() {
         await checkLoginStatus();
         if(isAuth) {
            await Spotify.getCurrentUserProfile();
-           await Spotify.getCurrentUserPlaylists();
+           setUserId(Spotify.userId)
+           setUsername(Spotify.userName);
+           await Spotify.getCurrentUserPlaylistsIds();
         }
        
       };

@@ -3,8 +3,21 @@ const redirectUri = 'https://localhost:3000';
 
 
 const Spotify = {
-  redirectUri: 'https://localhost:3000',
+  _userId: 'null',
+  _userName: 'null',
 
+  get userName () {
+    return this._userName;
+  },
+  set userName (newName) {
+    this._userName = newName;
+  },
+  get userId () {
+    return this._userId;
+  },
+  set userId (newId) {
+    this._userId = newId;
+  },
   generateRandomString(length) {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -255,14 +268,24 @@ const Spotify = {
     }
   
     const data = await response.json();
+
+
     console.log("le nom d utilisateur est : " + data.display_name);
     console.log("l'id utilisateur est : " + data.id);
+
+    
+
+    this.user_name = data.display_name;
+    this.user_id = data.id;
+    const user_profile = [user_name, user_id];
+
+    return user_profile;
     } catch (error) {
       console.error(error, error.status + " " + error.message);
           throw error; // Rethrow the error
       }
   },
-  async getCurrentUserPlaylists() {
+  async getCurrentUserPlaylistsIds() {
     let accessToken = await this.getAccessToken();
 
     try {
@@ -282,6 +305,10 @@ const Spotify = {
     } catch (error) {
       console.error(error, error.status + " " + error.message);
       }
+  },
+  async getPlaylistItems(playlistIds) {
+
+    let accessToken = await this.getAccessToken();
   },
   async getPlaylist() {
 

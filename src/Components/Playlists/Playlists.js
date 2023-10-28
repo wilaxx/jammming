@@ -1,7 +1,9 @@
 import React from "react";
 import "./Playlists.css";
 
-function Playlists() {
+function Playlists () {
+
+
   return (
     <div className="Playlists">
         
@@ -24,6 +26,6 @@ function Playlists() {
 
     </div>
   );
-}
+};
 
 export default Playlists;
