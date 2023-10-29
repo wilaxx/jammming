@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
 
-function SearchBar({onSearch}) {
+function SearchBar(props) {
 
   const [word, setWord] = useState("");
 
@@ -11,7 +11,7 @@ function SearchBar({onSearch}) {
   };
 
   const handleClick = async () => {
-    await onSearch(word);
+    await onSearch('modify', word);
     setWord("");
   };
 

@@ -58,33 +58,36 @@ function Features(props) {
     if(comp === "create") {
       return (
         <CreatePlaylist
-        onSearch={props.onSearch}
-        tracksResults={props.tracksResults} 
-        onAdd={props.onAdd}
-        onRemove={props.onRemove} 
-        tracksPlaylist={props.tracksPlaylist} 
-        namePlaylist={props.namePlaylist} 
-        onNameChange={props.onNameChange} 
-        onSave={props.onSave} />
+        onSearchOfCreate={props.onSearchOfCreate}
+        tracksResultsOfCreate={props.tracksResultsOfCreate} 
+        onAddOfCreate={props.onAddOfCreate}
+        onRemoveOfCreate={props.onRemoveOfCreate} 
+        tracksPlaylistOfCreate={props.tracksPlaylistOfCreate} 
+        namePlaylistOfCreate={props.namePlaylistOfCreate} 
+        onNameChangeOfCreate={props.onNameChangeOfCreate} 
+        onSaveOfCreate={props.onSaveOfCreate} />
       );
     }
     else if(comp === "modify") {
       return (
         <ModifyPlaylist
-        onSearch={props.onSearch}
-        tracksResults={props.tracksResults}
-        onAdd={props.onAdd}
-        onRemove={props.onRemove}
-        tracksPlaylist={props.tracksPlaylist}
-        namePlaylist={props.namePlaylist} 
-        onNameChange={props.onNameChange} 
-        onSave={props.onSave}
+        onSearchOfModify={props.onSearchOfModify}
+        tracksResultsOfModify={props.tracksResultsOfModify}
+        onAddOfModify={props.onAddOfModify}
+        onRemoveOfModify={props.onRemoveOfModify}
+        tracksPlaylistOfModify={props.tracksPlaylistOfModify}
+        namePlaylistOfModify={props.namePlaylistOfModify} 
+        onNameChangeOfModify={props.onNameChangeOfModify} 
+        onSaveOfModify={props.onSaveOfModify}
           />
       );
     }
     else if(comp === "search-albums") {
       return (
-        <SearchAlbums />
+        <SearchAlbums
+        onSearchOfSearchalb={props.onSearchOfSearchalb}
+        tracksResultsOfSearchalb={props.tracksResultsOfSearchalb}
+         />
       );
     }
     else if (comp === "home") {

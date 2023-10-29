@@ -13,19 +13,19 @@ function CreatePlaylist (props) {
     return (
 
         <div className="CreatePlaylist">
-          <SearchBar onSearch={props.onSearch} />
+          <SearchBar onSearchOfCreate={props.onSearchOfCreate} />
          
           <div className="CreatePlaylist-results">
           
-          <SearchResults tracksResults={props.tracksResults} onAdd={props.onAdd} />
+          <SearchResults tracksResultsOfCreate={props.tracksResultsOfCreate} onAdd={props.onAdd} />
           
           <Suspense fallback={<h1> HELLO </h1>}>
           <Playlist 
-          onRemove={props.onRemove} 
-          tracksPlaylist={props.tracksPlaylist} 
-          namePlaylist={props.namePlaylist} 
-          onNameChange={props.onNameChange} 
-          onSave={props.onSave} />
+          onRemoveOfCreate={props.onRemoveOfCreate} 
+          tracksPlaylistOfCreate={props.tracksPlaylistOfCreate} 
+          namePlaylistOfCreate={props.namePlaylistOfCreate} 
+          onNameChangeOfCreate={props.onNameChangeOfCreate} 
+          onSaveOfCreate={props.onSaveOfCreate} />
           </Suspense>
           </div>
       </div>

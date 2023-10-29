@@ -11,38 +11,45 @@ function App() {
 
   const [userName, setUsername] = useState('');
   const [userId, setUserId] = useState('');
-  const [tracksResults, setTracksResults] = useState([]);
   
+  const [tracksResultsOfCreate, setTracksResultsOfCreate] = useState([]);
+  const [tracksPlaylistOfCreate, setTracksPlaylistOfCreate] = useState([]);
+  const [namePlaylistOfCreate, setNamePlaylistOfCreate] = useState("New Playlist");
 
-  const [tracksPlaylist, setTracksPlaylist] = useState([]);
-  const [namePlaylist, setNamePlaylist] = useState("New Playlist");
+  const [tracksResultsOfModify, setTracksResultsOfModify] = useState([]);
+  const [tracksPlaylistOfModify, setTracksPlaylistOfModify] = useState([]);
+  const [namePlaylistOfModify, setNamePlaylistOfModify] = useState("New Playlist");
+
+  const [tracksResultsOfSearchalb, setTracksResultsOfSearchalb] = useState([]);
+
   const [isAuth, setIsAuth] = useState(null);
-  // const [activeComp, setActiveComp] = useState("");
 
-  const updatePlaylistName = (name) => {
-    setNamePlaylist((prevName) => name);
+
+ //functions for Create component
+  const updatePlaylistNameOfCreate = (name) => {
+    setNamePlaylistOfCreate((prevName) => name);
   };
-  const onAdd = (track) => {    
-    if (tracksPlaylist.every(element => element.id !== track.id)){
-      setTracksPlaylist((prevTracks) => [...prevTracks, track] );
+  const onAddOfCreate = (track) => {    
+    if (tracksPlaylistOfCreate.every(element => element.id !== track.id)){
+      setTracksPlaylistOfCreate((prevTracks) => [...prevTracks, track] );
     }
     else {
       alert("deja dans la playlist")
     }
   };
-  const onRemove = (track) => {
-    setTracksPlaylist((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
+  const onRemoveOfCreate = (track) => {
+    setTracksPlaylistOfCreate((prevTracks) => prevTracks.filter((element) => element.id !== track.id));
   };
-  const onSearch = async (word) => {
+  const onSearchOfCreate = async (comp, word) => {
       try {
 
         if (word.trim() === "") {
-          setTracksResults([]); 
+          setTracksResultsOfCreate([]); 
           return;
         }
 
         const searchData = await Spotify.search(word);
-        setTracksResults((prev) => searchData);
+        setTracksResultsOfCreate((prev) => searchData);
         
       } catch (error) {
         console.error('An error occurred during the test:', error.message);
@@ -52,23 +59,75 @@ function App() {
     
    
   };
-  const onSave = async (namePaylist, tracksPlaylist) => {
+  const onSaveOfCreate = async (namePaylistOfCreate, tracksPlaylistOfCreate) => {
     try {
-      const namepl = namePaylist;
-      const trackspl = [...tracksPlaylist];
+      const namepl = namePaylistOfCreate;
+      const trackspl = [...tracksPlaylistOfCreate];
 
       await Spotify.savePlaylist(namepl, trackspl);
       alert("Playlist and tracks saved successfully.");
       
       // Réinitialiser les états
-      setTracksPlaylist(prev => []); // Effacer la liste des morceaux
-      setNamePlaylist("New Playlist");
+      setTracksPlaylistOfCreate(prev => []); // Effacer la liste des morceaux
+      setNamePlaylistOfCreate("New Playlist");
     } catch (error) {
       console.error('An error occurred while saving the playlist:', error);
     }
 
   };
 
+//functions for Modify component
+const updatePlaylistNameOfModify = (name) => {
+  setNamePlaylistOfModify((prevName) => name);
+};
+
+const onAddOfModify = (track) => {
+  if (tracksPlaylistOfModify.every(element => element.id !== track.id)) {
+    setTracksPlaylistOfModify((prevTracks) => [...prevTracks, track]);
+  } else {
+    alert("Already in the modified playlist");
+  }
+};
+
+const onRemoveOfModify = (track) => {
+  setTracksPlaylistOfModify((prevTracks) =>
+    prevTracks.filter((element) => element.id !== track.id)
+  );
+};
+
+const onSearchOfModify = async (word) => {
+  try {
+    if (word.trim() === "") {
+      setTracksResultsOfModify([]);
+      return;
+    }
+
+    const searchData = await Spotify.search(word);
+    setTracksResultsOfModify((prev) => searchData);
+  } catch (error) {
+    console.error('An error occurred during the modification search:', error.message);
+    alert('An error occurred while modifying');
+  }
+};
+
+const onSaveOfModify = async (namePlaylistOfModify, tracksPlaylistOfModify) => {
+  try {
+    const namepl = namePlaylistOfModify;
+    const trackspl = [...tracksPlaylistOfModify];
+
+    await Spotify.savePlaylist(namepl, trackspl);
+    alert("Modified playlist and tracks saved successfully.");
+
+    // Reset the states
+    setTracksPlaylistOfModify(prev => []); // Clear the tracks list
+    setNamePlaylistOfModify("New Playlist");
+  } catch (error) {
+    console.error('An error occurred while saving the modified playlist:', error);
+  }
+};
+
+
+// functions for the Header comp
   const logIn = async () => {
   await Spotify.authorize();
     };
@@ -76,6 +135,8 @@ function App() {
     localStorage.clear();
     setIsAuth(false);
     };
+
+  // function to launch with useEffect
     const checkLoginStatus = async () => {
     let accessTokenCheck = await Spotify.getAccessToken();
     if(accessTokenCheck){
@@ -91,18 +152,29 @@ function App() {
       }
     }
     };
+
+  //function to use in the return to load appropriate component
     const loadComp = (isAuth) => {
     if(isAuth) {
       return (
         <Features
-        onSearch={onSearch}
-        tracksResults={tracksResults} 
-        onAdd={onAdd}
-        onRemove={onRemove} 
-        tracksPlaylist={tracksPlaylist} 
-        namePlaylist={namePlaylist} 
-        onNameChange={updatePlaylistName} 
-        onSave={onSave}
+        onSearchOfCreate={onSearchOfCreate}
+        tracksResultsOfCreate={tracksResultsOfCreate}
+        tracksResultsOfModify={tracksResultsOfModify}
+        tracksResultsOfSearchalb={tracksResultsOfSearchalb}
+        onAddOfCreate={onAddOfCreate}
+        onRemoveOfCreate={onRemoveOfCreate}
+        tracksPlaylistOfCreate={tracksPlaylistOfCreate}
+        tracksPlaylistOfModify={tracksPlaylistOfModify}
+        namePlaylistOfCreate={namePlaylistOfCreate}
+        namePlaylistOfModify={namePlaylistOfModify}
+        onNameChangeOfCreate={updatePlaylistNameOfCreate}
+        onSaveOfCreate={onSaveOfCreate}
+        onAddOfModify={onAddOfModify}
+        onRemoveOfModify={onRemoveOfModify}
+        onSearchOfModify={onSearchOfModify}
+        onSaveOfModify={onSaveOfModify}
+        updatePlaylistNameOfModify={updatePlaylistNameOfModify}
         />
 
       );
@@ -141,14 +213,10 @@ function App() {
           header.style.backgroundColor = 'rgba(109, 102, 134, 0.4)';
         }
       };
-  
-      // Ajoutez un écouteur d'événement de défilement
       window.addEventListener('scroll', handleScroll);
-  
-      // Nettoyez l'écouteur lorsque le composant est démonté
-      return () => {
+        return () => {
         window.removeEventListener('scroll', handleScroll);
-      };
+        };
     }, []);
 
 

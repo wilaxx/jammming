@@ -12,12 +12,12 @@ function ModifyPlaylist (props) {
     <div className="ModifyPlaylist">
 
       <Playlists
-      onRemove={props.onRemove}
+      onRemoveOfModify={props.onRemoveOfModify}
        />
       
       <article className="addSongs">
-        <SearchBar onSearch={props.onSearch} />
-        <SearchResults tracksResults={props.tracksResults} onAdd={props.onAdd} />
+        <SearchBar onSearchOfModify={props.onSearchOfModify} />
+        <SearchResults tracksResultsOfModify={props.tracksResultsOfModify} onAddOfModify={props.onAddOfModify} />
       </article>
 
     </div>
