@@ -1,3 +1,12 @@
 .ModifyPlaylist {
     display: flex;
 }
+
+.Playlists:nth-child(1) {
+    flex-basis: 65%;
+    border: 1px solid blue;
+}
+.addSongs:nth-child(2) {
+    flex-basis: 35%;
+    border: 1px solid orange;
+}

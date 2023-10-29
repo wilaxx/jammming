@@ -7,8 +7,6 @@ import Playlists from "../Playlists/Playlists";
 
 function ModifyPlaylist (props) {
 
-  console.log("je fais le test de chatGPT " + Array.isArray(props.tracksResults));
-
   return (
 
     <div className="ModifyPlaylist">
@@ -16,7 +14,7 @@ function ModifyPlaylist (props) {
       <Playlists
       onRemove={props.onRemove}
        />
-          
+      
       <article className="addSongs">
         <SearchBar onSearch={props.onSearch} />
         <SearchResults tracksResults={props.tracksResults} onAdd={props.onAdd} />

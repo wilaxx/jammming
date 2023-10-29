@@ -3,8 +3,11 @@ const redirectUri = 'https://localhost:3000';
 
 
 const Spotify = {
-  _userId: 'null',
-  _userName: 'null',
+  _userId: '',
+  _userName: '',
+
+  
+
 
   get userName () {
     return this._userName;
@@ -182,7 +185,7 @@ const Spotify = {
     }
   });
   if (!response.ok) {
-    throw new Error("An error occurred during the search : " + response.message);
+    throw new Error("An error occurred during the search Spotify.js : " + response.status);
   }
 
   const data = await response.json();
@@ -201,7 +204,7 @@ const Spotify = {
   return results;
   }
    catch (error) {
-    console.error("An error occurred during the search: ", error.status + " " + error.message);
+    console.error(error, error.status + " " + error.message);
         throw error; // Rethrow the error
     }
   },
@@ -275,9 +278,9 @@ const Spotify = {
 
     
 
-    this.user_name = data.display_name;
-    this.user_id = data.id;
-    const user_profile = [user_name, user_id];
+    this._userName = data.display_name;
+    this._userId = data.id;
+    const user_profile = [this._userName, this._userId];
 
     return user_profile;
     } catch (error) {

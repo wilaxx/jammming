@@ -12,6 +12,8 @@ function App() {
   const [userName, setUsername] = useState('');
   const [userId, setUserId] = useState('');
   const [tracksResults, setTracksResults] = useState([]);
+  
+
   const [tracksPlaylist, setTracksPlaylist] = useState([]);
   const [namePlaylist, setNamePlaylist] = useState("New Playlist");
   const [isAuth, setIsAuth] = useState(null);
@@ -43,8 +45,8 @@ function App() {
         setTracksResults((prev) => searchData);
         
       } catch (error) {
-        console.error('An error occurred during the search:', error);
-        throw error;
+        console.error('An error occurred during the test:', error.message);
+        alert('an error appeared ')
       }
     
     
