@@ -2,20 +2,21 @@ import React from "react";
 import "./Tracklist.css";
 import Track from "../Track/Track"
 
-function Tracklist({ onAdd, onRemove, isRemoval, tracks }) {
-  
-  const arrayToLoop = [...tracks];
+function Tracklist(props) {
+
+  const arrayToLoop = [...props.tracks];
     
     return (
       <div className="Tracklist">
       {arrayToLoop.map((element) => {
         return (
-            <Track 
+            <Track
+            activeComp={props.activeComp} 
             track={element} 
             key={element.id}
-            onAdd={onAdd}
-            onRemove={onRemove}
-            isRemoval={isRemoval} 
+            onAdd={props.onAdd}
+            onRemove={props.onRemove}
+            isRemoval={props.isRemoval} 
             />
             ); 
         })

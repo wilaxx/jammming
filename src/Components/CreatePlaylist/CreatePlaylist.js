@@ -9,23 +9,27 @@ import { Suspense } from "react";
 
 function CreatePlaylist (props) {
 
+    console.log("test1 vaut : " + props.activeComp)
+  let active = props.activeComp;
 
+  console.log("test2 : " + active)
     return (
 
         <div className="CreatePlaylist">
-          <SearchBar onSearchOfCreate={props.onSearchOfCreate} />
+          <SearchBar onSearch={props.onSearch} activeComp={props.activeComp} />
          
           <div className="CreatePlaylist-results">
           
-          <SearchResults tracksResultsOfCreate={props.tracksResultsOfCreate} onAdd={props.onAdd} />
+          <SearchResults activeComp={props.activeComp} tracksResults={props.tracksResultsOfCreate} onAdd={props.onAdd} />
           
           <Suspense fallback={<h1> HELLO </h1>}>
-          <Playlist 
-          onRemoveOfCreate={props.onRemoveOfCreate} 
-          tracksPlaylistOfCreate={props.tracksPlaylistOfCreate} 
-          namePlaylistOfCreate={props.namePlaylistOfCreate} 
-          onNameChangeOfCreate={props.onNameChangeOfCreate} 
-          onSaveOfCreate={props.onSaveOfCreate} />
+          <Playlist
+          activeComp={props.activeComp} 
+          onRemove={props.onRemove} 
+          tracks={props.tracksPlaylistOfCreate} 
+          name={props.namePlaylistOfCreate} 
+          onNameChange={props.onNameChange} 
+          onSave={props.onSave} />
           </Suspense>
           </div>
       </div>

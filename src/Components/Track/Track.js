@@ -1,18 +1,21 @@
 import React from "react";
 import "./Track.css";
 
-function Track({ onRemove, onAdd, track, isRemoval }) {
+function Track(props) {
+
+  
 
   const removeTrack = () => {
-    onRemove(track);
+    props.onRemove(props.activeComp, props.track);
   };
 
   const addTrack = () => {
-    onAdd(track);
+    console.log("je teste : " + props.activeComp)
+    props.onAdd(props.activeComp, props.track);
   };
 
   const action = () => {
-    if (isRemoval) {
+    if (props.isRemoval) {
       return (
       <button onClick={removeTrack} > - </button>
       );
@@ -26,9 +29,9 @@ function Track({ onRemove, onAdd, track, isRemoval }) {
   return (
     <div className="Track">
       <div className="content-track">
-        <h3>{track.name} </h3>
-        <h4>{track.artist}</h4>
-        <p>{track.album}</p>
+        <h3>{props.track.name} </h3>
+        <h4>{props.track.artist}</h4>
+        <p>{props.track.album}</p>
       </div>
       {action()}
     </div>  

@@ -58,27 +58,29 @@ function Features(props) {
     if(comp === "create") {
       return (
         <CreatePlaylist
-        onSearchOfCreate={props.onSearchOfCreate}
+        onSearch={props.onSearch}
         tracksResultsOfCreate={props.tracksResultsOfCreate} 
-        onAddOfCreate={props.onAddOfCreate}
-        onRemoveOfCreate={props.onRemoveOfCreate} 
+        onAdd={props.onAdd}
+        onRemove={props.onRemove} 
         tracksPlaylistOfCreate={props.tracksPlaylistOfCreate} 
         namePlaylistOfCreate={props.namePlaylistOfCreate} 
-        onNameChangeOfCreate={props.onNameChangeOfCreate} 
-        onSaveOfCreate={props.onSaveOfCreate} />
+        onNameChange={props.onNameChange} 
+        onSave={props.onSave}
+        activeComp={activeComp} />
       );
     }
     else if(comp === "modify") {
       return (
         <ModifyPlaylist
-        onSearchOfModify={props.onSearchOfModify}
+        onSearch={props.onSearch}
         tracksResultsOfModify={props.tracksResultsOfModify}
-        onAddOfModify={props.onAddOfModify}
-        onRemoveOfModify={props.onRemoveOfModify}
+        onAdd={props.onAdd}
+        onRemove={props.onRemove}
         tracksPlaylistOfModify={props.tracksPlaylistOfModify}
         namePlaylistOfModify={props.namePlaylistOfModify} 
-        onNameChangeOfModify={props.onNameChangeOfModify} 
-        onSaveOfModify={props.onSaveOfModify}
+        onNameChange={props.onNameChange} 
+        onSave={props.onSave}
+        activeComp={activeComp}
           />
       );
     }

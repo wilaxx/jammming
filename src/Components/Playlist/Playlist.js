@@ -2,15 +2,16 @@ import React from "react";
 import "./Playlist.css";
 import Tracklist from "../Tracklist/Tracklist";
 
-  const Playlist = ({ tracksPlaylist, onRemove, onNameChange, onSave, namePlaylist }) => {
+  const Playlist = (props) => {
 
+    let activeComp = props.activeComp;
 
     const handleNameChange = ({target}) => {
-      onNameChange(target.value)
+      props.onNameChange(activeComp, target.value)
     };
 
     const handleClick = () => {
-      onSave(namePlaylist, tracksPlaylist);
+      props.onSave(activeComp);
       const resetInput = document.getElementById('plname-input');
       resetInput.value = "";
 
@@ -27,9 +28,10 @@ import Tracklist from "../Tracklist/Tracklist";
       >
       </input>
 
-      <Tracklist 
-      tracks={tracksPlaylist} 
-      onRemove={onRemove}  
+      <Tracklist
+      activeComp={props.activeComp} 
+      tracks={props.tracks} 
+      onRemove={props.onRemove}  
       isRemoval={true} 
       />
   

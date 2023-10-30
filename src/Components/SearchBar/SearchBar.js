@@ -11,7 +11,7 @@ function SearchBar(props) {
   };
 
   const handleClick = async () => {
-    await onSearch('modify', word);
+    await props.onSearch(props.activeComp, word);
     setWord("");
   };
 
