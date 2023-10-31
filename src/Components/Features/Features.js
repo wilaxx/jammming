@@ -10,6 +10,7 @@ import homefeatures from "./home-features.png";
 function Features(props) {
 
   const [activeComp, setActiveComp] = useState("home");
+  console.log("la prop userPlaylists vaut : " + props.userPlaylists);
 
   const setActiveButton = (comp) => {
     const navButtons = document.querySelectorAll('.btn-wrapper button');
@@ -81,6 +82,7 @@ function Features(props) {
         onNameChange={props.onNameChange} 
         onSave={props.onSave}
         activeComp={activeComp}
+        userPlaylists={props.userPlaylists}
           />
       );
     }

@@ -11,6 +11,7 @@ function App() {
 
   const [userName, setUsername] = useState('');
   const [userId, setUserId] = useState('');
+  const [userPlaylists, setUserPlaylists] = useState([]);
   
   const [tracksResultsOfCreate, setTracksResultsOfCreate] = useState([]);
   const [tracksPlaylistOfCreate, setTracksPlaylistOfCreate] = useState([]);
@@ -196,6 +197,7 @@ function App() {
         namePlaylistOfModify={namePlaylistOfModify}
         onNameChange={updatePlaylistName}
         onSave={onSave}
+        userPlaylists={userPlaylists}
       
         />
 
@@ -214,9 +216,13 @@ function App() {
         await checkLoginStatus();
         if(isAuth) {
            await Spotify.getCurrentUserProfile();
-           setUserId(Spotify.userId)
+           setUserId(Spotify.userId);
            setUsername(Spotify.userName);
-           await Spotify.getCurrentUserPlaylistsIds();
+
+           let items = await Spotify.getPlaylists();
+
+           setUserPlaylists(items);
+           console.log("les playlists sonht : " + items);
         }
        
       };

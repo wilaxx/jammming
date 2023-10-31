@@ -188,6 +188,7 @@ const Spotify = {
     throw new Error("An error occurred during the search Spotify.js : " + response.status);
   }
 
+
   const data = await response.json();
   if(data.tracks.items.length === 0){
     return [];
@@ -271,24 +272,16 @@ const Spotify = {
     }
   
     const data = await response.json();
-
-
-    console.log("le nom d utilisateur est : " + data.display_name);
-    console.log("l'id utilisateur est : " + data.id);
-
     
-
     this._userName = data.display_name;
     this._userId = data.id;
-    const user_profile = [this._userName, this._userId];
-
-    return user_profile;
+    return;
     } catch (error) {
       console.error(error, error.status + " " + error.message);
           throw error; // Rethrow the error
       }
   },
-  async getCurrentUserPlaylistsIds() {
+  async getCurrentUserPlaylistsInfos() {
     let accessToken = await this.getAccessToken();
 
     try {
@@ -302,20 +295,50 @@ const Spotify = {
     }
   
     const data = await response.json();
-    let arrayPlaylistsIds = data.items.map(x => x.id);
-    console.log("le array des ids de playlits est : " + arrayPlaylistsIds)
-    return arrayPlaylistsIds;
+    let arrayPlaylistsInfos = data.items.map(x => ({id: x.id, name: x.name}));
+
+    return arrayPlaylistsInfos;
     } catch (error) {
       console.error(error, error.status + " " + error.message);
       }
   },
-  async getPlaylistItems(playlistIds) {
-
+  async getPlaylists() {
     let accessToken = await this.getAccessToken();
-  },
-  async getPlaylist() {
+    let allPlaylistsItems = await this.getCurrentUserPlaylistsInfos();
 
-  }
+    try {
+      
+      for (let element of allPlaylistsItems) {
+        let playlistId = element.id;
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+          headers: {
+            Authorization: 'Bearer ' + accessToken
+          }
+        });
+  
+        if (!response.ok) {
+          throw new Error(`An error occurred while fetching playlist ${playlistId} with code: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        let playlistItems = await data.items.map(item => ({
+          id: item.track.id,
+          name: item.track.name,
+          artist: item.track.artists[0].name,
+          album: item.track.album.name,
+          uri: item.track.uri
+        }));
+  
+        element.tracks = playlistItems;
+      }
+
+      return allPlaylistsItems;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
 
 
 

@@ -1,20 +1,20 @@
 import React from "react";
 import "./Playlists.css";
 
-function Playlists () {
+function Playlists (props) {
+
+  let playlists = props.userPlaylists;
 
 
   return (
     <div className="Playlists">
         
-      <nav className="plNames">
-        <ul>
-          <button>un</button>
-          <button>deux</button>
-          <button>trois</button>
-          <button>quatre</button>
-          <button>cinq</button>
-        </ul>
+      <nav className="panel">
+          {playlists.map((element) => {
+            return(
+              <button key={element.uri} className="playlist"> {element.name}</button>
+            );
+          })}
       </nav>
 
       <section className="plToModify">

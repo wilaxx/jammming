@@ -12,6 +12,7 @@ function ModifyPlaylist (props) {
     <div className="ModifyPlaylist">
 
       <Playlists
+      userPlaylists={props.userPlaylists}
       activeComp={props.activeComp}
       onRemove={props.onRemove}
       tracks={props.tracksPlaylistOfModify}
