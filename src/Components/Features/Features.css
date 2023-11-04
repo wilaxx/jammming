@@ -42,10 +42,13 @@
     border-style: none;
     color: rgba(135, 125, 111, 0.8);
     font-family: 'Patrick Hand';
+    box-shadow: rgb(92, 60, 0) 0px 1px 1px;
   }
 
  .active {
-  box-shadow: rgba(255, 165, 0) 0px 2px 5px;
+  border-style: none;
+  box-shadow: rgba(255, 165, 0) 0px 2px 5px !important;
+  color : orange !important; 
  }
 
  

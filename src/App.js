@@ -246,7 +246,7 @@ function App() {
         const scrollPosition = window.scrollY;
       
         if (scrollPosition > 0) {
-          header.style.background = 'rgba(109, 102, 134, 0.98)'; 
+          header.style.background = 'rgba(171, 171, 233, 0.8)'; 
         } else {
           header.style.backgroundColor = 'rgba(109, 102, 134, 0.4)';
         }
