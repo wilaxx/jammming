@@ -4,7 +4,6 @@ import CreatePlaylist from "../CreatePlaylist/CreatePlaylist";
 import ModifyPlaylist from "../ModifyPlaylist/ModifyPlaylist";
 import SearchAlbums from "../SearchAlbums/SearchAlbums";
 import HomeFeatures from "../HomeFeatures/HomeFeatures";
-import homefeatures from "./home-features.png";
 
 
 function Features(props) {
@@ -14,13 +13,11 @@ function Features(props) {
 
   const setActiveButton = (comp) => {
     const navButtons = document.querySelectorAll('.btn-wrapper button');
-    const homeImage = document.querySelector('.Features img');
   
     navButtons.forEach((button) => {
       button.classList.remove('active');
     });
 
-    homeImage.classList.remove('active');
   
     if (comp === "create") {
       document.querySelector('.create-playlist').classList.add('active');
@@ -29,7 +26,6 @@ function Features(props) {
     } else if (comp === "search-albums") {
       document.querySelector('.search-albums').classList.add('active');
     } else if (comp === "home") {
-      homeImage.classList.add('active');
     }
     
   };
@@ -102,6 +98,24 @@ function Features(props) {
   };
 
   
+  useEffect(() => {
+    const handleHeaderClick = () => {
+      setActiveComp("home");
+      setActiveButton("home");
+    };
+
+    const header = document.querySelector('.Header');
+    if (header) {
+      header.addEventListener('click', handleHeaderClick);
+    }
+
+    return () => {
+      if (header) {
+        header.removeEventListener('click', handleHeaderClick);
+      }
+    };
+  }, []);
+
 
   useEffect(() => {
     setActiveButton(activeComp);
@@ -111,8 +125,6 @@ function Features(props) {
   return (
 
     <div className="Features">
-
-      <img src={homefeatures} alt="home-features" onClick={handleHomeClick} />
 
       <div className="banner">
         <nav className="banner-nav">

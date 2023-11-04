@@ -10,7 +10,6 @@ function Track(props) {
   };
 
   const addTrack = () => {
-    console.log("je teste : " + props.activeComp)
     props.onAdd(props.activeComp, props.track);
   };
 

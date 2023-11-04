@@ -1,3 +1,13 @@
 .Playlists {
-    flex: 1;
+    display: flex;
+    /* flex: 1; */
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.plToModify {
+    flex-grow: 1;
 }

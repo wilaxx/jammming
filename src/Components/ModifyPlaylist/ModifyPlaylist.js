@@ -18,7 +18,6 @@ function ModifyPlaylist (props) {
       tracks={props.tracksPlaylistOfModify}
       onNameChange={props.onNameChange}
       onSave={props.onSave}
-
        />
       
       <article className="addSongs">

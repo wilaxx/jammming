@@ -2,11 +2,9 @@
     display: flex;
 }
 
-.Playlists:nth-child(1) {
-    flex-basis: 65%;
-    border: 1px solid blue;
+.Playlists {
+    flex-basis: 70%;
 }
-.addSongs:nth-child(2) {
-    flex-basis: 35%;
-    border: 1px solid orange;
+.addSongs {
+    flex-basis: 30%;
 }

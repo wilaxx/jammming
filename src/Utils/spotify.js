@@ -7,8 +7,6 @@ const Spotify = {
   _userName: '',
 
   
-
-
   get userName () {
     return this._userName;
   },
@@ -320,6 +318,7 @@ const Spotify = {
           throw new Error(`An error occurred while fetching playlist ${playlistId} with code: ${response.status}`);
         }
   
+
         const data = await response.json();
         let playlistItems = await data.items.map(item => ({
           id: item.track.id,
@@ -330,6 +329,9 @@ const Spotify = {
         }));
   
         element.tracks = playlistItems;
+        console.log("element.tracks vaut : " + element.tracks)
+        console.log("element.tracks.name vaut : " + element.tracks[0].name)
+
       }
 
       return allPlaylistsItems;
@@ -337,7 +339,7 @@ const Spotify = {
       console.error(error);
       return null;
     }
-  },
+  }
 
 
 

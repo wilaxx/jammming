@@ -12,6 +12,7 @@ function App() {
   const [userName, setUsername] = useState('');
   const [userId, setUserId] = useState('');
   const [userPlaylists, setUserPlaylists] = useState([]);
+  const [activeComp, setActiveComp] = useState(null);
   
   const [tracksResultsOfCreate, setTracksResultsOfCreate] = useState([]);
   const [tracksPlaylistOfCreate, setTracksPlaylistOfCreate] = useState([]);
@@ -164,6 +165,8 @@ function App() {
     setIsAuth(false);
     };
 
+
+
   // function to launch with useEffect
     const checkLoginStatus = async () => {
     let accessTokenCheck = await Spotify.getAccessToken();
@@ -184,6 +187,7 @@ function App() {
   //function to use in the return to load appropriate component
     const loadComp = (isAuth) => {
     if(isAuth) {
+
       return (
         <Features
         onSearch={onSearch}
@@ -198,7 +202,7 @@ function App() {
         onNameChange={updatePlaylistName}
         onSave={onSave}
         userPlaylists={userPlaylists}
-      
+        activeComp={activeComp}
         />
 
       );
@@ -212,6 +216,7 @@ function App() {
 
 
     useEffect(() => {
+
       const checkStatus = async () => {
         await checkLoginStatus();
         if(isAuth) {
@@ -220,15 +225,20 @@ function App() {
            setUsername(Spotify.userName);
 
            let items = await Spotify.getPlaylists();
-
-           setUserPlaylists(items);
-           console.log("les playlists sonht : " + items);
+           setUserPlaylists(items); 
+           
         }
-       
+
       };
-    
+      
       checkStatus();
+
+      
     }, [isAuth]);
+
+
+
+
 
     useEffect(() => {
       const handleScroll = () => {
@@ -241,11 +251,14 @@ function App() {
           header.style.backgroundColor = 'rgba(109, 102, 134, 0.4)';
         }
       };
+
       window.addEventListener('scroll', handleScroll);
+      
         return () => {
         window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
 
 
 

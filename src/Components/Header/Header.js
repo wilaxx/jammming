@@ -1,14 +1,21 @@
 import "./Header.css";
+import { useEffect, useRef } from "react";
 
 function Header ({ isAuth, logIn, logOut }) {
 
-    const handleLogin = async () => {
+    const handleLogin = async (event) => {
+        event.stopPropagation();
+        alert("You will be redirected to Spotify website to authenticate");
         await logIn();
+        
+    };
+    const handleLogout = (event) => {
+        event.stopPropagation();
+        alert("You will be disconnected from Spotify");
+        logOut();
+        
     };
 
-    const handleLogout = () => {
-        logOut();
-    };
 
     const buttonRender = (auth) => {
 
@@ -48,6 +55,7 @@ function Header ({ isAuth, logIn, logOut }) {
             </div>
                 
         </header>
+
 
     );
 };
