@@ -225,7 +225,8 @@ function App() {
            setUsername(Spotify.userName);
 
            let items = await Spotify.getPlaylists();
-           setUserPlaylists(items); 
+           setUserPlaylists(items);
+           setTracksPlaylistOfModify(items[0].tracks); 
            
         }
 

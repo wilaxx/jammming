@@ -1,5 +1,10 @@
 .ModifyPlaylist {
     display: flex;
+    gap: 1rem;
+}
+
+.ModifyPlaylist > * {
+   
 }
 
 .Playlists {

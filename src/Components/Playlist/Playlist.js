@@ -21,11 +21,11 @@ import Tracklist from "../Tracklist/Tracklist";
     const loadComp = (comp) => {
       if(comp === "create") {
         return (
-          <div className="Playlist">
+          <div className="Playlist-Create">
             <input
               type="text"
               aria-label="Name of the playlist"
-              placeholder="Type playlist name ..."
+              placeholder={"Type playlist name ..."}
               onChange={handleNameChange}
               id="plname-input"
             >
@@ -46,11 +46,11 @@ import Tracklist from "../Tracklist/Tracklist";
       }
       else if(comp === "modify") {
         return (
-          <div className="Playlist">
+          <div className="Playlist-Modify">
           <input
             type="text"
             aria-label="Name of the playlist"
-            placeholder="Type playlist name ..."
+            placeholder={props.playlists[1].name}
             onChange={handleNameChange}
             id="plname-input"
           >

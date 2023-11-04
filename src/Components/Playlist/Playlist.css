@@ -1,4 +1,4 @@
-.Playlist {
+.Playlist-Create {
     /* width: 95%; */
     /* align-self: center; */
     display: flex;
@@ -12,7 +12,7 @@
     min-height: 40vh;
 }
 
-.Playlist input {
+.Playlist-Create input {
     /* justify-self: flex-start; */
     color: rgb(255, 255, 255);
     font-weight: bold;
@@ -26,12 +26,12 @@
     padding-bottom: 0.7rem;
 }
 
-.Playlist input::placeholder {
+.Playlist-Create input::placeholder {
     color: rgb(152, 152, 180);
     font-size: 1.2rem;
   }
 
-.Playlist > button {
+.Playlist-Create > button {
     /* justify-self: flex-end; */
     background-color: rgb(171, 171, 233);
     padding: 0.5rem 1.5rem;
@@ -44,6 +44,59 @@
     
 }
 
-.Playlist .Track {
+.Playlist-Create .Track {
+    background-color: rgba(71, 84, 100, 0.622);
+}
+
+
+
+
+.Playlist-Modify {
+    /* width: 95%; */
+    /* align-self: center; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: center; */
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    gap: 0.2rem;
+    /* padding: 1rem 1.5rem; */
+    border-radius: 0.3rem;
+    min-height: 40vh;
+}
+
+.Playlist-Modify input {
+    /* justify-self: flex-start; */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    border-style: none;
+    background: transparent;
+    font-size: 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.73);
+    outline: 0;
+    margin: 0 2rem;
+    padding-bottom: 0.7rem;
+}
+
+.Playlist-Modify input::placeholder {
+    color: rgb(152, 152, 180);
+    font-size: 1.2rem;
+  }
+
+.Playlist-Modify > button {
+    /* justify-self: flex-end; */
+    background-color: rgb(171, 171, 233);
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+    border-style: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: rgb(100, 65, 0);
+    align-self: center;
+    
+}
+
+.Playlist-Modify .Track {
     background-color: rgba(71, 84, 100, 0.622);
 }
