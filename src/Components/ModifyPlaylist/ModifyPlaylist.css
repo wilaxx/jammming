@@ -1,15 +1,50 @@
 .ModifyPlaylist {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
+    padding: 1rem;
 }
 
 .ModifyPlaylist > * {
    
 }
 
+.panel {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 10%;
+    gap: 1rem;
+}
+
+.playlist-btn {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: transparent;
+}
+
+.plToModify {
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 90%;
+    /* flex-grow: 1; */
+    padding: 0 2rem;
+}
+
+.Playlist-Modify {
+    flex-basis: 60%;
+}
+
 .Playlists {
     flex-basis: 70%;
 }
 .addSongs {
+    display: flex;
+    flex-direction: column;
     flex-basis: 30%;
+    gap: 5rem;
+}
+
+.addSongs p {
+    font-size: 2rem;
+    text-align: center;
+    padding: 2rem;
 }

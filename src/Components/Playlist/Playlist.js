@@ -5,7 +5,6 @@ import Tracklist from "../Tracklist/Tracklist";
   const Playlist = (props) => {
 
     let activeComp = props.activeComp;
-    console.log("tout de suite activeComp vaut : " + activeComp)
 
     const handleNameChange = ({target}) => {
       props.onNameChange(activeComp, target.value)
@@ -50,7 +49,7 @@ import Tracklist from "../Tracklist/Tracklist";
           <input
             type="text"
             aria-label="Name of the playlist"
-            placeholder={props.playlists[1].name}
+            placeholder={"tu te calmes"}
             onChange={handleNameChange}
             id="plname-input"
           >
@@ -64,7 +63,7 @@ import Tracklist from "../Tracklist/Tracklist";
           />
       
           <button onClick={handleClick}>
-            Save
+            Update playlist !
           </button>
         </div>
         );

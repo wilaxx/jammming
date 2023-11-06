@@ -3,7 +3,14 @@ import "./Track.css";
 
 function Track(props) {
 
-  
+  const remFromPl = () => {
+    props.onRemove(props.track);
+  };
+
+  const addToPl = () => {
+    props.onAdd(props.track);
+  }
+
 
   const removeTrack = () => {
     props.onRemove(props.activeComp, props.track);
@@ -13,15 +20,45 @@ function Track(props) {
     props.onAdd(props.activeComp, props.track);
   };
 
+  const addFound = () => {
+
+  };
+
   const action = () => {
-    if (props.isRemoval) {
-      return (
-      <button onClick={removeTrack} > - </button>
-      );
+
+    if (props.activeComp === "create") {
+      if (props.isRemoval) {
+        return (
+        <button onClick={removeTrack} > - </button>
+        );
+      } else {
+        return (
+        <button onClick={addTrack} > + </button>
+        );
+      }
+        
     }
+    else if (props.activeComp === "modify") {
       return (
-      <button onClick={addTrack} > + </button>
-      );
+        <button onClick={remFromPl} > - </button>
+        );
+    }
+
+    else if (props.activeComp === "deleted-tracks") {
+      return (
+        <button onClick={addToPl} > + </button>
+        );
+    }
+
+    else if (props.activeComp === "search-modify") {
+      return (
+        <button onClick={addToPl} > + </button>
+        );
+    }
+
+
+
+    
     
 };
 

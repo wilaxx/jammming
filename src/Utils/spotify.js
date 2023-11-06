@@ -329,8 +329,6 @@ const Spotify = {
         }));
   
         element.tracks = playlistItems;
-        console.log("element.tracks vaut : " + element.tracks)
-        console.log("element.tracks.name vaut : " + element.tracks[0].name)
 
       }
 

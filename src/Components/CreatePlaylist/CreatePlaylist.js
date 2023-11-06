@@ -9,10 +9,8 @@ import { Suspense } from "react";
 
 function CreatePlaylist (props) {
 
-    console.log("test1 vaut : " + props.activeComp)
-  let active = props.activeComp;
 
-  console.log("test2 : " + active)
+  
     return (
 
         <div className="CreatePlaylist">

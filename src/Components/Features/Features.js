@@ -9,7 +9,6 @@ import HomeFeatures from "../HomeFeatures/HomeFeatures";
 function Features(props) {
 
   const [activeComp, setActiveComp] = useState("home");
-  console.log("la prop userPlaylists vaut : " + props.userPlaylists);
 
   const setActiveButton = (comp) => {
     const navButtons = document.querySelectorAll('.btn-wrapper button');
@@ -71,8 +70,6 @@ function Features(props) {
         <ModifyPlaylist
         onSearch={props.onSearch}
         tracksResultsOfModify={props.tracksResultsOfModify}
-        onAdd={props.onAdd}
-        onRemove={props.onRemove}
         tracksPlaylistOfModify={props.tracksPlaylistOfModify}
         namePlaylistOfModify={props.namePlaylistOfModify} 
         onNameChange={props.onNameChange} 
