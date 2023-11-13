@@ -337,7 +337,88 @@ const Spotify = {
       console.error(error);
       return null;
     }
-  }
+  },
+  async renamePlaylist(playlistId, playlistName) {
+    let accessToken = await this.getAccessToken();
+
+      try {
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: playlistName})
+  
+          });
+
+        if(!response.ok) {
+          throw new Error("An error occured during playlist renaming.")
+        }
+        else{
+          console.log("playlist a bien ete renommée");
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+  },
+  async addItemsToPlaylist(playlistId, items) {
+    let accessToken = await this.getAccessToken();
+    let urisToAdd = items.map(track => track.uri)
+    try {
+      const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({uris: urisToAdd})
+          });
+
+        if(!response.ok) {
+          throw new Error("An error occured during playlist renaming.")
+        }
+        else{
+          console.log("les items ont bien ete ajoutés");
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+  },
+  async removeItemsFromPlaylist(playlistId, items) {
+    let accessToken = await this.getAccessToken();
+    let urisToAdd = items.map(track => track.uri)
+    try {
+      const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({uris: urisToAdd})
+          });
+
+        if(!response.ok) {
+          throw new Error("An error occured during playlist renaming.")
+        }
+        else{
+          console.log("les items ont bien ete ajoutés");
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+  },
+  async updatePlaylist(playlistId, playlistName, toRemove, toAdd) {
+    try {
+      await this.renamePlaylist(playlistId, playlistName);
+      await this.addItemsToPlaylist(playlistId, toAdd);
+      await this.removeItemsFromPlaylist(playlistId, toRemove);
+    } catch (error) {
+      
+    }
+  },
+
+  
 
 
 

@@ -73,7 +73,7 @@ function Features(props) {
         tracksPlaylistOfModify={props.tracksPlaylistOfModify}
         namePlaylistOfModify={props.namePlaylistOfModify} 
         onNameChange={props.onNameChange} 
-        onSave={props.onSave}
+        onUpdate={props.onUpdate}
         activeComp={activeComp}
         userPlaylists={props.userPlaylists}
           />

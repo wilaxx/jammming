@@ -20,10 +20,6 @@ function Track(props) {
     props.onAdd(props.activeComp, props.track);
   };
 
-  const addFound = () => {
-
-  };
-
   const action = () => {
 
     if (props.activeComp === "create") {

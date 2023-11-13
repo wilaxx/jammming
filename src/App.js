@@ -27,7 +27,7 @@ function App() {
   const [isAuth, setIsAuth] = useState(null);
 
 
- //functions for Create component
+ //functions sub components in features
   const updatePlaylistName = (comp, name) => {
     if (comp === "create") {
       setNamePlaylistOfCreate((prevName) => name);
@@ -154,6 +154,16 @@ function App() {
    
 
   };
+  const onUpdate = async (playlistID, playlistName, addTracks, remTracks) => {
+    
+    try {
+      await Spotify.updatePlaylist(playlistID, playlistName, addTracks, remTracks);
+    } catch (error) {
+      console.error(error)
+    }
+    
+    
+  };
 
 
 // functions for the Header comp
@@ -164,7 +174,6 @@ function App() {
     localStorage.clear();
     setIsAuth(false);
     };
-
 
 
   // function to launch with useEffect
@@ -201,6 +210,7 @@ function App() {
         namePlaylistOfModify={namePlaylistOfModify}
         onNameChange={updatePlaylistName}
         onSave={onSave}
+        onUpdate={onUpdate}
         userPlaylists={userPlaylists}
         activeComp={activeComp}
         />
@@ -222,12 +232,7 @@ function App() {
         if(isAuth) {
            await Spotify.getCurrentUserProfile();
            setUserId(Spotify.userId);
-           setUsername(Spotify.userName);
-
-           let items = await Spotify.getPlaylists();
-           setUserPlaylists(items);
-           setTracksPlaylistOfModify(items[0].tracks); 
-           
+           setUsername(Spotify.userName);       
         }
 
       };
@@ -236,9 +241,6 @@ function App() {
 
       
     }, [isAuth]);
-
-
-
 
 
     useEffect(() => {

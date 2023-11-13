@@ -7,16 +7,15 @@ function HomeFeatures() {
         <div className="create-guidelines">
           <p>Search for songs
             <br />
-            Add tracks in a new playlist
+            Add tracks.
             <br />
             Name your playlist then save it to Spotify
           </p>
         </div>
         <div className="modify-guidelines">
-          <p>Here you can load you existing playlist 
-            from your Spotify account
+          <p>Modify a playlist : 
             <br /> 
-            You can change the playlists titles,
+            You can change the playlist title,
             <br /> 
             remove tracks from it
             <br />

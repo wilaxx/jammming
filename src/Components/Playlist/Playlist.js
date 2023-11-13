@@ -10,11 +10,21 @@ import Tracklist from "../Tracklist/Tracklist";
       props.onNameChange(activeComp, target.value)
     };
 
+
     const handleClick = () => {
       props.onSave(activeComp);
-      const resetInput = document.getElementById('plname-input');
+      const resetInput = document.getElementById('plname-create');
       resetInput.value = "";
+    };
+
+    const modifyPlName = ({target}) => {
+      props.onNameChange(target.value)
     }
+
+
+    const updatePl = () => {
+      props.onUpdate();
+    };
 
 
     const loadComp = (comp) => {
@@ -26,7 +36,7 @@ import Tracklist from "../Tracklist/Tracklist";
               aria-label="Name of the playlist"
               placeholder={"Type playlist name ..."}
               onChange={handleNameChange}
-              id="plname-input"
+              id="plname-create"
             >
             </input>
 
@@ -34,7 +44,11 @@ import Tracklist from "../Tracklist/Tracklist";
             activeComp={props.activeComp} 
             tracks={props.tracks} 
             onRemove={props.onRemove}  
-            isRemoval={true} 
+            isRemoval={true}
+            tracksToAdd={props.tracksToAdd}
+            tracksToRemove={props.tracksToRemove}
+            playlistName={props.playlistName}
+            playlistId={props.playlistId}  
             />
         
             <button onClick={handleClick}>
@@ -48,10 +62,11 @@ import Tracklist from "../Tracklist/Tracklist";
           <div className="Playlist-Modify">
           <input
             type="text"
+            value={props.playlistName}
             aria-label="Name of the playlist"
-            placeholder={"tu te calmes"}
-            onChange={handleNameChange}
-            id="plname-input"
+            placeholder={props.playlistName}
+            onChange={modifyPlName}
+            id="plname-modify"
           >
           </input>
 
@@ -62,7 +77,7 @@ import Tracklist from "../Tracklist/Tracklist";
           isRemoval={true} 
           />
       
-          <button onClick={handleClick}>
+          <button onClick={updatePl}>
             Update playlist !
           </button>
         </div>
